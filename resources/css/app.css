@@ -1,0 +1,32 @@
+/* 
+|-----------------------------
+| Vendors
+|----------------------------- 
+*/
+
+@import "@css/common/vendors/_vendors.css";
+
+/* 
+|-----------------------------
+| Tailwind
+|----------------------------- 
+*/
+
+@import "tailwindcss";
+
+/* 
+|-----------------------------
+| Base
+|----------------------------- 
+*/
+
+@import "@css/common/base/_base.css";
+@import "@css/common/components/_components.css";
+
+/* 
+|-----------------------------
+| Reference
+|----------------------------- 
+*/
+
+@reference "@css/reference.css";

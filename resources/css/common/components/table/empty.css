@@ -1,0 +1,13 @@
+/* 
+|-----------------------------
+| Empty Table
+|----------------------------- 
+*/
+
+.table-empty td{
+    @apply text-center text-[15px] text-gray-400! leading-relaxed;
+}
+
+.table-container:has(.table-empty) {
+    @apply h-[200px];
+}

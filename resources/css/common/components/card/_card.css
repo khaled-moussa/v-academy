@@ -1,0 +1,176 @@
+/* 
+|-----------------------------
+| Base
+|----------------------------- 
+*/
+
+.card {
+    @apply relative w-full h-fit bg-white border border-gray-100 rounded-2xl overflow-hidden;
+}
+
+.card-body {
+    @apply p-5;
+}
+
+/* 
+|-----------------------------
+| Header
+|----------------------------- 
+*/
+
+.card-header {
+    @apply flex items-start justify-between mb-3;
+}
+
+.card-icon {
+    @apply w-10 h-10 rounded-[10px] bg-gray-50 flex items-center justify-center;
+}
+
+/* 
+|-----------------------------
+| Title
+|----------------------------- 
+*/
+
+.card-title {
+    @apply text-[15px] font-medium text-gray-900 tracking-tight leading-snug mb-1;
+}
+
+.card-subtitle {
+    @apply text-[13px] font-medium text-gray-500 mb-3;
+}
+
+.card-description {
+    @apply text-[13px] text-gray-500 leading-relaxed mb-4;
+}
+
+
+/* 
+|-----------------------------
+| Stats
+|----------------------------- 
+*/
+
+.card--stat {
+    @apply bg-gray-900 border-gray-900 text-white;
+}
+
+.card--stat::before {
+    @apply hidden;
+}
+
+.card--stat .card-stat-label {
+    @apply text-[11px] font-medium text-white/40 uppercase tracking-[0.1em] mb-2.5;
+}
+
+.card--stat .card-stat-value {
+    @apply text-[28px] font-medium text-white tracking-tight leading-none mb-2;
+}
+
+.card--stat .card-stat-compare {
+    @apply text-[11px] text-white/35 ml-1.5;
+}
+
+/* 
+|-----------------------------
+| List
+|----------------------------- 
+*/
+
+.card--list {
+    @apply w-full;
+}
+
+.card--list::before {
+    @apply hidden;
+}
+
+.card-list-header {
+    @apply flex items-center justify-between px-5 py-4 border-b border-gray-100;
+}
+
+.card-list-header .card-title {
+    @apply mb-0;
+}
+
+.card-list-link {
+    @apply text-[11px] text-gray-400 hover:text-gray-700 transition-colors;
+}
+
+.card-list-item {
+    @apply flex items-center gap-3 px-5 py-2.5 border-b border-gray-100 last:border-0;
+}
+
+.card-list-dot {
+    @apply w-1.5 h-1.5 rounded-full flex-shrink-0;
+}
+
+.card-list-item-title {
+    @apply text-[13px] font-medium text-gray-800 leading-tight;
+}
+
+.card-list-item-time {
+    @apply text-[11px] text-gray-400 mt-0.5;
+}
+
+/* 
+|-----------------------------
+| Items
+|----------------------------- 
+*/
+
+.card-items {
+    @apply w-full mt-3;
+}
+
+/* 
+|-----------------------------
+| Layouts
+|----------------------------- 
+*/
+
+.card-items--stacked .card-item {
+    @apply flex items-start justify-between py-2.5 border-b border-gray-100 last:border-0 gap-4;
+}
+
+.card-items--grid {
+    @apply grid grid-cols-2 gap-px bg-gray-100 rounded-lg overflow-hidden;
+}
+
+.card-items--grid .card-item {
+    @apply flex flex-col gap-1 p-3 bg-white;
+}
+
+.card-items--inline {
+    @apply flex flex-wrap gap-2;
+}
+
+.card-items--inline .card-item {
+    @apply flex items-center gap-1.5 bg-gray-50 border border-gray-100 rounded-lg px-3 py-1.5;
+}
+
+/* 
+|-----------------------------
+| Variants
+|----------------------------- 
+*/
+
+.card-item-label {
+    @apply text-[11px] font-medium text-gray-400 uppercase tracking-[0.07em] whitespace-nowrap flex-shrink-0;
+}
+
+.card-item-value {
+    @apply text-[13px] font-medium text-gray-800;
+}
+
+.card-item-link {
+    @apply text-[13px] font-medium text-blue-600 hover:underline;
+}
+
+.card-item-mono {
+    @apply text-[12px] font-mono text-gray-700 bg-gray-50 border border-gray-200 rounded px-1.5 py-0.5;
+}
+
+.card-item-description {
+    @apply text-[13px] text-gray-500 leading-relaxed tracking-normal;
+}

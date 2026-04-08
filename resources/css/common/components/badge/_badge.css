@@ -1,0 +1,66 @@
+/* 
+|-----------------------------
+| Base
+|----------------------------- 
+*/
+
+[class*="badge"]:not([class*="badges"]) {
+    @apply font-inter inline-flex h-fit w-fit items-center justify-center
+           gap-1.5 rounded-md px-2.5 py-2 text-center text-[11px] leading-none
+           font-medium tracking-wide select-none first-letter:capitalize;
+}
+
+/* 
+|-----------------------------
+| Variants
+|----------------------------- 
+*/
+
+[class*="badge"]:not([class*="badges"]) {
+    @apply bg-gray-100 text-gray-600;
+}
+
+[class*="badge"].success:not([class*="badges"]),
+[class*="badge"].active:not([class*="badges"]),
+[class*="badge"].accept:not([class*="badges"]) {
+    @apply bg-emerald-50 text-emerald-700;
+}
+
+[class*="badge"].info:not([class*="badges"]) {
+    @apply bg-blue-50 text-blue-600;
+}
+
+[class*="badge"].warning:not([class*="badges"]),
+[class*="badge"].pending:not([class*="badges"]) {
+    @apply bg-amber-50 text-amber-700;
+}
+
+[class*="badge"].danger:not([class*="badges"]),
+[class*="badge"].rejected:not([class*="badges"]),
+[class*="badge"].cancelled:not([class*="badges"]) {
+    @apply bg-red-50 text-red-600;
+}
+
+[class*="badge"].in-progress:not([class*="badges"]),
+[class*="badge"].review:not([class*="badges"]) {
+    @apply bg-blue-50 text-blue-700;
+}
+
+[class*="badge"].completed:not([class*="badges"]) {
+    @apply bg-violet-50 text-violet-700;
+}
+
+[class*="badge"].finished:not([class*="badges"]),
+[class*="badge"].done:not([class*="badges"]) {
+    @apply bg-teal-50 text-teal-700;
+}
+
+/* 
+|-----------------------------
+| Dot
+|----------------------------- 
+*/
+
+.dot-badge::before {
+    @apply block text-[0.5rem] content-['\25CF'];
+}

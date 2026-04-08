@@ -1,0 +1,3 @@
+@livewireScripts
+
+@stack('scripts')
