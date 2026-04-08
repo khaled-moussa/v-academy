@@ -44,24 +44,29 @@ jobs:
           script: |
             cd /home/u443430971/domains/variablesacademy.com/public_html
 
+            PHP=/opt/alt/php84/usr/bin/php
+
+            echo "Using PHP version:"
+            $PHP -v
+
             echo "Pulling latest code..."
             git reset --hard
             git clean -fd
             git pull origin master
 
             echo "Installing PHP dependencies..."
-            composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+            $PHP $(which composer) install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
             echo "Running package discovery..."
-            php artisan package:discover --ansi
+            $PHP artisan package:discover --ansi
 
             echo "Running migrations..."
-            php artisan migrate --force --no-interaction
+            $PHP artisan migrate --force --no-interaction
 
             echo "Clearing caches..."
-            php artisan optimize:clear
-            php artisan cache:clear
-            php artisan route:clear
-            php artisan view:clear
+            $PHP artisan optimize:clear
+            $PHP artisan cache:clear
+            $PHP artisan route:clear
+            $PHP artisan view:clear
 
             echo "Deployment completed."
