@@ -39,7 +39,7 @@ jobs:
         with:
           host: ${{ secrets.HOSTINGER_IP }}
           username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_KEY }}
+          key: ${{ secrets.HOSTINGER_KEY }} 
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
             cd /home/u443430971/domains/variablesacademy.com/public_html
