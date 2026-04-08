@@ -1,0 +1,67 @@
+name: Deploy Variables Academy to Production Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install NPM dependencies & build assets
+        run: |
+          npm ci
+          npm run build
+
+      - name: Upload built assets to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOSTINGER_IP }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          source: "public/build/"
+          target: "/home/u443430971/domains/variablesacademy.com/public_html/public/"
+          overwrite: true
+          strip_components: 1
+      - name: Deploy and Build on Server via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTINGER_IP }}
+          username: ${{ secrets.HOSTINGER_USER }}
+          key: ${{ secrets.HOSTINGER_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          script: |
+            cd /home/u443430971/domains/variablesacademy.com/public_html
+
+            echo "Pulling latest code..."
+            git reset --hard
+            git clean -fd
+            git pull origin master
+
+            echo "Installing PHP dependencies..."
+            composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+            echo "Running package discovery..."
+            php artisan package:discover --ansi
+
+            echo "Running migrations..."
+            php artisan migrate --force --no-interaction
+
+            echo "Clearing caches..."
+            php artisan optimize:clear
+            php artisan cache:clear
+            php artisan route:clear
+            php artisan view:clear
+
+            echo "Deployment completed."
