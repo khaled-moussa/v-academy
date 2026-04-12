@@ -36,8 +36,8 @@ class UserPanelProvider extends PanelProvider
             ->id('user')
             ->path('user')
             ->login(fn() => redirect(to: Filament::getPanel('auth')->getLoginUrl()))
-            ->emailVerification()
-            ->emailChangeVerification()
+            // ->emailVerification()
+            // ->emailChangeVerification()
 
 
             ->profile(CustomEditProfile::class)

@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Domain\Auth\Middlewares\RedirectIfAuthenticatedToDashboard;
 use App\Domain\Auth\Middlewares\SetUserTimezoneMiddleware;
 use App\Filament\Pages\CustomDashboard;
 use App\Filament\Pages\CustomEditProfile;
@@ -35,8 +36,8 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login(fn() => redirect(to: Filament::getPanel('auth')->getLoginUrl()))
-            ->emailVerification()
-            ->emailChangeVerification()
+            // ->emailVerification()
+            // ->emailChangeVerification()
 
             ->profile(CustomEditProfile::class)
 
