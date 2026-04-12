@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Domain\Auth\Middlewares\RedirectIfAuthenticatedToDashboard;
 use App\Filament\Pages\CustomLogin;
 use App\Filament\Pages\CustomRegister;
 use Filament\Http\Middleware\Authenticate;
@@ -59,6 +60,7 @@ class AuthPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                RedirectIfAuthenticatedToDashboard::class
             ])
 
             ->authMiddleware([
