@@ -19,10 +19,10 @@ class AdminSeeder extends Seeder
 
         $admins = [
             [
-                'first_name' => 'Khaled',
-                'last_name'  => 'Moussa',
+                'first_name' => 'variables',
+                'last_name'  => 'Academy',
                 'gender'     => GenderEnum::MALE->value,
-                'email'      => 'khaledmoussaeid@gmail.com',
+                'email'      => 'variablesacademy2000@gmail.com',
             ],
         ];
 
