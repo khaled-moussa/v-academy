@@ -128,8 +128,12 @@ class PlanForm
     | Helpers
     |----------------------------------------------------------------------
     */
-    private static function resolvePriceAfterDiscount(Plan $plan)
+    private static function resolvePriceAfterDiscount(?Plan $plan)
     {
+        if (!$plan) {
+            return;
+        }
+        
         $discount = $plan->getDiscount();
         $priceDiscount = $plan->getPriceDiscount();
 
