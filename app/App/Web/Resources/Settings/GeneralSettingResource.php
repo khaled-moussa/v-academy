@@ -14,10 +14,12 @@ class GeneralSettingResource extends JsonResource
             'uuid'                => $this->getUuid(),
 
             'site_name'           => $this->getSiteName(),
+            'slugon'              => $this->getSlugon(),
             'description'         => $this->getDescription(),
             'address'             => $this->getAddress(),
             'location_url'        => $this->getLocationUrl(),
             'support_email'       => $this->getSupportEmail(),
+            'phones'              => $this->getPhones(),
 
             'max_capacity'        => $this->getMaxCapacity(),
             'user_can_create_session' => $this->canUserCreateSession(),

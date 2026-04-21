@@ -2,7 +2,7 @@
 
 namespace App\Filament\Panels\User\Widgets;
 
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Widgets\Widget;
 
 class NutrationPlanWidget extends Widget
@@ -37,7 +37,7 @@ class NutrationPlanWidget extends Widget
 
     public function getViewData(): array
     {
-        $plans = UserContext::user()
+        $plans = AuthContext::user()
             ?->nutrationPlans
             ?->toResourceCollection()
             ?->resolve() ?? [];

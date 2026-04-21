@@ -26,8 +26,9 @@ return new class extends Migration
             $table->string('site_name')
                 ->default(config('app.name'));
 
-            $table->longText('description')
-                ->nullable();
+            $table->mediumText('slugon');
+
+            $table->longText('description');
 
             $table->json('phones')
                 ->nullable();

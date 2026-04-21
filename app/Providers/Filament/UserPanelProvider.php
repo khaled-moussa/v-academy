@@ -2,7 +2,7 @@
 
 namespace App\Providers\Filament;
 
-use App\Filament\Pages\CustomDashboard;
+use App\Domain\Auth\Middlewares\EnsureUserIsActive;
 use App\Filament\Pages\CustomEditProfile;
 use App\Filament\Widgets\CustomAccountWidget;
 use Filament\Facades\Filament;
@@ -10,7 +10,6 @@ use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
-use Filament\Navigation\NavigationGroup;
 use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
@@ -48,8 +47,6 @@ class UserPanelProvider extends PanelProvider
             |--------------------------------
             */
             ->brandName(config('company-info.site'))
-            // ->brandLogo(asset('images/logo.svg'))
-            // ->favicon(asset('images/favicon.png'))
             ->font('Poppins')
 
             ->sidebarCollapsibleOnDesktop()
@@ -98,6 +95,7 @@ class UserPanelProvider extends PanelProvider
                 SubstituteBindings::class,
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
+                EnsureUserIsActive::class,
             ])
 
             ->authMiddleware([

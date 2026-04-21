@@ -2,8 +2,6 @@
 
 namespace App\Providers\Filament;
 
-use App\Domain\Auth\Middlewares\RedirectIfAuthenticatedToDashboard;
-use App\Domain\Auth\Middlewares\SetUserTimezoneMiddleware;
 use App\Filament\Pages\CustomDashboard;
 use App\Filament\Pages\CustomEditProfile;
 use App\Filament\Widgets\CustomAccountWidget;
@@ -47,8 +45,6 @@ class AdminPanelProvider extends PanelProvider
             |--------------------------------
             */
             ->brandName(config('company-info.site'))
-            // ->brandLogo(asset('images/logo.svg'))
-            // ->favicon(asset('images/favicon.png'))
             ->font('Poppins')
             ->defaultThemeMode(ThemeMode::System)
 

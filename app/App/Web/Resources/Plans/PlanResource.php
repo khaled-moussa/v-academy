@@ -10,19 +10,24 @@ class PlanResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'              => $this->getId(),
-            'uuid'            => $this->getUuid(),
+            'id'             => $this->getId(),
+            'uuid'           => $this->getUuid(),
 
-            'name'            => $this->getName(),
-            'description'     => $this->getDescription(),
+            'name'           => $this->getName(),
+            'no_of_sessions' => $this->getNoOfSession(),
 
-            'no_of_sessions'  => $this->getNoOfSession(),
-            'price'           => $this->getPrice(),
+            'price'          => $this->getPrice(),
+            'discount'       => $this->getDiscount(),
+            'price_discount' => $this->getPriceDiscount(),
 
-            'includes'        => $this->getIncludes(),
-            'is_active'       => $this->isActive(),
 
-            'created_at'      => $this->getCreatedAt(),
+            'includes'       => $this->getIncludes(),
+
+            'has_discount'   => $this->hasDiscount(),
+            'is_popular'     => $this->isPopular(),
+            'is_active'      => $this->isActive(),
+
+            'created_at'     => $this->getCreatedAt(),
         ];
     }
 }

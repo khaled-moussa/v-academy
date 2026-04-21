@@ -2,7 +2,7 @@
 
 namespace App\Filament\Panels\User\Widgets;
 
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Widgets\Widget;
 
 class SubscriptionWidget extends Widget
@@ -23,7 +23,7 @@ class SubscriptionWidget extends Widget
 
     public function getViewData(): array
     {
-        $user = UserContext::user();
+        $user = AuthContext::user();
 
         $subscription = $user->activeSubscription;
         $plan         = $subscription?->plan;

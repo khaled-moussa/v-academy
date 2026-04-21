@@ -1,6 +1,6 @@
 <?php
 
-use App\App\Web\Controllers\Guest\Landing\LandingController;
+use App\App\Web\Controllers\Landing\LandingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -11,5 +11,4 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-Route::get('/', LandingController::class)
-    ->name('landing');
+Route::get('/', LandingController::class)->name('landing');

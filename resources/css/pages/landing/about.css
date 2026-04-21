@@ -1,0 +1,110 @@
+/* -------------------------------
+   CONTAINER
+-------------------------------- */
+.about__container {
+    @apply max-w-7xl mx-auto px-6;
+}
+
+/* -------------------------------
+   GRID (REPLACES custom-col)
+-------------------------------- */
+.about__grid {
+    @apply grid grid-cols-1 md:grid-cols-2 items-center gap-10;
+}
+
+/* -------------------------------
+   COPY SECTION
+-------------------------------- */
+.about__copy {
+    @apply text-white/92;
+}
+
+.about__copy p {
+    @apply text-white/72 mb-3;
+}
+
+.about__highlights {
+    @apply flex flex-wrap gap-2 mt-3;
+}
+
+/* -------------------------------
+   VISUAL
+-------------------------------- */
+.about__visual {
+    @apply grid place-items-center mb-6;
+}
+
+/* -------------------------------
+   CARD
+-------------------------------- */
+.about__card {
+    @apply relative w-[min(520px,92%)] min-h-70 p-6 lg:p-6 bg-surface-2 border border-white/10 rounded-3xl overflow-hidden;
+}
+
+/* -------------------------------
+   HEADING
+-------------------------------- */
+.about__heading {
+    @apply text-white/92 text-[clamp(20px,2.6vw,28px)]  max-w-[16ch] font-bold;
+}
+
+/* -------------------------------
+   BADGE
+-------------------------------- */
+.about__badge {
+    @apply absolute top-6 right-6 bg-linear-to-br from-brand-500 to-accent-500 text-black px-2.5 py-2 rounded-full font-bold;
+}
+
+/* -------------------------------
+   RINGS
+-------------------------------- */
+.about__ring {
+    @apply absolute w-35 h-35 rounded-full -top-7.5 -left-7.5 border border-brand-500/50;
+}
+
+.about__ring--2 {
+    @apply w-55 h-55 -top-15 left-auto -right-15;
+}
+
+.about__ring--3 {
+    @apply w-75 h-75 top-auto left-10 -bottom-20;
+}
+
+/* -------------------------------
+   RESPONSIVE (TAILWIND ONLY)
+-------------------------------- */
+.about__copy p {
+    @apply text-sm lg:text-base;
+}
+
+.about__badge {
+    @apply text-xs lg:text-sm;
+}
+
+.about__heading {
+    @apply text-xl lg:text-[clamp(20px,2.6vw,28px)];
+}
+
+.about__card {
+    @apply p-5 lg:p-6;
+}
+
+.about__ring {
+    @apply w-25 h-25 lg:w-35 lg:h-35;
+}
+
+.about__ring--2 {
+    @apply w-40 h-40 lg:w-55 lg:h-55;
+}
+
+.about__ring--3 {
+    @apply w-60 h-60 lg:w-75 lg:h-75;
+}
+
+.about__copy {
+    @apply p-5 lg:p-0;
+}
+
+.about__highlights .chip {
+    @apply text-xs lg:text-sm;
+}

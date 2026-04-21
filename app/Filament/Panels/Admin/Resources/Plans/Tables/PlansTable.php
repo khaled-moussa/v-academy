@@ -77,6 +77,9 @@ class PlansTable
                 ToggleColumn::make('is_active')
                     ->label('Active'),
 
+                ToggleColumn::make('is_popular')
+                    ->label('Popular'),
+
             ])
 
             /*

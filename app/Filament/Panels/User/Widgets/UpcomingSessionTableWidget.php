@@ -3,12 +3,12 @@
 namespace App\Filament\Panels\User\Widgets;
 
 use App\Domain\TrainingSession\Actions\GetSessionsAction;
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Widgets\TableWidget;
 use Filament\Tables\Table;
+use Filament\Widgets\TableWidget;
 
 class UpcomingSessionTableWidget extends TableWidget
 {
@@ -17,66 +17,100 @@ class UpcomingSessionTableWidget extends TableWidget
 
     public function table(Table $table): Table
     {
-        $user = UserContext::user();
-        $isSubscribed = $user->hasActiveSubscription();
+        $user = AuthContext::user();
+        $hasSubscription = AuthContext::hasActiveSubscription();
 
-        $startOfWeek = now()->startOfWeek()->format('M d, Y');
-        $endOfWeek = now()->endOfWeek()->format('M d, Y');
+        $startOfWeek = now()->startOfWeek();
+        $endOfWeek = now()->endOfWeek();
 
         return $table
+
+            /*
+            |------------------------------------------------------------------
+            | Header
+            |------------------------------------------------------------------
+            */
+
             ->heading('Upcoming Sessions')
-            ->description($isSubscribed ? "This table shows upcoming sessions for this week: {$startOfWeek} - {$endOfWeek}" : null)
-            ->query(fn() => app(GetSessionsAction::class)->upcomingUserSessions(
-                user: $user,
-                startDate: now()->startOfWeek(),
-                endDate: now()->endOfWeek(),
-            ))
+            ->description("This week: {$startOfWeek->format('M d')} - {$endOfWeek->format('M d, Y')}")
+
+            /*
+            |------------------------------------------------------------------
+            | Query
+            |------------------------------------------------------------------
+            */
+
+            ->query(fn() => app(GetSessionsAction::class)
+                ->upcomingUserSessions(
+                    user: $user,
+                    startDate: $startOfWeek->toDateString(),
+                    endDate: $endOfWeek->toDateString(),
+                ))
+
+            /*
+            |------------------------------------------------------------------
+            | Columns
+            |------------------------------------------------------------------
+            */
+
             ->columns([
                 TextColumn::make('name')
                     ->label('Session Name')
                     ->weight(FontWeight::Bold)
-                    ->searchable()
-                    ->hidden(!$isSubscribed),
+                    ->searchable(),
 
                 TextColumn::make('session_state')
                     ->label('State')
                     ->badge()
-                    ->color(fn($state) => $state->filamentColor())
-                    ->formatStateUsing(fn($state) => $state->label())
-                    ->hidden(!$isSubscribed),
+                    ->color(fn($state) => $state?->filamentColor())
+                    ->formatStateUsing(fn($state) => $state?->label()),
 
                 TextColumn::make('capacity')
                     ->label('Capacity')
                     ->badge()
-                    ->color(fn($record) => self::determineColorForCapacity($record))
-                    ->formatStateUsing(fn($record) => 'Capacity ' . $record->getBooking() . '/' . $record->getCapacity())
-                    ->hidden(!$isSubscribed),
+                    ->color(fn($record) => self::capacityColor($record))
+                    ->formatStateUsing(
+                        fn($record) => "Capacity {$record->getBooking()}/{$record->getCapacity()}"
+                    ),
 
                 TextColumn::make('session_date')
                     ->label('Date')
                     ->date()
                     ->badge()
                     ->icon(Heroicon::CalendarDays)
-                    ->formatStateUsing(fn($record) => $record->getCreatedAt()?->format('M d, Y'))
-                    ->hidden(!$isSubscribed),
+                    ->formatStateUsing(
+                        fn($record) => $record->getSessionDate()?->format('M d, Y')
+                    ),
 
                 TextColumn::make('session_time')
                     ->label('Time')
                     ->badge()
                     ->icon(Heroicon::OutlinedClock)
-                    ->formatStateUsing(fn($record) => $record->getCreatedAt()?->format('h:i A'))
-                    ->hidden(!$isSubscribed),
+                    ->formatStateUsing(
+                        fn($record) => $record->getSessionDate()?->format('h:i A')
+                    ),
             ])
+
+            /*
+            |------------------------------------------------------------------
+            | Options
+            |------------------------------------------------------------------
+            */
+
             ->searchable(false)
             ->paginated(false);
     }
 
-    /**
-     * Determine the color for the capacity column based on usage.
-     */
-    protected static function determineColorForCapacity($record): string
+    /*
+    |-------------------------------------------------------------------------
+    | Helpers
+    |-------------------------------------------------------------------------
+    */
+
+    private static function capacityColor($record): string
     {
-        $usage = $record->getBooking() / max($record->getCapacity(), 1);
+        $capacity = max($record->getCapacity(), 1);
+        $usage = $record->getBooking() / $capacity;
 
         return match (true) {
             $usage >= 0.9 => 'danger',

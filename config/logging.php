@@ -74,12 +74,26 @@ return [
         ],
 
         'slack' => [
-            'driver' => 'slack',
-            'url' => env('LOG_SLACK_WEBHOOK_URL'),
-            'username' => env('LOG_SLACK_USERNAME', 'Laravel Log'),
-            'emoji' => env('LOG_SLACK_EMOJI', ':boom:'),
-            'level' => env('LOG_LEVEL', 'critical'),
-            'replace_placeholders' => true,
+            'driver'  => 'monolog',
+            'handler' => \Monolog\Handler\SlackWebhookHandler::class,
+
+            'handler_with' => [
+                'webhookUrl' => env('LOG_SLACK_WEBHOOK_URL'),
+                'channel' => env('LOG_SLACK_CHANNEL'),
+                'username' => env('LOG_SLACK_USERNAME', 'Laravel Log'),
+                'useAttachment' => false,
+                'iconEmoji' => env('LOG_SLACK_EMOJI', ':boom:'),
+            ],
+
+            'tap' => [
+                \App\Support\Logging\SlackFormatter::class,
+            ],
+
+            'processors' => [
+                \App\Support\Logging\SlackContextProcessor::class,
+            ],
+
+            'level' => env('LOG_LEVEL', 'error'),
         ],
 
         'papertrail' => [
@@ -89,7 +103,7 @@ return [
             'handler_with' => [
                 'host' => env('PAPERTRAIL_URL'),
                 'port' => env('PAPERTRAIL_PORT'),
-                'connectionString' => 'tls://'.env('PAPERTRAIL_URL').':'.env('PAPERTRAIL_PORT'),
+                'connectionString' => 'tls://' . env('PAPERTRAIL_URL') . ':' . env('PAPERTRAIL_PORT'),
             ],
             'processors' => [PsrLogMessageProcessor::class],
         ],
@@ -126,7 +140,5 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
-
     ],
-
 ];

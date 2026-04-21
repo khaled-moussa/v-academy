@@ -26,8 +26,10 @@ class Plan extends Model
 
     protected $casts = [
         'price' => 'float',
+        'discount' => 'integer',
         'includes' => 'array',
         'is_active' => 'boolean',
+        'is_popular' => 'boolean',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -41,6 +43,17 @@ class Plan extends Model
     public function newEloquentBuilder($query): PlanQueryBuilder
     {
         return new PlanQueryBuilder($query);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |  Attributes
+    |--------------------------------------------------------------------------
+    */
+    public function getPriceDiscountAttribute(): float
+    {
+        $priceDiscount = $this->price * ($this->discount / 100);
+        return $this->price - $priceDiscount;
     }
 
     /*
@@ -79,6 +92,16 @@ class Plan extends Model
         return $this->price;
     }
 
+    public function getPriceDiscount(): float
+    {
+        return $this->price_discount;
+    }
+
+    public function getDiscount(): ?int
+    {
+        return $this->discount;
+    }
+
     public function getIncludes(): ?array
     {
         return $this->includes;
@@ -99,6 +122,16 @@ class Plan extends Model
     | States
     |--------------------------------------------------------------------------
     */
+
+    public function hasDiscount(): bool
+    {
+        return $this->discount > 0;
+    }
+
+    public function isPopular(): bool
+    {
+        return $this->is_popular;
+    }
 
     public function isActive(): bool
     {

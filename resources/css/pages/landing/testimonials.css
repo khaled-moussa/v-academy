@@ -1,0 +1,65 @@
+
+/* -------------------------------
+   CONTAINER
+-------------------------------- */
+.testimonials__container {
+  @apply md:max-w-200 mx-auto xl:max-w-330 px-6;
+}
+
+/* -------------------------------
+   HEADER
+-------------------------------- */
+.testimonials .section__title {
+  @apply text-white/92;
+}
+
+.testimonials .lead {
+  @apply text-white/72;
+}
+
+.testimonials__header {
+  @apply mb-10 text-start max-w-3xl;
+}
+
+/* -------------------------------
+   GRID (REPLACES custom-col system)
+-------------------------------- */
+.testimonials__grid {
+  @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6;
+}
+
+/* -------------------------------
+   VIDEO CARD
+-------------------------------- */
+.video-card {
+  @apply bg-surface-1 border border-white/10 rounded-2xl overflow-hidden;
+}
+
+/* -------------------------------
+   VIDEO WRAPPER
+-------------------------------- */
+.video-wrap {
+  @apply relative w-full aspect-video bg-white/4;
+}
+
+.video-wrap .video {
+  @apply absolute inset-0 w-full h-full border-0;
+}
+
+/* -------------------------------
+   META
+-------------------------------- */
+.video-meta {
+  @apply text-white/92 py-3 px-4 border-t border-white/10;
+}
+
+/* -------------------------------
+   FOOTER CTA
+-------------------------------- */
+.testimonials__footer {
+  @apply text-center mt-8;
+}
+
+.testimonials__more {
+  @apply mt-0;
+}

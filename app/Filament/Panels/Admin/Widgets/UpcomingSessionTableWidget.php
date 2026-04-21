@@ -4,7 +4,7 @@ namespace App\Filament\Panels\Admin\Widgets;
 
 use App\Domain\Dashboard\Traits\HasFilterByDateTrait;
 use App\Domain\TrainingSession\Actions\GetSessionsAction;
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Carbon\Carbon;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Icons\Heroicon;

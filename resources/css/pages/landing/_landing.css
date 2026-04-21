@@ -1,0 +1,36 @@
+@reference "@css/reference.css";
+
+/* 
+|---------------------------------
+| Imports
+|--------------------------------
+*/
+
+/* Import section-specific styles */
+@import "./navbar.css";
+@import "./hero.css";
+@import "./about.css";
+@import "./testimonials.css";
+@import "./plans.css";
+@import "./footer.css";
+
+/* Shared Styles - Common across all sections */
+
+/* Section Base Styles */
+.section {
+  @apply py-16;
+}
+
+.section__title {
+  @apply text-white/92 text-[clamp(24px,3.5vw,36px)] mb-4 font-bold;
+}
+
+.lead {
+  @apply text-white/72 text-lg leading-[1.75] mb-4;
+}
+
+
+/* Chip/Badge Styles */
+.chip {
+  @apply px-2.5 py-1.5 rounded-full border border-white/10 bg-white/4 text-white/92;
+}

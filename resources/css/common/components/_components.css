@@ -1,4 +1,8 @@
-@import "./badge/_badge.css";
-@import "./card/_card.css";
-@import "./table/_table.css";
-@import "./error/_error.css";
+@import "./button/_button.css";
+@import "./header/_header.css";
+@import "./sidebar/_sidebar.css";
+@import "./loader/_loader.css";
+@import "./ds-modal/_ds-modal.css";
+@import "./ds-form/_ds-form.css";
+@import "./ds-card/_ds-card.css";
+@import "./button/_button.css";

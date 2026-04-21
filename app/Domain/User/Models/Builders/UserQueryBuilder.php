@@ -62,6 +62,11 @@ class UserQueryBuilder extends Builder
         return $this->where('is_active', $active);
     }
 
+    public function activeSubscription(): static
+    {
+        return $this->whereHas('currentSubscription');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Exclusions

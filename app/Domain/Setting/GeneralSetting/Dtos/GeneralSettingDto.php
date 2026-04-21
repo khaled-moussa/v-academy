@@ -6,7 +6,8 @@ class GeneralSettingDto
 {
     public function __construct(
         public readonly ?string $siteName = null,
-        public readonly ?string  $description = null,
+        public readonly ?string $slugon = null,
+        public readonly ?string $description = null,
         public readonly ?string $address = null,
         public readonly ?string $locationUrl = null,
         public readonly ?string $supportEmail = null,
@@ -24,6 +25,7 @@ class GeneralSettingDto
     {
         return array_filter([
             'site_name'                => $this->siteName,
+            'slugon'                   => $this->slugon,
             'description'              => $this->description,
             'address'                  => $this->address,
             'location_url'             => $this->locationUrl,

@@ -1,0 +1,82 @@
+/* -------------------------------
+   HERO BASE
+-------------------------------- */
+.hero {
+    @apply relative py-10 pb-20 bg-[(--grad-hero-right)] bg-[(--grad-hero-right)] lg:py-6 lg:pb-16;
+}
+
+/* -------------------------------
+   CONTAINER
+-------------------------------- */
+.hero__container {
+    @apply max-w-330 lg:max-w-135 mx-auto px-6;
+}
+
+/* -------------------------------
+   GRID
+-------------------------------- */
+.hero__content {
+    @apply grid grid-cols-1 md:grid-cols-2 items-center gap-10 min-h-[75vh] lg:min-h-[60vh];
+}
+
+/* -------------------------------
+   COPY
+-------------------------------- */
+.hero__copy {
+    @apply text-white/92 flex flex-col justify-center;
+}
+
+.hero__eyebrow {
+    @apply text-accent-500 font-semibold tracking-wider mb-3.5;
+}
+
+.hero__title {
+    @apply text-[clamp(32px,5vw,56px)] leading-[1.1] mb-4 font-bold;
+}
+
+.hero__subtitle {
+    @apply text-white/72 text-lg leading-relaxed mb-6;
+}
+
+/* -------------------------------
+   ACTIONS
+-------------------------------- */
+.hero__actions {
+    @apply flex gap-3 mb-4.5 flex-wrap;
+}
+
+/* -------------------------------
+   BADGES
+-------------------------------- */
+.hero__badges {
+    @apply flex flex-wrap gap-3 text-white/72;
+}
+
+.hero__badges li {
+    @apply px-2.5 py-1.5 rounded-full border border-white/10 bg-white/4;
+}
+
+/* -------------------------------
+   VISUAL
+-------------------------------- */
+.hero__visual {
+    @apply grid place-items-center;
+}
+
+.hero__image-stack {
+    @apply relative w-[min(520px,92%)] aspect-4/5 lg:w-[min(440px,100%)];
+}
+
+/* -------------------------------
+   EFFECTS (TAILWIND ANIMATIONS ONLY)
+-------------------------------- */
+.hero__glow {
+    @apply absolute inset-[-6%] rounded-3xl w-full blur-[18px]
+           bg-[radial-gradient(60%_60%_at_50%_40%,rgba(250,207,106,0.22),rgba(195,145,43,0))]
+           animate-glow;
+}
+
+.hero__image {
+    @apply relative w-full h-full object-cover rounded-3xl;
+    @apply animate-float;
+}

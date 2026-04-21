@@ -9,6 +9,8 @@ use App\Domain\Subscription\Models\Subscription;
 use App\Filament\Components\Notification\CustomNotification;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
+use Filament\Infolists\Components\ImageEntry;
+use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
@@ -41,39 +43,9 @@ class SubscriptionInfolist
         return Tab::make('Subscription')
             ->icon(Heroicon::OutlinedCreditCard)
             ->schema([
+
                 Section::make('Subscription Details')
-                    ->footerActions([
-
-                        /*
-                        |-----------------------------
-                        | Accept Payment
-                        |-----------------------------
-                        */
-                        Action::make('accept_payment')
-                            ->label('Accept')
-                            ->visible(fn($record) => $record->isPending())
-                            ->requiresConfirmation()
-                            ->action(fn($record) => self::handleUpdatePayment(
-                                $record,
-                                SubscriptionApprovedState::value()
-                            )),
-
-                        /*
-                        |-----------------------------
-                        | Reject Payment
-                        |-----------------------------
-                        */
-                        Action::make('reject_payment')
-                            ->label('Reject')
-                            ->color(Color::Rose)
-                            ->visible(fn($record) => $record->isPending())
-                            ->requiresConfirmation()
-                            ->action(fn($record) => self::handleUpdatePayment(
-                                $record,
-                                SubscriptionRejectedState::value()
-                            )),
-                    ])
-
+                    ->footerActions(self::paymentProofsAction())
                     ->schema([
 
                         /*
@@ -81,6 +53,13 @@ class SubscriptionInfolist
                         | Basic Info
                         |-----------------------------
                         */
+
+                        ImageEntry::make('image')
+                            ->label('Payment Proof')
+                            ->belowLabel('Click on image to view on new tab')
+                            ->imageSize(200)
+                            ->url(fn($state) => $state, true)
+                            ->columnSpanFull(),
 
                         TextEntry::make('uuid')
                             ->label('Reference')
@@ -216,6 +195,46 @@ class SubscriptionInfolist
                     ->columnSpanFull()
                     ->contained(false),
             ]);
+    }
+
+    /*
+    |------------------------------------------------------------------
+    | Actions 
+    |------------------------------------------------------------------
+    */
+
+    private static function paymentProofsAction(): array
+    {
+        return [
+            /*
+            |-----------------------------
+            | Accept Payment
+            |-----------------------------
+            */
+            Action::make('accept_payment')
+                ->label('Accept')
+                ->visible(fn($record) => $record->isPending())
+                ->requiresConfirmation()
+                ->action(fn($record) => self::handleUpdatePayment(
+                    $record,
+                    SubscriptionApprovedState::value()
+                )),
+
+            /*
+            |-----------------------------
+            | Reject Payment
+            |-----------------------------
+            */
+            Action::make('reject_payment')
+                ->label('Reject')
+                ->color(Color::Rose)
+                ->visible(fn($record) => $record->isPending())
+                ->requiresConfirmation()
+                ->action(fn($record) => self::handleUpdatePayment(
+                    $record,
+                    SubscriptionRejectedState::value()
+                )),
+        ];
     }
 
     /*
