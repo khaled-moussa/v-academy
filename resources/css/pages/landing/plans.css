@@ -1,0 +1,115 @@
+/* -------------------------------
+   CONTAINER
+-------------------------------- */
+
+.plan__container {
+  @apply md:max-w-200 mx-auto xl:max-w-330 px-6;
+}
+
+/* -------------------------------
+   HEADER
+-------------------------------- */
+
+.plan .section__title {
+  @apply text-white/92;
+}
+
+.plan .lead {
+  @apply text-white/72;
+}
+
+.plan__header {
+  @apply text-start max-w-3xl mb-10;
+}
+
+/* -------------------------------
+   GRID
+-------------------------------- */
+
+.plan__grid {
+  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+}
+
+/* -------------------------------
+   CARD
+-------------------------------- */
+
+.plan-card {
+  @apply bg-surface-1 border border-white/10 rounded-3xl p-6 flex flex-col h-full;
+}
+
+/* HEAD */
+
+.plan-card__head {
+  @apply flex items-center justify-between mb-4;
+}
+
+/* TITLE */
+
+.plan-card__title {
+  @apply text-white/92 text-[clamp(18px,2.2vw,22px)] font-bold;
+}
+
+/* BADGE */
+
+.plan-card__badge {
+  @apply px-2.5 py-1.5 rounded-full;
+  @apply bg-linear-to-br from-brand-500 to-accent-500;
+  @apply text-black font-bold text-xs;
+}
+
+/* PRICE WRAPPER */
+
+.plan-card__price-wrapper {
+  @apply flex items-center gap-3;
+}
+
+/* OLD PRICE (line-through) */
+
+.plan-card__old-price {
+  @apply text-white/50 line-through text-sm;
+}
+
+/* ACTIVE PRICE */
+
+.plan-card__price {
+  @apply text-white/92 font-extrabold text-2xl;
+}
+
+/* DISCOUNT PRICE */
+
+.plan-card__price--discount {
+  @apply text-brand-400;
+}
+
+/* LIST */
+
+.plan-card__list {
+  @apply grid gap-2.5 mb-4;
+}
+
+.plan-card__list li {
+  @apply text-white/72;
+}
+
+/* CTA */
+
+.plan-card__cta {
+  @apply w-full mt-auto;
+}
+
+/* -------------------------------
+   NOTE
+-------------------------------- */
+
+.plan__note {
+  @apply mt-8 p-5 bg-white/4 border border-white/10 rounded-2xl;
+}
+
+.plan__note h4 {
+  @apply text-white/92 mb-3 font-bold;
+}
+
+.plan__note ul {
+  @apply grid gap-1.5 text-white/72;
+}

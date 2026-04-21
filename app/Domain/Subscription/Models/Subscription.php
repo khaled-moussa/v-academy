@@ -11,14 +11,17 @@ use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionPending
 use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionStates;
 use App\Support\Traits\HasUuid;
 use Spatie\ModelStates\HasStates;
+use Spatie\MediaLibrary\HasMedia;
+use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
 #[UseResource(SubscriptionResource::class)]
-class Subscription extends Model
+class Subscription extends Model implements HasMedia
 {
     use HasStates;
+    use InteractsWithMedia;
     use HasUuid;
     use HasSubscriptionRelation;
 
@@ -50,6 +53,26 @@ class Subscription extends Model
     public function newEloquentBuilder($query): SubscriptionQueryBuilder
     {
         return new SubscriptionQueryBuilder($query);
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |  Attributes
+    |--------------------------------------------------------------------------
+    */
+    public function getImageAttribute(): ?string
+    {
+        return $this->getFirstMediaUrl('payment_proofs');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    |  Media Register
+    |--------------------------------------------------------------------------
+    */
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('payment_proofs')->singleFile();
     }
 
     /*

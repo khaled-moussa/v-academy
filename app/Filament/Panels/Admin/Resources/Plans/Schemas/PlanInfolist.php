@@ -28,17 +28,8 @@ class PlanInfolist
                             ->schema([
                                 TextEntry::make('name')
                                     ->label('Plan Name')
-                                    ->weight('bold'),
-
-                                Section::make('Description')
-                                    ->schema([
-                                        TextEntry::make('description')
-                                            ->hiddenLabel()
-                                            ->placeholder('No description'),
-                                    ])
-                                    ->columnSpanFull()
-                                    ->compact()
-                                    ->secondary(),
+                                    ->weight('bold')
+                                    ->columnSpanFull(),
 
                                 TextEntry::make('no_of_sessions')
                                     ->label('Number of Sessions')

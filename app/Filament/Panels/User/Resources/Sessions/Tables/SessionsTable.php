@@ -12,7 +12,7 @@ use App\Domain\TrainingSession\Models\SessionStates\SessionScheduledState;
 use App\Domain\TrainingSession\Models\TrainingSession;
 use App\Filament\Components\Filter\DateRangeFilter;
 use App\Filament\Components\Notification\CustomNotification;
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Actions\Action;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\ViewAction;
@@ -231,7 +231,7 @@ class SessionsTable
 
     private static function shouldShowSubscribe(): bool
     {
-        return ! UserContext::hasActiveSubscription();
+        return ! AuthContext::hasActiveSubscription();
     }
 
     private static function shouldHideBook(TrainingSession $session): bool
@@ -259,7 +259,7 @@ class SessionsTable
     private static function handleBookingSession(TrainingSession $session): void
     {
         app(BookSessionAction::class)->execute(
-            UserContext::user(),
+            AuthContext::user(),
             $session
         );
 
@@ -269,7 +269,7 @@ class SessionsTable
     private static function handleCanceledSession(TrainingSession $session): void
     {
         app(CancelSessionAction::class)->execute(
-            UserContext::user(),
+            AuthContext::user(),
             $session
         );
 
@@ -295,7 +295,7 @@ class SessionsTable
     private static function isUserBookedThisSession(TrainingSession $session): bool
     {
         return app(CheckIsUserBookedSession::class)
-            ->execute(UserContext::user(), $session);
+            ->execute(AuthContext::user(), $session);
     }
 
     private static function determineCapacityColor(TrainingSession $session): array

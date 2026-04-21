@@ -58,9 +58,14 @@ class GeneralSetting extends Model
         return $this->site_name;
     }
 
-    public function getDescription(): ?array
+    public function getSlugon(): string
     {
-        return $this->description ? json_decode($this->description, true) : null;
+        return $this->slugon;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 
     public function getAddress(): string

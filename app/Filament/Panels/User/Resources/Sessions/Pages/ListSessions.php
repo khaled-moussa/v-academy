@@ -4,7 +4,7 @@ namespace App\Filament\Panels\User\Resources\Sessions\Pages;
 
 use App\Domain\TrainingSession\Actions\BookSessionAction;
 use App\Filament\Panels\User\Resources\Sessions\SessionResource;
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
 
@@ -17,9 +17,9 @@ class ListSessions extends ListRecords
         return [
             CreateAction::make()
                 ->after(function ($record) {
-                    app(BookSessionAction::class)->execute(UserContext::user(), $record);
+                    app(BookSessionAction::class)->execute(AuthContext::user(), $record);
                 })
-                ->hidden(!UserContext::hasActiveSubscription() || !app('generalSetting')['user_can_create_session']),
+                ->hidden(!AuthContext::hasActiveSubscription() || !app('generalSetting')['user_can_create_session']),
         ];
     }
 }

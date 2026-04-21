@@ -28,7 +28,7 @@ class TrainingSessionQueryBuilder extends Builder
         return $this->where('user_id', $userId);
     }
 
-    public function whenBookig(?int $userId): self
+    public function whenUserBookig(?int $userId): self
     {
         return $this->when($userId, fn($q) => $q->whereHas('userBooking', fn($q) => $q->where('user_id', $userId)));
     }

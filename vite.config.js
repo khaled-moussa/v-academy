@@ -10,6 +10,9 @@ export default defineConfig({
                 // -- App
                 "resources/css/app.css",
                 "resources/js/app.js",
+
+                // -- Landing
+                "resources/css/pages/landing/_landing.css",
             ],
             refresh: true,
         }),
@@ -43,7 +46,7 @@ export default defineConfig({
             "@css": resolve(__dirname, "resources/css"),
 
             "@img": resolve(__dirname, "resources/assets/images"),
-            "@vidoes": resolve(__dirname, "resources/audio"),
+            "@videos": resolve(__dirname, "resources/assets/videos"),
             "@json": resolve(__dirname, "resources/json"),
             "@views": resolve(__dirname, "resources/views"),
         },

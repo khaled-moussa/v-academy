@@ -1,0 +1,7 @@
+.btn--primary {
+  @apply bg-gradient-to-br from-brand-500 to-accent-500 text-black font-bold;
+}
+
+.btn--primary:hover {
+  @apply -translate-y-0.5;
+}

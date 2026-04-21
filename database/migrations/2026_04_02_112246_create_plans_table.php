@@ -26,10 +26,10 @@ return new class extends Migration
             $table->string('name')
                 ->index();
 
-            $table->longText('description')
-                ->nullable();
-
             $table->decimal('price', 10, 2);
+
+            $table->integer('discount')
+                ->default(0);
 
             $table->unsignedBigInteger('no_of_sessions');
 
@@ -41,6 +41,10 @@ return new class extends Migration
             | Conditions
             |-------------------------------
             */
+
+            $table->boolean('is_popular')
+                ->default(false);
+
             $table->boolean('is_active')
                 ->default(false);
 

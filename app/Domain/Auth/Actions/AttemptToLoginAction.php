@@ -14,14 +14,8 @@ class AttemptToLoginAction
         $user = app(GetUserByEmailAction::class)
             ->execute(email: $email);
 
-        if (! $user) {
-            throw new FailedToLoginException;
-        }
-
-        $isPasswordCorrect = Hash::check($password, $user->getPassword());
-
-        if (! $isPasswordCorrect) {
-            throw new FailedToLoginException;
+        if (! $user || ! Hash::check($password, $user->getPassword())) {
+            throw new FailedToLoginException();
         }
 
         return $user;

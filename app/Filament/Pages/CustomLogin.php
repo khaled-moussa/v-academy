@@ -2,8 +2,8 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Components\Notification\CustomNotification;
 use Filament\Auth\Pages\Login as BaseLogin;
-use Filament\Notifications\Notification;
 use Filament\Schemas\Schema;
 
 class CustomLogin extends BaseLogin
@@ -12,15 +12,7 @@ class CustomLogin extends BaseLogin
     {
         parent::mount();
 
-        if (session()->has('failed_login_message')) {
-            Notification::make()
-                ->title('Login Failed')
-                ->body(session('failed_login_message'))
-                ->danger()
-                ->send();
-
-            session()->forget('failed_login_message');
-        }
+        $this->handleFailedLoginMessage();
     }
 
     public function form(Schema $schema): Schema
@@ -30,5 +22,22 @@ class CustomLogin extends BaseLogin
             $this->getPasswordFormComponent(),
             $this->getRememberFormComponent(),
         ]);
+    }
+
+    /*
+    |-----------------------------------
+    | Helpers
+    |-----------------------------------
+    */
+
+    private function handleFailedLoginMessage(): void
+    {
+        $message = session()->pull('failed_login_message');
+
+        if (! $message) {
+            return;
+        }
+
+        CustomNotification::error(title: $message);
     }
 }

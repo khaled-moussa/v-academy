@@ -24,6 +24,13 @@ class AdminSeeder extends Seeder
                 'gender'     => GenderEnum::MALE->value,
                 'email'      => 'variablesacademy2000@gmail.com',
             ],
+
+            [
+                'first_name' => 'khaled',
+                'last_name'  => 'moussa',
+                'gender'     => GenderEnum::MALE->value,
+                'email'      => 'khaledmoussaeid@gmail.com',
+            ],
         ];
 
         /*

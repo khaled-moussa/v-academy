@@ -3,19 +3,18 @@
 namespace App\Domain\Auth\Middlewares;
 
 use App\Domain\Panel\Actions\PanelResolverAction;
-use App\Support\Context\UserContext;
-use Closure;
+use App\Support\Context\AuthContext;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use Closure;
 
 class RedirectIfAuthenticatedToDashboard
 {
     public function handle(Request $request, Closure $next)
     {
-        if (Auth::check()) {
-            return redirect(PanelResolverAction::panelRoute(UserContext::user()));
+        if (! AuthContext::check()) {
+            return $next($request);
         }
 
-        return $next($request);
+        return redirect(PanelResolverAction::panelRoute(AuthContext::user()));
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Panels\Admin\Resources\Plans\Schemas;
 
+use App\Domain\Plan\Models\Plan;
 use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Repeater\TableColumn;
 use Filament\Forms\Components\Textarea;
@@ -32,30 +33,33 @@ class PlanForm
                                     ->label('Plan Name')
                                     ->required()
                                     ->maxLength(255)
-                                    ->placeholder('Enter plan name')
-                                    ->columnSpanFull(),
-
-                                Textarea::make('description')
-                                    ->label('Description')
-                                    ->required()
-                                    ->rows(3)
-                                    ->placeholder('Enter plan description')
-                                    ->columnSpanFull(),
-
-                                TextInput::make('price')
-                                    ->label('Price')
-                                    ->required()
-                                    ->numeric()
-                                    ->mask(RawJs::make('$money($input)'))
-                                    ->stripCharacters(',')
-                                    ->minValue(1)
-                                    ->suffix('EGP'),
+                                    ->placeholder('Enter plan name'),
 
                                 TextInput::make('no_of_sessions')
                                     ->label('Number of Sessions')
                                     ->numeric()
                                     ->required()
                                     ->placeholder('Enter number of sessions'),
+
+                                TextInput::make('price')
+                                    ->label('Price')
+                                    ->belowContent(fn($record) => self::resolvePriceAfterDiscount($record))
+                                    ->required()
+                                    ->numeric()
+                                    ->minValue(1)
+                                    ->mask(RawJs::make('$money($input)'))
+                                    ->stripCharacters(',')
+                                    ->suffix('EGP'),
+
+                                TextInput::make('discount')
+                                    ->label('Discount')
+                                    ->numeric()
+                                    ->minValue(0)
+                                    ->maxValue(100)
+                                    ->mask(RawJs::make('$money($input)'))
+                                    ->stripCharacters(',')
+                                    ->suffix('%'),
+
                             ])
                             ->columns(2)
                             ->secondary()
@@ -102,7 +106,12 @@ class PlanForm
                                 Toggle::make('is_active')
                                     ->label('Active')
                                     ->default(true),
+
+                                Toggle::make('is_popular')
+                                    ->label('Popular')
+                                    ->default(false),
                             ])
+                            ->columns(2)
                             ->secondary()
                             ->compact()
                             ->collapsible()
@@ -112,5 +121,22 @@ class PlanForm
                     ->compact()
                     ->columnSpanFull(),
             ]);
+    }
+
+    /*
+    |----------------------------------------------------------------------
+    | Helpers
+    |----------------------------------------------------------------------
+    */
+    private static function resolvePriceAfterDiscount(Plan $plan)
+    {
+        $discount = $plan->getDiscount();
+        $priceDiscount = $plan->getPriceDiscount();
+
+        if ($discount === 0) {
+            return null;
+        }
+
+        return 'Price after discount ' . number_format($priceDiscount) . ' EGP';
     }
 }

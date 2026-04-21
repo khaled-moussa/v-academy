@@ -2,7 +2,7 @@
 
 namespace App\Filament\Panels\User\Resources\Sessions\Schemas;
 
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
@@ -55,7 +55,7 @@ class SessionForm
                             ->default(app('generalSetting')['max_capacity']),
 
                         Hidden::make('user_created_session_id')
-                            ->default(UserContext::id()),
+                            ->default(AuthContext::id()),
 
                         Hidden::make('is_admin_created')
                             ->default(false),

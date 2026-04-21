@@ -5,6 +5,7 @@ namespace App\Filament\Panels\Admin\Pages\Settings;
 use App\Domain\Setting\GeneralSetting\Actions\UpdateGeneralSettingAction;
 use App\Domain\Setting\GeneralSetting\Dtos\GeneralSettingDto;
 use App\Filament\Components\Notification\CustomNotification;
+use App\Support\Context\GeneralSettingContext;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -34,11 +35,12 @@ class SiteSettings extends Page
     | State
     |-------------------------------
     */
-    public ?string $site_name = null;
-    public ?string  $description = null;
+    public string $siteName;
+    public string $slugon;
+    public string $description;
     public ?string $address = null;
-    public ?string $location_url = null;
-    public ?string $support_email = null;
+    public ?string $locationUrl = null;
+    public ?string $supportEmail = null;
     public ?array $phones = [];
 
     /*
@@ -58,14 +60,15 @@ class SiteSettings extends Page
     */
     public function mount(): void
     {
-        $setting = app('generalSetting');
+        $setting = GeneralSettingContext::toArray();
 
-        $this->site_name     = $setting['site_name'] ?? null;
-        $this->description   = $setting['description'] ?? null;
-        $this->address       = $setting['address'] ?? null;
-        $this->location_url  = $setting['location_url'] ?? null;
-        $this->support_email = $setting['support_email'] ?? null;
-        $this->phones        = $setting['phones'] ?? [];
+        $this->siteName     = data_get($setting, 'site_name');
+        $this->slugon       = data_get($setting, 'slugon');
+        $this->description  = data_get($setting, 'description');
+        $this->address      = data_get($setting, 'address');
+        $this->locationUrl  = data_get($setting, 'location_url');
+        $this->supportEmail = data_get($setting, 'support_email');
+        $this->phones       = data_get($setting, 'phones', []);
     }
 
     /*
@@ -78,7 +81,6 @@ class SiteSettings extends Page
         return [
             Action::make('save')
                 ->label('Save')
-                ->requiresConfirmation()
                 ->action(fn() => $this->save())
                 ->button(),
         ];
@@ -106,13 +108,23 @@ class SiteSettings extends Page
                         ->schema([
                             Section::make()
                                 ->schema([
-                                    TextInput::make('site_name')
+                                    TextInput::make('siteName')
                                         ->label('Site Name')
                                         ->required()
                                         ->columnSpanFull(),
 
+                                    TextInput::make('slugon')
+                                        ->label('Slugon')
+                                        ->required()
+                                        ->maxLength(300)
+                                        ->rule('max:300')
+                                        ->columnSpanFull(),
+
                                     Textarea::make('description')
                                         ->label('Description')
+                                        ->required()
+                                        ->maxLength(300)
+                                        ->rule('max:300')
                                         ->rows(3)
                                         ->columnSpanFull(),
                                 ])
@@ -134,12 +146,12 @@ class SiteSettings extends Page
                                         ->label('Address')
                                         ->columnSpanFull(),
 
-                                    TextInput::make('location_url')
+                                    TextInput::make('locationUrl')
                                         ->label('Location URL')
                                         ->url()
                                         ->columnSpanFull(),
 
-                                    TextInput::make('support_email')
+                                    TextInput::make('supportEmail')
                                         ->label('Support Email')
                                         ->email()
                                         ->columnSpanFull(),
@@ -152,6 +164,7 @@ class SiteSettings extends Page
                                                 ->prefixIcon(Heroicon::Phone)
                                         )
                                         ->columnSpanFull()
+                                        ->reorderable(false)
                                 ])
                                 ->columns(2)
                                 ->contained(false),
@@ -168,12 +181,15 @@ class SiteSettings extends Page
     */
     public function save(): void
     {
+        $this->validate();
+
         $dto = new GeneralSettingDto(
-            siteName: $this->site_name,
+            siteName: $this->siteName,
+            slugon: $this->slugon,
             description: $this->description,
             address: $this->address,
-            locationUrl: $this->location_url,
-            supportEmail: $this->support_email,
+            locationUrl: $this->locationUrl,
+            supportEmail: $this->supportEmail,
             phones: $this->phones,
         );
 

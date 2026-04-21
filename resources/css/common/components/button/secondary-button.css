@@ -1,0 +1,7 @@
+.btn--ghost {
+    @apply bg-surface-1 !border-white/10 text-white/92;
+}
+
+.btn--ghost:hover {
+    @apply bg-white/6;
+}

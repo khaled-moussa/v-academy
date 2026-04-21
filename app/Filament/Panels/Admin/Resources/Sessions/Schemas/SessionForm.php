@@ -4,7 +4,7 @@ namespace App\Filament\Panels\Admin\Resources\Sessions\Schemas;
 
 use App\Domain\TrainingSession\Models\SessionStates\SessionAvailableState;
 use App\Domain\TrainingSession\Models\SessionStates\SessionStates;
-use App\Support\Context\UserContext;
+use App\Support\Context\AuthContext;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
@@ -72,7 +72,7 @@ class SessionForm
                         */
 
                         Hidden::make('user_created_session_id')
-                            ->default(UserContext::id()),
+                            ->default(AuthContext::id()),
 
                         Hidden::make('is_admin_created')
                             ->default(true),

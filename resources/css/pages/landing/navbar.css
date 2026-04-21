@@ -1,0 +1,79 @@
+/* -------------------------------
+   NAV BASE
+-------------------------------- */
+.nav {
+  @apply relative flex items-center justify-between py-5 z-10;
+}
+
+.nav--hero {
+    @apply text-white/92;
+}
+
+/* -------------------------------
+   BRAND
+-------------------------------- */
+.nav__brand {
+    @apply inline-flex items-center gap-2.5 text-white/92;
+}
+
+.brand-mark {
+    @apply inline-grid place-items-center w-10 h-10 rounded-[14px] bg-linear-to-br from-brand-500 to-accent-500 text-black font-extrabold;
+}
+
+.brand-mark img {
+    @apply w-7.5;
+}
+
+.brand-name {
+    @apply font-semibold tracking-wider;
+}
+
+/* -------------------------------
+   NAV MENU (RESPONSIVE ONLY TAILWIND)
+-------------------------------- */
+.nav__menu {
+    @apply hidden lg:flex items-center gap-7;
+    @apply absolute lg:static right-4 top-16 flex-col lg:flex-row gap-2.5 lg:gap-7 min-w-50 p-3.5 lg:p-0 bg-surface-1 lg:bg-transparent border border-white/10 lg:border-0  rounded-[14px] lg:rounded-none;
+}
+
+/* checkbox toggle (mobile only) */
+.nav__checkbox:checked ~ .nav__menu {
+    @apply flex;
+}
+
+/* -------------------------------
+   LINKS
+-------------------------------- */
+.nav__link {
+    @apply text-white/72 transition-colors duration-200;
+}
+
+.nav__link:hover {
+    @apply text-white/92;
+}
+
+/* -------------------------------
+   CTA
+-------------------------------- */
+.nav__cta {
+    @apply px-4 py-2.5 rounded-[14px] bg-white/4 text-white/92 border border-white/10 backdrop-blur-sm transition-colors;
+}
+
+.nav__cta:hover {
+    @apply bg-white/6;
+}
+
+/* -------------------------------
+   MOBILE TOGGLE
+-------------------------------- */
+.nav__checkbox {
+    @apply hidden;
+}
+
+.nav__toggle {
+    @apply lg:hidden cursor-pointer;
+}
+
+.nav__toggle span {
+    @apply block w-6.5 h-0.5 my-1.5 bg-white/92 transition-all duration-300 ease-out;
+}
