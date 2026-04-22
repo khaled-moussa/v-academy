@@ -1,82 +1,128 @@
-/* -------------------------------
-   HERO BASE
--------------------------------- */
+/* 
+|--------------------------------
+| HERO BASE
+|-------------------------------- 
+*/
 .hero {
-    @apply relative py-10 pb-20 bg-[(--grad-hero-right)] bg-[(--grad-hero-right)] lg:py-6 lg:pb-16;
+    @apply relative py-11 pb-16;
+    @apply lg:py-10 lg:pb-20;
+
+    background-image:
+        radial-gradient(
+            1200px 600px at 10% -20%,
+            rgba(195, 145, 43, 0.25),
+            transparent 60%
+        ),
+        radial-gradient(
+            1000px 500px at 110% 0%,
+            rgba(250, 207, 106, 0.15),
+            transparent 50%
+        );
 }
 
-/* -------------------------------
-   CONTAINER
--------------------------------- */
+/* 
+|--------------------------------
+| CONTAINER
+|-------------------------------- 
+*/
 .hero__container {
-    @apply max-w-330 lg:max-w-135 mx-auto px-6;
+    @apply container;
 }
 
-/* -------------------------------
-   GRID
--------------------------------- */
+/* 
+|--------------------------------
+| GRID
+|-------------------------------- 
+*/
 .hero__content {
-    @apply grid grid-cols-1 md:grid-cols-2 items-center gap-10 min-h-[75vh] lg:min-h-[60vh];
+    @apply grid grid-cols-1 md:grid-cols-2;
+    @apply items-center gap-10;
+    @apply min-h-[75vh] lg:min-h-[60vh];
 }
 
-/* -------------------------------
-   COPY
--------------------------------- */
-.hero__copy {
-    @apply text-white/92 flex flex-col justify-center;
+/* 
+|--------------------------------
+| COPY
+|-------------------------------- 
+*/
+.hero__intro {
+    @apply text-foreground;
+    @apply flex flex-col justify-center;
 }
 
-.hero__eyebrow {
-    @apply text-accent-500 font-semibold tracking-wider mb-3.5;
+.hero__slugon {
+    @apply font-semibold tracking-wider text-brand-300;
+    @apply mb-3.5;
 }
 
-.hero__title {
-    @apply text-[clamp(32px,5vw,56px)] leading-[1.1] mb-4 font-bold;
+.hero__description {
+    @apply text-[clamp(32px,5vw,56px)];
+    @apply leading-[1.1] font-bold;
+    @apply mb-4;
 }
 
 .hero__subtitle {
-    @apply text-white/72 text-lg leading-relaxed mb-6;
+    @apply text-muted-foreground text-lg leading-relaxed;
+    @apply mb-6;
 }
 
-/* -------------------------------
-   ACTIONS
--------------------------------- */
+/* 
+|--------------------------------
+| ACTIONS
+|-------------------------------- 
+*/
 .hero__actions {
-    @apply flex gap-3 mb-4.5 flex-wrap;
+    @apply flex flex-wrap gap-3;
+    @apply mb-4.5;
 }
 
-/* -------------------------------
-   BADGES
--------------------------------- */
+/* 
+|--------------------------------
+| BADGES
+|-------------------------------- 
+*/
 .hero__badges {
     @apply flex flex-wrap gap-3 text-white/72;
 }
 
 .hero__badges li {
-    @apply px-2.5 py-1.5 rounded-full border border-white/10 bg-white/4;
+    @apply px-2.5 py-1.5;
+    @apply rounded-full;
+    @apply border border-white/10;
+    @apply bg-white/4;
 }
 
-/* -------------------------------
-   VISUAL
--------------------------------- */
+/* 
+|--------------------------------
+| VISUAL
+|-------------------------------- 
+*/
 .hero__visual {
     @apply grid place-items-center;
+    @apply -order-1 lg:order-1;
 }
 
 .hero__image-stack {
-    @apply relative w-[min(520px,92%)] aspect-4/5 lg:w-[min(440px,100%)];
+    @apply relative aspect-4/5;
+    @apply w-[min(440px,100%)] lg:w-[min(520px,92%)];
 }
 
-/* -------------------------------
-   EFFECTS (TAILWIND ANIMATIONS ONLY)
--------------------------------- */
+/* 
+|--------------------------------
+| EFFECTS (TAILWIND ANIMATIONS ONLY)
+|-------------------------------- 
+*/
 .hero__glow {
-    @apply absolute inset-[-6%] rounded-3xl w-full blur-[18px]
-           bg-[radial-gradient(60%_60%_at_50%_40%,rgba(250,207,106,0.22),rgba(195,145,43,0))]
-           animate-glow;
+    @apply absolute inset-[-6%];
+    @apply w-full rounded-3xl;
+    @apply blur-[18px];
+    @apply animate-glow;
+
+    @apply bg-[radial-gradient(60%_60%_at_50%_40%,rgba(250,207,106,0.22),rgba(195,145,43,0))];
 }
 
 .hero__image {
-    @apply relative w-full h-full object-cover rounded-3xl;
+    @apply relative w-full h-full;
+    @apply object-cover rounded-3xl;
     @apply animate-float;
 }

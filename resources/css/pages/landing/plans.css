@@ -1,115 +1,140 @@
-/* -------------------------------
-   CONTAINER
--------------------------------- */
-
+/* 
+|---------------------------------
+| CONTAINER
+|--------------------------------
+*/
 .plan__container {
-  @apply md:max-w-200 mx-auto xl:max-w-330 px-6;
+    @apply container;
 }
 
-/* -------------------------------
-   HEADER
--------------------------------- */
 
-.plan .section__title {
-  @apply text-white/92;
-}
-
-.plan .lead {
-  @apply text-white/72;
-}
-
-.plan__header {
-  @apply text-start max-w-3xl mb-10;
-}
-
-/* -------------------------------
-   GRID
--------------------------------- */
-
+/* 
+|---------------------------------
+| GRID
+|--------------------------------
+*/
 .plan__grid {
-  @apply grid grid-cols-1 md:grid-cols-3 gap-6;
+    @apply grid grid-cols-1;
+    @apply gap-6;
+    @apply md:grid-cols-3;
 }
 
-/* -------------------------------
-   CARD
--------------------------------- */
 
+/* 
+|---------------------------------
+| CARD
+|--------------------------------
+*/
 .plan-card {
-  @apply bg-surface-1 border border-white/10 rounded-3xl p-6 flex flex-col h-full;
+    @apply flex flex-col h-full;
+    @apply p-6;
+    @apply bg-dark;
+    @apply border border-foreground/10;
+    @apply rounded-3xl;
 }
 
-/* HEAD */
 
+/* 
+|---------------------------------
+| HEAD
+|--------------------------------
+*/
 .plan-card__head {
-  @apply flex items-center justify-between mb-4;
+    @apply flex items-center justify-between;
+    @apply mb-4;
 }
 
-/* TITLE */
 
+/* 
+|---------------------------------
+| TITLE
+|--------------------------------
+*/
 .plan-card__title {
-  @apply text-white/92 text-[clamp(18px,2.2vw,22px)] font-bold;
+    @apply text-[clamp(18px,2.2vw,22px)];
+    @apply font-bold;
+    @apply text-foreground;
 }
 
-/* BADGE */
 
+/* 
+|---------------------------------
+| BADGE
+|--------------------------------
+*/
 .plan-card__badge {
-  @apply px-2.5 py-1.5 rounded-full;
-  @apply bg-linear-to-br from-brand-500 to-accent-500;
-  @apply text-black font-bold text-xs;
+    @apply px-2.5 py-1.5;
+    @apply rounded-full;
+    @apply font-bold text-xs;
+    @apply bg-linear-to-br from-brand-500 to-brand-300;
 }
 
-/* PRICE WRAPPER */
 
+/* 
+|---------------------------------
+| PRICE WRAPPER
+|--------------------------------
+*/
 .plan-card__price-wrapper {
-  @apply flex items-center gap-3;
+    @apply flex items-center gap-3;
 }
 
-/* OLD PRICE (line-through) */
 
+/* 
+|---------------------------------
+| OLD PRICE
+|--------------------------------
+*/
 .plan-card__old-price {
-  @apply text-white/50 line-through text-sm;
+    @apply text-sm;
+    @apply text-muted-foreground;
+    @apply line-through;
 }
 
-/* ACTIVE PRICE */
 
+/* 
+|---------------------------------
+| ACTIVE PRICE
+|--------------------------------
+*/
 .plan-card__price {
-  @apply text-white/92 font-extrabold text-2xl;
+    @apply text-2xl;
+    @apply font-extrabold;
+    @apply text-foreground;
 }
 
-/* DISCOUNT PRICE */
 
+/* 
+|---------------------------------
+| DISCOUNT PRICE
+|--------------------------------
+*/
 .plan-card__price--discount {
-  @apply text-brand-400;
+    @apply text-brand-300;
 }
 
-/* LIST */
 
+/* 
+|---------------------------------
+| LIST
+|--------------------------------
+*/
 .plan-card__list {
-  @apply grid gap-2.5 mb-4;
+    @apply grid gap-2.5;
+    @apply mb-4;
 }
 
 .plan-card__list li {
-  @apply text-white/72;
+    @apply text-muted-foreground;
 }
 
-/* CTA */
 
+/* 
+|---------------------------------
+| CTA
+|--------------------------------
+*/
 .plan-card__cta {
-  @apply w-full mt-auto;
-}
-
-/* -------------------------------
-   NOTE
--------------------------------- */
-
-.plan__note {
-  @apply mt-8 p-5 bg-white/4 border border-white/10 rounded-2xl;
-}
-
-.plan__note h4 {
-  @apply text-white/92 mb-3 font-bold;
-}
-
-.plan__note ul {
-  @apply grid gap-1.5 text-white/72;
+    @apply w-full;
+    @apply mt-auto;
 }

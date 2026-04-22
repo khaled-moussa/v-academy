@@ -3,6 +3,7 @@
 namespace App\Domain\TrainingSession\Models\Pivots;
 
 use App\Support\Traits\HasUuid;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Domain\TrainingSession\Models\Concerns\HasTrainingSessionJoinRelation;
 use Illuminate\Database\Eloquent\Relations\Pivot;
 use Carbon\Carbon;
@@ -10,6 +11,7 @@ use Carbon\Carbon;
 class TrainingSessionJoin extends Pivot
 {
     use HasUuid;
+    use HasFormattedTimestamps;
     use HasTrainingSessionJoinRelation;
 
     /*
@@ -43,7 +45,7 @@ class TrainingSessionJoin extends Pivot
     {
         return $this->uuid;
     }
-   
+
     public function getAttendance(): bool
     {
         return $this->attendance;

@@ -11,7 +11,6 @@ use App\Domain\Subscription\Enums\PaymentMethodEnum;
 use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionActiveState;
 use App\Filament\Components\Notification\CustomNotification;
 use App\Support\Context\AuthContext;
-use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
@@ -24,10 +23,10 @@ use Filament\Schemas\Components\Flex;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
-use Filament\Support\Enums\Alignment;
 use Filament\Support\Icons\Heroicon;
 use Filament\Support\RawJs;
 use Livewire\Attributes\On;
+use BackedEnum;
 
 class ExplorePlans extends Page
 {
@@ -108,6 +107,7 @@ class ExplorePlans extends Page
             ->afterHeader([
                 $this->discountBadge($plan),
             ])
+
             ->footer([
                 $this->subscribeAction($plan),
                 $this->subscriptionStateEntry($plan)
@@ -117,6 +117,7 @@ class ExplorePlans extends Page
                 $this->priceBlock($plan),
                 $this->includesBlock($plan),
             ])
+            
             ->columns(1);
     }
 

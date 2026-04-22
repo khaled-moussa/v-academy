@@ -55,36 +55,10 @@ class UserInfolist
                             ->color(Color::Orange)
                             ->copyable(),
 
-                        TextEntry::make('created_at')
-                            ->label('Member Since')
-                            ->badge()
-                            ->color(Color::Gray)
-                            ->formatStateUsing(fn($record) => $record->getCreatedAt()),
-                    ])
-                    ->columns(2)
-                    ->compact(),
-
-                /* 
-                |-------------------------------
-                | Identity
-                |------------------------------- 
-                */
-
-                Section::make()
-                    ->schema([
-                        TextEntry::make('first_name')
-                            ->label('First Name')
+                        TextEntry::make('full_name')
+                            ->label('Full Name')
                             ->weight(FontWeight::SemiBold),
 
-                        TextEntry::make('last_name')
-                            ->label('Last Name')
-                            ->weight(FontWeight::SemiBold),
-                    ])
-                    ->columns(2)
-                    ->compact(),
-
-                Section::make()
-                    ->schema([
                         TextEntry::make('age')
                             ->badge()
                             ->placeholder('N/A'),
@@ -97,8 +71,14 @@ class UserInfolist
                         TextEntry::make('address')
                             ->icon(Heroicon::OutlinedMapPin)
                             ->placeholder('No address'),
+
+                        TextEntry::make('created_at_formatted')
+                            ->label('Member Since')
+                            ->badge()
+                            ->color(Color::Gray),
                     ])
-                    ->columns(3)
+                    ->columns(2)
+                    ->secondary()
                     ->compact(),
 
                 /* 
@@ -158,8 +138,7 @@ class UserInfolist
                     ->columns(2)
                     ->compact()
                     ->secondary()
-                    ->collapsed()
-                    ->persistCollapsed(),
+                    ->collapsible(),
             ]);
     }
 
@@ -184,43 +163,46 @@ class UserInfolist
 
                 RepeatableEntry::make('nutrationPlans')
                     ->hiddenLabel()
-                    ->table([
-                        TableColumn::make('Meal'),
-                        TableColumn::make('Sat'),
-                        TableColumn::make('Sun'),
-                        TableColumn::make('Mon'),
-                        TableColumn::make('Tue'),
-                        TableColumn::make('Wed'),
-                        TableColumn::make('Thu'),
-                        TableColumn::make('Fri'),
-                    ])
+
                     ->schema([
-                        TextEntry::make('meal')
-                            ->label('Meal'),
+                        Section::make(fn($record) => $record?->getMeal())
+                            ->schema([
+                                TextEntry::make('saturday')
+                                    ->color(Color::Gray)
+                                    ->label('Sat'),
 
-                        TextEntry::make('saturday')
-                            ->label('Sat'),
+                                TextEntry::make('sunday')
+                                    ->color(Color::Gray)
+                                    ->label('Sun'),
 
-                        TextEntry::make('sunday')
-                            ->label('Sun'),
+                                TextEntry::make('monday')
+                                    ->color(Color::Gray)
+                                    ->label('Mon'),
 
-                        TextEntry::make('monday')
-                            ->label('Mon'),
+                                TextEntry::make('tuesday')
+                                    ->color(Color::Gray)
+                                    ->label('Tue'),
 
-                        TextEntry::make('tuesday')
-                            ->label('Tue'),
+                                TextEntry::make('wednesday')
+                                    ->color(Color::Gray)
+                                    ->label('Wed'),
 
-                        TextEntry::make('wednesday')
-                            ->label('Wed'),
+                                TextEntry::make('thursday')
+                                    ->color(Color::Gray)
+                                    ->label('Thu'),
 
-                        TextEntry::make('thursday')
-                            ->label('Thu'),
-
-                        TextEntry::make('friday')
-                            ->label('Fri'),
+                                TextEntry::make('friday')
+                                    ->color(Color::Gray)
+                                    ->label('Fri'),
+                            ])
+                            ->columns(2)
+                            ->compact()
+                            ->secondary()
+                            ->collapsible(),
 
                     ])
-                    ->placeholder('No nutration plan'),
+                    ->placeholder('No nutration plan')
+                    ->contained(false),
             ]);
     }
 
@@ -249,7 +231,8 @@ class UserInfolist
                             ->state('Active')
                             ->hiddenLabel()
                             ->badge()
-                            ->color(Color::Green),
+                            ->color(Color::Green)
+                            ->hidden(fn($record) => is_null($record)),
                     ])
                     ->schema(self::subscriptionSchema())
                     ->columns(2)
@@ -295,22 +278,26 @@ class UserInfolist
                 ->label('Reference')
                 ->badge()
                 ->color(Color::Orange)
-                ->copyable(),
+                ->copyable()
+                ->placeholder('N/A'),
 
             TextEntry::make('amount')
-                ->money('EGP')
-                ->badge(),
+                ->money('EGP', locale: 'nl')
+                ->badge()
+                ->placeholder('N/A'),
 
             TextEntry::make('payment_method')
                 ->badge()
                 ->color(fn($state) => $state->color())
-                ->formatStateUsing(fn($state) => $state->label()),
+                ->formatStateUsing(fn($state) => $state->label())
+                ->placeholder('N/A'),
 
             TextEntry::make('subscription_state')
                 ->label('Payment Status')
                 ->badge()
                 ->color(fn($state) => $state->filamentColor())
-                ->formatStateUsing(fn($state) => $state->label()),
+                ->formatStateUsing(fn($state) => $state->label())
+                ->placeholder('N/A'),
 
             /* 
             |-------------------------------
@@ -334,14 +321,14 @@ class UserInfolist
                         ->formatStateUsing(fn($state) => $state?->format('d M Y, h:i A'))
                         ->placeholder('N/A'),
 
-                    TextEntry::make('created_at')
+                    TextEntry::make('created_at_formatted')
                         ->label('Subscribed At')
                         ->badge()
                         ->color(Color::Gray)
-                        ->formatStateUsing(fn($state) => $state?->format('d M Y, h:i A')),
+                        ->placeholder('N/A'),
                 ])
-                ->columnSpanFull()
                 ->columns(3)
+                ->columnSpanFull()
                 ->compact()
                 ->secondary(),
         ];

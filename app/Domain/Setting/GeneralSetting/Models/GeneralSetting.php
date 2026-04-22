@@ -4,6 +4,7 @@ namespace App\Domain\Setting\GeneralSetting\Models;
 
 use App\App\Web\Resources\Settings\GeneralSettingResource;
 use App\Domain\Setting\GeneralSetting\Models\Builders\GeneralSettingQueryBuilder;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Database\Eloquent\Model;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
 class GeneralSetting extends Model
 {
     use HasUuid;
+    use HasFormattedTimestamps;
 
     /*
     |--------------------------------------------------------------------------
@@ -23,6 +25,7 @@ class GeneralSetting extends Model
 
     protected $casts = [
         'phones' => 'array',
+        'youtube_links' => 'array',
         'user_can_create_session' => 'boolean',
     ];
 
@@ -58,6 +61,11 @@ class GeneralSetting extends Model
         return $this->site_name;
     }
 
+    public function getTagline(): string
+    {
+        return $this->tagline;
+    }
+
     public function getSlugon(): string
     {
         return $this->slugon;
@@ -66,6 +74,11 @@ class GeneralSetting extends Model
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function getYoutubeLinks(): ?array
+    {
+        return $this->youtube_links;
     }
 
     public function getAddress(): string

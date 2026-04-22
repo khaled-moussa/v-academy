@@ -95,7 +95,7 @@ class SessionInfolist
                             ->compact()
                             ->secondary(),
 
-                        // (if NOT admin created)
+                        // (If NOT admin created)
                         Section::make('Created By')
                             ->relationship('user')
                             ->visible(fn($record) => ! $record->isAdminCreated())

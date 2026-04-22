@@ -1,6 +1,6 @@
 <section id="hero" class="hero">
 
-    <div class="custom-container">
+    <div class="hero__container">
 
         {{-- Navbar --}}
         @include('pages.landing.partials.navbar')
@@ -9,20 +9,21 @@
         <div class="hero__content">
 
             {{-- Copy --}}
-            <div class="hero__copy">
+            <div class="hero__intro">
 
-                <div class="hero__eyebrow">
-                    1:1 Sessions & In-Person Coaching
-                </div>
-
-                <h1 class="hero__title">
+                <p class="hero__slugon">
                     {{ $generalSetting['slugon'] }}
+                </p>
+
+                <h1 class="hero__description">
+                    {{ $generalSetting['description'] }}
                 </h1>
 
                 <p class="hero__subtitle">
-                    {{ $generalSetting['description'] }}
+                    Personalized training and nutrition tailored to your goals, lifestyle, and schedule.
                 </p>
 
+                {{-- Actions --}}
                 <div class="hero__actions">
                     <a href="#contact" class="btn btn--primary">
                         Start Coaching
@@ -33,6 +34,7 @@
                     </a>
                 </div>
 
+                {{-- Badges --}}
                 <ul class="hero__badges">
                     <li>Custom Plans</li>
                     <li>Weekly Check-ins</li>
@@ -43,13 +45,20 @@
 
             {{-- Visual --}}
             <div class="hero__visual">
+
                 <div class="hero__image-stack">
+
                     <div class="hero__glow"></div>
 
-                    <x-asset.img class="hero__image" folder="branding" img="logo-dark.png" alt="Fitness coaching in action" />
+                    <x-asset.img class="hero__image" folder="branding" img="logo-dark.png"
+                        alt="Fitness coaching in action" />
+
                 </div>
+
             </div>
 
         </div>
+
     </div>
+
 </section>

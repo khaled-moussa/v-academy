@@ -9,6 +9,7 @@ use App\Domain\TrainingSession\Models\SessionStates\SessionAvailableState;
 use App\Domain\TrainingSession\Models\SessionStates\SessionCanceledState;
 use App\Domain\TrainingSession\Models\SessionStates\SessionFullState;
 use App\Domain\TrainingSession\Models\SessionStates\SessionScheduledState;
+use App\Domain\TrainingSession\Models\SessionStates\SessionStates;
 use App\Domain\TrainingSession\Models\TrainingSession;
 use App\Filament\Components\Filter\DateRangeFilter;
 use App\Filament\Components\Notification\CustomNotification;
@@ -24,6 +25,7 @@ use Filament\Tables\Columns\Layout\Panel;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
@@ -32,6 +34,13 @@ class SessionsTable
     public static function configure(Table $table): Table
     {
         return $table
+
+            /*
+            |------------------------------------------------------------------
+            | Header
+            |------------------------------------------------------------------
+            */
+
             ->heading('Training Sessions')
             ->description('Join or create training sessions here.')
 
@@ -40,6 +49,7 @@ class SessionsTable
             | Columns
             |-----------------------------------------------------------------
             */
+
             ->columns([
                 Split::make([
 
@@ -60,6 +70,7 @@ class SessionsTable
                     | Right: Session State
                     |-------------------------------
                     */
+
                     TextColumn::make('session_state')
                         ->label('State')
                         ->badge()
@@ -72,6 +83,7 @@ class SessionsTable
                 | Secondary Info
                 |-------------------------------
                 */
+
                 Stack::make([
                     TextColumn::make('user.full_name')
                         ->label('Created By')
@@ -109,16 +121,18 @@ class SessionsTable
                 | Collapsible Details
                 |-------------------------------
                 */
+
                 Panel::make([
                     TextColumn::make('user.full_name')->badge(),
                 ])->collapsible(),
             ])
 
-            /* 
-            |-----------------------------------------------------------------
+            /*
+            |------------------------------------------------------------------
             | Layout
-            |-----------------------------------------------------------------
+            |------------------------------------------------------------------
             */
+
             ->contentGrid([
                 'md' => 2,
                 'xl' => 3,
@@ -129,44 +143,51 @@ class SessionsTable
             | Table Options
             |-----------------------------------------------------------------
             */
+
             ->deferLoading()
             ->searchable(false)
 
-            /* 
-            |-----------------------------------------------------------------
-            | Grouping
-            |-----------------------------------------------------------------
+            /*
+            |------------------------------------------------------------------
+            | Groupping
+            |------------------------------------------------------------------
             */
+
             ->groups([
                 Group::make('is_active')
                     ->label('Active Status')
                     ->titlePrefixedWithLabel(false)
                     ->getTitleFromRecordUsing(fn($state) => $state ? 'Active' : 'Inactive'),
 
-                Group::make('session_state')
-                    ->label('Session State')
-                    ->titlePrefixedWithLabel(false),
-
-                Group::make('created_at')->date(),
+                Group::make('created_at_formatted')
+                    ->label('Created At')
+                    ->date(),
             ])
             ->collapsedGroupsByDefault()
 
-            /* 
-            |-----------------------------------------------------------------
+            /*
+            |------------------------------------------------------------------
             | Filters
-            |-----------------------------------------------------------------
+            |------------------------------------------------------------------
             */
+
             ->filters([
+                SelectFilter::make('session_state')
+                    ->label('Session State')
+                    ->options(SessionStates::options())
+                    ->native(false),
+
                 DateRangeFilter::make('session_date')
-                    ->label('Session Date Range'),
+                    ->label('Date Range'),
             ])
             ->filtersFormWidth(Width::Large)
 
-            /* 
-            |-----------------------------------------------------------------
-            | Actions
-            |-----------------------------------------------------------------
+            /*
+            |------------------------------------------------------------------
+            | Record Actions
+            |------------------------------------------------------------------
             */
+
             ->recordActions([
                 ActionGroup::make([
 
@@ -175,6 +196,7 @@ class SessionsTable
                     | Subscribe
                     |-------------------------------
                     */
+
                     Action::make('subscribe')
                         ->label('Subscribe Now')
                         ->icon(Heroicon::OutlinedCreditCard)
@@ -187,19 +209,21 @@ class SessionsTable
                     | Book Session
                     |-------------------------------
                     */
+
                     Action::make('book_session')
                         ->label('Book Session')
                         ->icon(Heroicon::Plus)
                         ->button()
                         ->hidden(fn($record) => self::shouldHideBook($record))
                         ->action(fn($record) => self::handleBookingSession($record))
-                        ->rateLimit(2),
+                        ->rateLimit(3),
 
                     /* 
                     |-------------------------------
                     | Cancel Session
                     |-------------------------------
                     */
+
                     Action::make('cancel_session')
                         ->label('Cancel Session')
                         ->icon(Heroicon::XMark)
@@ -207,13 +231,14 @@ class SessionsTable
                         ->button()
                         ->hidden(fn($record) => self::shouldHideCancel($record))
                         ->action(fn($record) => self::handleCanceledSession($record))
-                        ->rateLimit(2),
+                        ->rateLimit(3),
 
                     /* 
                     |-------------------------------
                     | View Details
                     |-------------------------------
                     */
+
                     ViewAction::make('details')
                         ->label('Details')
                         ->icon(Heroicon::OutlinedEye)
@@ -246,7 +271,7 @@ class SessionsTable
     {
         return
             self::shouldShowSubscribe() ||
-            ! self::isUserBookedThisSession($session) ||
+            !self::isUserBookedThisSession($session) ||
             self::isSessionLocked($session);
     }
 

@@ -2,10 +2,11 @@
 
 namespace App\Filament\Panels\Admin\Resources\Users\Tables;
 
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use App\Filament\Components\Button\GroupedActionsButton;
 use App\Filament\Components\Filter\DateRangeFilter;
+use App\Support\Enums\GenderEnum;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\Width;
@@ -21,8 +22,22 @@ class UsersTable
     public static function configure(Table $table): Table
     {
         return $table
+
+            /*
+            |------------------------------------------------------------------
+            | Header
+            |------------------------------------------------------------------
+            */
+
             ->heading('Users')
             ->description('Manage your users here.')
+
+            /* 
+            |-----------------------------------------------------------------
+            | Columns
+            |-----------------------------------------------------------------
+            */
+
             ->columns([
 
                 /*
@@ -30,15 +45,15 @@ class UsersTable
                 | User Identity
                 |-----------------------------------
                 */
+
                 TextColumn::make('full_name')
                     ->label('Name')
                     ->description(fn($record) => $record->getEmail())
                     ->weight(FontWeight::Bold)
                     ->searchable(['first_name', 'last_name', 'email']),
 
-                TextColumn::make('email')
-                    ->label('Email & Phone')
-                    ->description(fn($record) => $record->getPhone())
+                TextColumn::make('phone')
+                    ->label('Phone')
                     ->placeholder('No phone')
                     ->searchable(),
 
@@ -60,6 +75,7 @@ class UsersTable
                 | Current Plan
                 |-----------------------------------
                 */
+
                 TextColumn::make('activeSubscription.plan.name')
                     ->label('Current Plan')
                     ->color(Color::Gray)
@@ -70,6 +86,7 @@ class UsersTable
                 | States
                 |-----------------------------------
                 */
+
                 IconColumn::make('is_email_verified')
                     ->label('Email verified')
                     ->trueIcon(Heroicon::OutlinedCheckCircle)
@@ -82,18 +99,20 @@ class UsersTable
                 | Timestamp
                 |-----------------------------------
                 */
-                TextColumn::make('created_at')
+
+                TextColumn::make('created_at_formatted')
+                    ->label('Created At')
                     ->badge()
                     ->color(Color::Gray)
                     ->toggleable()
-                    ->toggledHiddenByDefault()
-                    ->formatStateUsing(fn($record) => $record->getCreatedAt()?->format('M d, Y h:i A')),
+                    ->toggledHiddenByDefault(),
 
                 /*
                 |-----------------------------------
                 | Action
                 |-----------------------------------
                 */
+
                 ToggleColumn::make('is_active')
                     ->label('Active')
                     ->toggleable()
@@ -101,20 +120,23 @@ class UsersTable
             ])
 
             /* 
-            |-------------------------------
-            | Table Behavior
-            |-------------------------------
+            |-----------------------------------------------------------------
+            | Table Options
+            |-----------------------------------------------------------------
             */
+
             ->deferLoading()
             ->stackedOnMobile()
             ->searchOnBlur()
             ->searchPlaceholder('Search (Full Name, Email, Phone)')
 
+
             /* 
-            |-------------------------------
-            | Groups
-            |-------------------------------
+            |-----------------------------------------------------------------
+            | Grouping
+            |-----------------------------------------------------------------
             */
+
             ->groups([
                 Group::make('is_active')
                     ->label('Active')
@@ -126,25 +148,32 @@ class UsersTable
                     ->titlePrefixedWithLabel(false)
                     ->getTitleFromRecordUsing(fn($state) => !is_null($state) ? 'Verified' : 'Not Verified'),
 
-                Group::make('created_at')
+                Group::make('created_at_formatted')
+                    ->label('Created At')
                     ->date(),
+
+                Group::make('gender')
+                    ->getTitleFromRecordUsing(fn($record) => $record->getGender()->label()),
             ])
             ->collapsedGroupsByDefault()
 
             /* 
-            |-------------------------------
+            |-----------------------------------------------------------------
             | Filters
-            |-------------------------------
+            |-----------------------------------------------------------------
             */
+
             ->filters([
                 DateRangeFilter::make(),
-            ])->filtersFormWidth(Width::Large)
+            ])
+            ->filtersFormWidth(Width::Large)
 
             /* 
-            |-------------------------------
+            |-----------------------------------------------------------------
             | Record Actions
-            |-------------------------------
+            |-----------------------------------------------------------------
             */
+
             ->recordActions(GroupedActionsButton::actions())
 
             /* 
@@ -152,6 +181,7 @@ class UsersTable
             | Toolbar Actions
             |-------------------------------
             */
+
             ->toolbarActions([
                 BulkActionGroup::make([
                     DeleteBulkAction::make(),

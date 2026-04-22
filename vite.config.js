@@ -11,6 +11,9 @@ export default defineConfig({
                 "resources/css/app.css",
                 "resources/js/app.js",
 
+                // -- Errors
+                "resources/css/pages/errors/_errors.css",
+
                 // -- Landing
                 "resources/css/pages/landing/_landing.css",
             ],

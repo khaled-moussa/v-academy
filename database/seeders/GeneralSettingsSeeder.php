@@ -19,6 +19,7 @@ class GeneralSettingsSeeder extends Seeder
 
         $dto = new GeneralSettingDto(
             siteName: config('company-info.site_name'),
+            tagline: config('company-info.tagline'),
             slugon: config('company-info.slugon'),
             description: config('company-info.description'),
             address: config('company-info.address'),

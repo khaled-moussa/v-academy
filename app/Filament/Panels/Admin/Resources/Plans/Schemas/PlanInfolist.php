@@ -2,6 +2,7 @@
 
 namespace App\Filament\Panels\Admin\Resources\Plans\Schemas;
 
+use App\Domain\Plan\Models\Plan;
 use Filament\Infolists\Components\IconEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
@@ -28,8 +29,15 @@ class PlanInfolist
                             ->schema([
                                 TextEntry::make('name')
                                     ->label('Plan Name')
-                                    ->weight('bold')
-                                    ->columnSpanFull(),
+                                    ->afterLabel([
+                                        TextEntry::make('is_popular')
+                                            ->hiddenLabel()
+                                            ->badge()
+                                            ->state('Pouplar')
+                                            ->hidden(fn($record) => !$record?->isPopular()),
+                                    ])
+                                    ->weight('bold'),
+
 
                                 TextEntry::make('no_of_sessions')
                                     ->label('Number of Sessions')
@@ -37,8 +45,12 @@ class PlanInfolist
 
                                 TextEntry::make('price')
                                     ->label('Price')
-                                    ->badge()
-                                    ->money('EGP', locale: 'ln'),
+                                    ->formatStateUsing(fn($record) => static::formatPrice($record))
+                                    ->html(),
+
+                                TextEntry::make('discount')
+                                    ->label('Discount')
+                                    ->suffix('%'),
                             ])
                             ->columns(2)
                             ->compact()
@@ -77,7 +89,7 @@ class PlanInfolist
                                     ->label('Active')
                                     ->boolean(),
 
-                                TextEntry::make('created_at')
+                                TextEntry::make('created_at_formatted')
                                     ->label('Created At')
                                     ->badge()
                                     ->color(Color::Gray)
@@ -89,5 +101,35 @@ class PlanInfolist
                     ])
                     ->columnSpanFull(),
             ]);
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    private static function formatPrice(Plan $plan): string
+    {
+        $price = $plan->getPrice();
+        $priceDiscount = $plan->getPriceDiscount();
+        $discount = $plan->getDiscount();
+
+        if ($discount > 0) {
+            return "
+            <div class='flex flex-col'>
+                <span style='text-decoration-line: line-through; color:gray'>
+                    {$price} EGP
+                </span>
+
+                <span>
+                    {$priceDiscount} EGP
+                </span>
+            </div>
+        ";
+        }
+
+        return "<span>{$price} EGP</span>";
     }
 }

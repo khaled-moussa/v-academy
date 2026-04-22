@@ -2,49 +2,65 @@
     'plans' => [],
 ])
 
-<section
-    id="plans"
-    class="plan section"
->
+<section id="plans" class="plan section">
+
     <div class="plan__container">
 
         {{-- Header --}}
         <header class="plan__header">
-            <h2 class="section__title">Plan & Pricing</h2>
+            <h2 class="section__title">
+                Plan & Pricing
+            </h2>
 
             <p class="lead">
                 Choose a plan that fits your goals. Train 1-on-1 or in a small group, with optional nutrition planning.
             </p>
         </header>
 
+
         {{-- Plans --}}
         <div class="plan__grid">
 
             @foreach ($plans as $plan)
+
+                {{-- Card --}}
                 <div @class([
                     'plan-card',
                     'plan-card--popular' => $plan['is_popular'] ?? false,
                 ])>
 
+                    {{-- Head --}}
                     <div class="plan-card__head">
+
                         <h3 class="plan-card__title">
                             {{ $plan['name'] }}
                         </h3>
 
-                        <span @class(['plan-card__badge', 'hidden' => empty($plan['is_popular'])])>
+                        <span @class([
+                            'plan-card__badge',
+                            'hidden' => empty($plan['is_popular']),
+                        ])>
                             Popular
                         </span>
+
                     </div>
 
+
+                    {{-- List --}}
                     <ul class="plan-card__list">
 
+                        {{-- Sessions --}}
                         <li class="plan-card__item">
-                            <span>{{ $plan['no_of_sessions'] }} Sessions</span>
+                            <span>
+                                {{ $plan['no_of_sessions'] }} Sessions
+                            </span>
                         </li>
 
+
+                        {{-- Price --}}
                         <li class="plan-card__price-wrapper">
 
-                            {{-- OLD PRICE --}}
+                            {{-- Old / Base Price --}}
                             <span @class([
                                 'plan-card__old-price' => $plan['has_discount'],
                                 'plan-card__price' => !$plan['has_discount'],
@@ -52,7 +68,7 @@
                                 {{ $plan['price'] }} EGP
                             </span>
 
-                            {{-- DISCOUNT PRICE --}}
+                            {{-- Discount Price --}}
                             @if ($plan['has_discount'])
                                 <span class="plan-card__price plan-card__price--discount">
                                     {{ $plan['price_discount'] }} EGP
@@ -61,8 +77,11 @@
 
                         </li>
 
+
                         <hr class="divider">
 
+
+                        {{-- Includes --}}
                         @foreach ($plan['includes'] ?? [] as $include)
                             <li class="plan-card__item">
                                 {{ $include }}
@@ -71,6 +90,8 @@
 
                     </ul>
 
+
+                    {{-- CTA --}}
                     <a
                         href="{{ route('filament.auth.auth.register') }}"
                         class="btn btn--primary plan-card__cta"
@@ -79,9 +100,11 @@
                     </a>
 
                 </div>
+
             @endforeach
 
         </div>
 
     </div>
+
 </section>

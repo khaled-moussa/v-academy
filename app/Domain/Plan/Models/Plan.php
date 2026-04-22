@@ -5,6 +5,7 @@ namespace App\Domain\Plan\Models;
 use App\App\Web\Resources\Plans\PlanResource;
 use App\Domain\Plan\Models\Builders\PlanQueryBuilder;
 use App\Domain\Plan\Models\Concerns\HasPlanRelation;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
@@ -14,6 +15,7 @@ use Illuminate\Database\Eloquent\Attributes\UseResource;
 class Plan extends Model
 {
     use HasUuid;
+    use HasFormattedTimestamps;
     use HasPlanRelation;
 
     /*

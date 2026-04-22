@@ -15,14 +15,22 @@ class SubscriptionsTable
     public static function configure(Table $table): Table
     {
         return $table
+
+            /*
+            |------------------------------------------------------------------
+            | Header
+            |------------------------------------------------------------------
+            */
+
             ->heading('Subscriptions')
             ->description('Manage user subscriptions here.')
 
             /*
-            |-----------------------------
+            |------------------------------------------------------------------
             | Columns
-            |-----------------------------
+            |------------------------------------------------------------------
             */
+
             ->columns([
 
                 /*
@@ -30,6 +38,7 @@ class SubscriptionsTable
                 | Plan Information
                 |--------------------------------
                 */
+
                 TextColumn::make('plan.name')
                     ->label('Plan'),
 
@@ -54,6 +63,7 @@ class SubscriptionsTable
                 | States
                 |--------------------------------
                 */
+
                 IconColumn::make('is_active')
                     ->label('Active')
                     ->boolean(),
@@ -63,6 +73,7 @@ class SubscriptionsTable
                 | Dates
                 |--------------------------------
                 */
+
                 TextColumn::make('next_renewal_at')
                     ->label('Next Renewal')
                     ->date()
@@ -76,19 +87,21 @@ class SubscriptionsTable
             ])
 
             /*
-            |-------------------------------
+            |------------------------------------------------------------------
             | Table Options
-            |--------------------------------
+            |------------------------------------------------------------------
             */
+
             ->deferLoading()
             ->stackedOnMobile()
             ->searchable(false)
 
             /*
-            |-----------------------------------
+            |------------------------------------------------------------------
             | Grouping
-            |-----------------------------------
+            |------------------------------------------------------------------
             */
+
             ->groups([
                 Group::make('is_active')
                     ->label('Active')
@@ -98,15 +111,19 @@ class SubscriptionsTable
                     ->label('Expired')
                     ->getTitleFromRecordUsing(fn($state) => $state ? 'Expired' : 'Not Expired'),
 
-                Group::make('created_at')->date(),
+                Group::make('created_at_formatted')
+                    ->label('Subscribed At')
+                    ->date(),
             ])
             ->collapsedGroupsByDefault()
 
+
             /*
-            |-----------------------------------
+            |------------------------------------------------------------------
             | Filters
-            |-----------------------------------
+            |------------------------------------------------------------------
             */
+
             ->filters([
                 DateRangeFilter::make()
             ])
@@ -114,10 +131,11 @@ class SubscriptionsTable
             ->filtersFormWidth(Width::Large)
 
             /*
-            |-------------------------------
-            | Actions
-            |--------------------------------
+            |------------------------------------------------------------------
+            | Record Actions
+            |------------------------------------------------------------------
             */
+
             ->recordActions(GroupedActionsButton::actions(
                 canDelete: false,
                 canEdit: false

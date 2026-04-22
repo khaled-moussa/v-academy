@@ -6,6 +6,7 @@ use App\Domain\User\Models\Builders\UserQueryBuilder;
 use App\Domain\User\Models\Concerns\HasUserRelation;
 use App\Support\Enums\GenderEnum;
 use App\Support\Enums\UserPanelEnum;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
 use Carbon\Carbon;
 use Filament\Panel;
@@ -20,6 +21,7 @@ class User extends Authenticatable implements FilamentUser, HasName, HasAvatar
 {
     use Notifiable;
     use HasUuid;
+    use HasFormattedTimestamps;
     use HasUserRelation;
 
     /*
