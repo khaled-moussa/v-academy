@@ -60,7 +60,7 @@ class SubscriptionInfolist
                             ->color(fn($state) => $state->filamentColor())
                             ->formatStateUsing(fn($state) => $state->label()),
 
-                        TextEntry::make('created_at')
+                        TextEntry::make('created_at_formatted')
                             ->label('Subscribed At')
                             ->dateTime()
                             ->color(Color::Gray),

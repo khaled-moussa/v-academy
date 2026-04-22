@@ -1,44 +1,57 @@
-/* -------------------------------
-   Footer
--------------------------------- */
-
-.site-footer {
-    @apply mt-10 py-10 pb-5;
-    @apply text-white/86;
+/* 
+|---------------------------------
+| FOOTER
+|--------------------------------
+*/
+.footer {
+    @apply py-10 pb-5;
+    @apply text-foreground;
     @apply bg-linear-to-br from-primary to-secondary;
 }
 
-/* -------------------------------
-   CONTAINER
--------------------------------- */
+/* 
+|---------------------------------
+| CONTAINER
+|--------------------------------
+*/
 .footer__container {
-    @apply md:max-w-200 mx-auto xl:max-w-330 px-6;
+    @apply container flex;
 }
 
-.site-footer h4 {
+/* 
+|---------------------------------
+| TYPOGRAPHY
+|--------------------------------
+*/
+.footer h4 {
     @apply mb-3;
-    @apply text-white;
+    @apply text-foreground;
 }
 
-.site-footer a {
-    @apply text-white/86;
+.footer__info a {
+    @apply text-muted-foreground;
 }
 
-.site-footer a:hover {
-    @apply text-white;
+.footer__info a:hover {
+    @apply text-foreground;
 }
 
-/* -------------------------------
-   GRID (REPLACES custom-col system)
--------------------------------- */
+/* 
+|---------------------------------
+| GRID
+|--------------------------------
+*/
 .footer__grid {
-    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+    @apply grid grid-cols-1;
+    @apply gap-6;
+    @apply md:grid-cols-2;
 }
 
-/* -------------------------------
-   Brand
--------------------------------- */
-
+/* 
+|---------------------------------
+| BRAND
+|--------------------------------
+*/
 .footer__brand-wrapper {
     @apply flex flex-col;
 }
@@ -47,50 +60,49 @@
     @apply flex items-center gap-3;
 }
 
-.footer__description {
-    @apply mt-2.5;
-    @apply text-white/72;
-}
-
-/* -------------------------------
-   Info Section
--------------------------------- */
-
+/* 
+|---------------------------------
+| INFO SECTION
+|--------------------------------
+*/
 .footer__info {
     @apply mt-2;
 }
 
 .footer__contact {
     @apply mt-1;
-    @apply text-white/70;
+    @apply text-muted-foreground;
 }
 
 .footer__phones {
     @apply mt-1;
     @apply grid gap-1;
-    @apply text-white/70;
+    @apply text-muted-foreground;
 }
 
 .footer__address {
     @apply mt-2;
-    @apply text-white/60;
+    @apply text-muted-foreground;
     @apply leading-relaxed;
     @apply max-w-sm;
 }
 
-/* -------------------------------
-   Links
--------------------------------- */
-
+/* 
+|---------------------------------
+| LINKS
+|--------------------------------
+*/
 .footer__links ul {
     @apply grid gap-2;
 }
 
-/* -------------------------------
-   Meta
--------------------------------- */
-
+/* 
+|---------------------------------
+| META
+|--------------------------------
+*/
 .footer__meta {
     @apply mt-6 pt-4;
     @apply text-center text-white/60;
+    @apply border-t border-brand-500/15;
 }

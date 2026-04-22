@@ -8,9 +8,7 @@ use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionRejecte
 use App\Domain\Subscription\Models\Subscription;
 use App\Filament\Components\Notification\CustomNotification;
 use Filament\Actions\Action;
-use Filament\Actions\ActionGroup;
 use Filament\Infolists\Components\ImageEntry;
-use Filament\Infolists\Components\SpatieMediaLibraryImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Tabs;
@@ -104,11 +102,10 @@ class SubscriptionInfolist
                                     ->formatStateUsing(fn($state) => $state?->format('d M Y, h:i A'))
                                     ->placeholder('N/A'),
 
-                                TextEntry::make('created_at')
+                                TextEntry::make('created_at_formatted')
                                     ->label('Subscribed At')
                                     ->badge()
-                                    ->color(Color::Gray)
-                                    ->formatStateUsing(fn($state) => $state?->format('d M Y, h:i A')),
+                                    ->color(Color::Gray),
                             ])
                             ->columnSpanFull()
                             ->columns(3)

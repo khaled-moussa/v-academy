@@ -4,8 +4,8 @@ namespace App\Filament\Panels\Admin\Resources\Sessions\Tables;
 
 use App\Domain\TrainingSession\Models\SessionStates\SessionAvailableState;
 use App\Domain\TrainingSession\Models\SessionStates\SessionFullState;
+use App\Domain\TrainingSession\Models\SessionStates\SessionStates;
 use App\Domain\TrainingSession\Models\TrainingSession;
-use App\Filament\Components\Filter\DateRangeFilter;
 use Filament\Actions\ActionGroup;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
@@ -17,6 +17,9 @@ use Filament\Tables\Columns\Layout\Panel;
 use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use App\Filament\Components\Filter\DateRangeFilter;
+use Filament\Actions\DeleteAction;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
@@ -33,7 +36,7 @@ class SessionsTable
             */
 
             ->heading('Training Sessions')
-            ->description('Join or create training sessions here.')
+            ->description('Manage training sessions here.')
 
             /*
             |------------------------------------------------------------------
@@ -148,11 +151,8 @@ class SessionsTable
                         fn($state) => $state ? 'Active' : 'Inactive'
                     ),
 
-                Group::make('session_state')
-                    ->label('Session State')
-                    ->titlePrefixedWithLabel(false),
-
-                Group::make('created_at')
+                Group::make('created_at_formatted')
+                    ->label('Created At')
                     ->date(),
             ])
             ->collapsedGroupsByDefault()
@@ -164,6 +164,11 @@ class SessionsTable
             */
 
             ->filters([
+                SelectFilter::make('session_state')
+                    ->label('Session State')
+                    ->options(SessionStates::options())
+                    ->native(false),
+
                 DateRangeFilter::make('session_date')
                     ->label('Session Date Range'),
             ])
@@ -171,7 +176,7 @@ class SessionsTable
 
             /*
             |------------------------------------------------------------------
-            | Actions
+            | Record Actions
             |------------------------------------------------------------------
             */
 
@@ -187,7 +192,7 @@ class SessionsTable
                     EditAction::make('edit_session')
                         ->label('Edit Session')
                         ->icon(Heroicon::PencilSquare)
-                        ->button(),
+                        ->outlined(),
 
                     /*
                     |-----------------------------
@@ -201,6 +206,17 @@ class SessionsTable
                         ->outlined(),
                 ])
                     ->buttonGroup(),
+
+                /*
+                |-----------------------------
+                | Delete
+                |-----------------------------
+                */
+
+                DeleteAction::make('delete')
+                    ->color(Color::Rose)
+                    ->icon(Heroicon::OutlinedTrash)
+                    ->button(),
             ]);
     }
 

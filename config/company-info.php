@@ -10,13 +10,11 @@ return [
 
     'site_name' => env('COMPANY_NAME', 'Variables Academy'),
 
-    'slugon' => env('SLUGON', '1:1 Sessions & In‑Person Coaching'),
-    
-    'description' => env('DESCRIPTION', 'Build strength. Move better. Transform confidently.'),
+    'tagline' => env('TAGLINE', '1:1 Sessions & In‑Person Coaching'),
 
-    'tax_number' => env('COMPANY_TAX_NUMBER', '123-456-789'),
+    'slugon' => env('SLUGON', 'Build strength. Move better. Transform confidently.'),
 
-    'commercial_number' => env('COMPANY_COMMERCIAL_NUMBER', 'CR-2025-001'),
+    'description' => env('DESCRIPTION', 'Personalized training and nutrition tailored to your goals, lifestyle, and schedule.'),
 
     /*
     |-------------------------------

@@ -3,39 +3,39 @@
 /* ---------------------------------------- */
 
 textarea {
-  @apply resize-y;
+    @apply resize-y;
 }
 
 textarea:disabled {
-  @apply resize-none;
+    @apply resize-none;
 }
 
 .input-field textarea {
-  @apply text-dark w-full rounded-lg border border-solid border-[#858C94]/20 bg-white p-3 text-sm shadow-none ring-0 transition-all duration-150 ease-in-out outline-none;
-  @apply placeholder:text-[#09101D]/50;
+    @apply font-inter w-full rounded-lg border border-solid border-current/5 bg-current/5 p-3 text-sm font-medium text-current/80 shadow-none ring-0 transition-all duration-150 ease-in-out outline-none;
+    @apply placeholder:text-current/40;
 }
 
 .input-field:hover textarea {
-  @apply border-dark/20;
+    @apply border-current/20;
 }
 
 .input-field textarea:active,
 .input-field textarea:focus-within,
 .input-field textarea:focus-visible,
 .input-field textarea:focus {
-  @apply border-main bg-white;
+    @apply border-current/10;
 }
 .input-field textarea:active + label,
 .input-field textarea:focus-within + label,
 .input-field textarea:focus-visible + label,
 .input-field textarea:focus + label {
-  @apply text-main;
+    @apply text-light;
 }
 
 #char-counter {
-  @apply mt-1 ml-auto w-fit text-xs text-gray-400 select-none;
+    @apply mt-1 ml-auto w-fit text-xs text-black/50;
 }
 
 #char-counter.warning {
-  @apply text-red-500;
+    @apply text-red-500;
 }

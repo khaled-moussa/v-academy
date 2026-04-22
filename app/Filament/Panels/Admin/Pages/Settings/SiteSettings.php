@@ -15,8 +15,8 @@ use Filament\Schemas\Components\Tabs;
 use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use BackedEnum;
 use Filament\Forms\Components\Repeater;
+use BackedEnum;
 
 class SiteSettings extends Page
 {
@@ -36,8 +36,10 @@ class SiteSettings extends Page
     |-------------------------------
     */
     public string $siteName;
+    public string $tagline;
     public string $slugon;
     public string $description;
+    public ?array $youtubeLinks = [];
     public ?string $address = null;
     public ?string $locationUrl = null;
     public ?string $supportEmail = null;
@@ -63,8 +65,10 @@ class SiteSettings extends Page
         $setting = GeneralSettingContext::toArray();
 
         $this->siteName     = data_get($setting, 'site_name');
+        $this->tagline      = data_get($setting, 'tagline');
         $this->slugon       = data_get($setting, 'slugon');
         $this->description  = data_get($setting, 'description');
+        $this->youtubeLinks = data_get($setting, 'youtube_links');
         $this->address      = data_get($setting, 'address');
         $this->locationUrl  = data_get($setting, 'location_url');
         $this->supportEmail = data_get($setting, 'support_email');
@@ -103,7 +107,7 @@ class SiteSettings extends Page
                     | Site Settings Tab
                     |-------------------------------
                     */
-                    Tab::make('Site Settings')
+                    Tab::make('Intro')
                         ->icon(Heroicon::OutlinedGlobeAmericas)
                         ->schema([
                             Section::make()
@@ -113,11 +117,19 @@ class SiteSettings extends Page
                                         ->required()
                                         ->columnSpanFull(),
 
-                                    TextInput::make('slugon')
+                                    TextInput::make('tagline')
+                                        ->label('Tagline')
+                                        ->required()
+                                        ->maxLength(150)
+                                        ->rule('max:150')
+                                        ->columnSpanFull(),
+
+                                    Textarea::make('slugon')
                                         ->label('Slugon')
                                         ->required()
                                         ->maxLength(300)
                                         ->rule('max:300')
+                                        ->rows(3)
                                         ->columnSpanFull(),
 
                                     Textarea::make('description')
@@ -134,10 +146,34 @@ class SiteSettings extends Page
 
                     /*
                     |-------------------------------
+                    | Site Youtube Tab
+                    |-------------------------------
+                    */
+                    Tab::make('Youtube')
+                        ->icon(Heroicon::OutlinedLink)
+                        ->schema([
+
+                            Repeater::make('youtubeLinks')
+                                ->schema([
+                                    TextInput::make('title')
+                                        ->label('Title')
+                                        ->required(),
+
+                                    TextInput::make('link')
+                                        ->label('Link')
+                                        ->required()
+                                ])
+                                ->columnSpanFull()
+                                ->reorderable(false)
+                        ]),
+
+
+                    /*
+                    |-------------------------------
                     | Academy Contact Tab
                     |-------------------------------
                     */
-                    Tab::make('Academy Contact')
+                    Tab::make('Contact')
                         ->icon(Heroicon::OutlinedPhone)
                         ->schema([
                             Section::make('Contact Details')
@@ -185,8 +221,10 @@ class SiteSettings extends Page
 
         $dto = new GeneralSettingDto(
             siteName: $this->siteName,
+            tagline: $this->tagline,
             slugon: $this->slugon,
             description: $this->description,
+            youtubeLinks: $this->youtubeLinks,
             address: $this->address,
             locationUrl: $this->locationUrl,
             supportEmail: $this->supportEmail,

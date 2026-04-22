@@ -1,0 +1,35 @@
+.link-btn {
+    @apply text-current/60 hover:text-current/90 text-sm;
+}
+
+.link-btn.danger {
+    @apply transition-all;
+}
+.link-btn i {
+    @apply text-current text-base leading-none;
+}
+
+.link-btn i.ti {
+    @apply text-base leading-none;
+}
+
+.link-btn i.fi {
+    @apply text-sm leading-none;
+}
+
+.link-btn.danger {
+    @apply border-[#ff0000]/15 text-red-500 hover:border-[#ff0000]/40;
+    @apply child:text-red-500 child:transition-all;
+    @apply hover:child:text-red-600;
+}
+
+.link-btn.danger i {
+    @apply text-red-300;
+}
+
+.link-btn.spinner::after {
+    filter: saturate(0) brightness(50%);
+}
+.link-btn.danger.spinner::after {
+    filter: hue-rotate(310deg);
+}

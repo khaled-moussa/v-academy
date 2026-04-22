@@ -2,6 +2,7 @@
 
 namespace App\Filament\Panels\Admin\Resources\Plans\Tables;
 
+use App\Domain\Plan\Models\Plan;
 use App\Filament\Components\Button\GroupedActionsButton;
 use App\Filament\Components\Filter\DateRangeFilter;
 use Filament\Support\Colors\Color;
@@ -46,27 +47,25 @@ class PlansTable
                     ->label('Total Sessions')
                     ->badge(),
 
-                /*
-                |-----------------------------
-                | Secondary Info
-                |-----------------------------
-                */
-
                 TextColumn::make('price')
                     ->label('Price')
+                    ->formatStateUsing(fn($record) => static::formatPrice($record))
+                    ->html(),
+
+                TextColumn::make('discount')
+                    ->label('Discount')
                     ->color(Color::Gray)
-                    ->money('EGP', locale: 'nl'),
+                    ->suffix('%'),
 
                 /*
                 |-----------------------------------
                 | Timestamp
                 |-----------------------------------
                 */
-                TextColumn::make('created_at')
+
+                TextColumn::make('created_at_formatted')
                     ->label('Created At')
-                    ->badge()
-                    ->icon(Heroicon::OutlinedClock)
-                    ->formatStateUsing(fn($record) => $record->getCreatedAt()),
+                    ->badge(),
 
                 /*
                 |-----------------------------------
@@ -101,11 +100,10 @@ class PlansTable
                 Group::make('is_active')
                     ->label('Active Status')
                     ->titlePrefixedWithLabel(false)
-                    ->getTitleFromRecordUsing(
-                        fn($state) => $state ? 'Active' : 'Inactive'
-                    ),
+                    ->getTitleFromRecordUsing(fn($state) => $state ? 'Active' : 'Inactive'),
 
-                Group::make('created_at')
+                Group::make('created_at_formatted')
+                    ->label('Created At')
                     ->date(),
             ])
             ->collapsedGroupsByDefault()
@@ -120,14 +118,44 @@ class PlansTable
                 DateRangeFilter::make('session_date')
                     ->label('Session Date Range'),
             ])
+
             ->filtersFormWidth(Width::Large)
 
             /*
             |------------------------------------------------------------------
-            | Actions
+            | Record Actions
             |------------------------------------------------------------------
             */
 
             ->recordActions(GroupedActionsButton::actions());
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Helpers
+    |--------------------------------------------------------------------------
+    */
+
+    private static function formatPrice(Plan $plan): string
+    {
+        $price = $plan->getPrice();
+        $priceDiscount = $plan->getPriceDiscount();
+        $discount = $plan->getDiscount();
+
+        if ($discount > 0) {
+            return "
+            <div class='flex flex-col'>
+                <span style='text-decoration-line: line-through; color:gray'>
+                    {$price} EGP
+                </span>
+
+                <span>
+                    {$priceDiscount} EGP
+                </span>
+            </div>
+        ";
+        }
+
+        return "<span>{$price} EGP</span>";
     }
 }

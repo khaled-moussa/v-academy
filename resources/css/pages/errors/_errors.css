@@ -1,0 +1,95 @@
+@reference "@css/reference.css";
+
+/* 
+|-----------------------------
+| Page
+|----------------------------- 
+*/
+
+.under-dev-page {
+    @apply fixed inset-0 grid place-items-center text-white;
+    @apply bg-linear-to-t from-brand-500/40 to-secondary;
+}
+
+/* 
+|-----------------------------
+| Content
+|----------------------------- 
+*/
+
+.under-dev-content {
+    @apply flex flex-col gap-2.5 text-center p-6;
+}
+
+/* 
+|-----------------------------
+| Header
+|----------------------------- 
+*/
+
+.under-dev-header {
+    @apply flex justify-center items-center gap-1;
+}
+
+/* 
+|-----------------------------
+| Pulse
+|----------------------------- 
+*/
+
+.under-dev-pulse {
+    @apply mx-auto relative flex w-3 h-3;
+}
+
+.under-dev-pulse .dot {
+    @apply relative inline-flex w-3 h-3 rounded-full bg-red-500;
+}
+
+.under-dev-pulse .dot-shadow {
+    @apply absolute inline-flex w-full h-full rounded-full bg-red-400 opacity-75 animate-ping;
+}
+
+/* 
+|-----------------------------
+| Title
+|----------------------------- 
+*/
+
+.under-dev-title {
+    @apply text-2xl font-extrabold tracking-tight;
+}
+
+/* 
+|-----------------------------
+| Code
+|----------------------------- 
+*/
+
+.under-dev-code {
+    @apply text-3xl font-extrabold tracking-tight mr-1;
+}
+
+.under-dev-code::after {
+    content: "|";
+    @apply mx-1;
+}
+
+/* 
+|-----------------------------
+| Subtitle
+|----------------------------- 
+*/
+
+.under-dev-subtitle {
+    @apply text-slate-300 mb-2.5 text-base;
+}
+
+/* 
+|-----------------------------
+| Button
+|----------------------------- 
+*/
+
+.under-dev-button {
+    @apply mx-auto w-fit;
+}

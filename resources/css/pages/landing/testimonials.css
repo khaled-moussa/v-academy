@@ -1,65 +1,75 @@
-
-/* -------------------------------
-   CONTAINER
--------------------------------- */
+/* 
+|---------------------------------
+| CONTAINER
+|--------------------------------
+*/
 .testimonials__container {
-  @apply md:max-w-200 mx-auto xl:max-w-330 px-6;
+    @apply container;
 }
 
-/* -------------------------------
-   HEADER
--------------------------------- */
-.testimonials .section__title {
-  @apply text-white/92;
-}
 
-.testimonials .lead {
-  @apply text-white/72;
-}
-
-.testimonials__header {
-  @apply mb-10 text-start max-w-3xl;
-}
-
-/* -------------------------------
-   GRID (REPLACES custom-col system)
--------------------------------- */
+/* 
+|---------------------------------
+| GRID (REPLACES custom-col system)
+|--------------------------------
+*/
 .testimonials__grid {
-  @apply grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6;
+    @apply grid grid-cols-1;
+    @apply gap-6;
+    @apply md:grid-cols-2 xl:grid-cols-4;
 }
 
-/* -------------------------------
-   VIDEO CARD
--------------------------------- */
+
+/* 
+|---------------------------------
+| VIDEO CARD
+|--------------------------------
+*/
 .video-card {
-  @apply bg-surface-1 border border-white/10 rounded-2xl overflow-hidden;
+    @apply bg-dark;
+    @apply border border-foreground/10;
+    @apply rounded-2xl overflow-hidden;
 }
 
-/* -------------------------------
-   VIDEO WRAPPER
--------------------------------- */
+
+/* 
+|---------------------------------
+| VIDEO WRAPPER
+|--------------------------------
+*/
 .video-wrap {
-  @apply relative w-full aspect-video bg-white/4;
+    @apply relative w-full;
+    @apply aspect-video;
 }
 
 .video-wrap .video {
-  @apply absolute inset-0 w-full h-full border-0;
+    @apply absolute inset-0;
+    @apply w-full h-full;
+    @apply border-0;
 }
 
-/* -------------------------------
-   META
--------------------------------- */
+
+/* 
+|---------------------------------
+| META
+|--------------------------------
+*/
 .video-meta {
-  @apply text-white/92 py-3 px-4 border-t border-white/10;
+    @apply py-3 px-4;
+    @apply text-muted-foreground;
 }
 
-/* -------------------------------
-   FOOTER CTA
--------------------------------- */
+
+/* 
+|---------------------------------
+| FOOTER CTA
+|--------------------------------
+*/
 .testimonials__footer {
-  @apply text-center mt-8;
+    @apply text-center;
+    @apply mt-8;
 }
 
 .testimonials__more {
-  @apply mt-0;
+    @apply mt-0;
 }

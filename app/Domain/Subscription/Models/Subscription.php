@@ -9,6 +9,7 @@ use App\Domain\Subscription\Models\Concerns\HasSubscriptionRelation;
 use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionApprovedState;
 use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionPendingState;
 use App\Domain\Subscription\Models\States\SubscriptionStates\SubscriptionStates;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
 use Spatie\ModelStates\HasStates;
 use Spatie\MediaLibrary\HasMedia;
@@ -23,6 +24,7 @@ class Subscription extends Model implements HasMedia
     use HasStates;
     use InteractsWithMedia;
     use HasUuid;
+    use HasFormattedTimestamps;
     use HasSubscriptionRelation;
 
     /*

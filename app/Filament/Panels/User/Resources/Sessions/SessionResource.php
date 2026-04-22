@@ -13,6 +13,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use BackedEnum;
+use Illuminate\Database\Eloquent\Builder;
 
 class SessionResource extends Resource
 {
@@ -29,6 +30,17 @@ class SessionResource extends Resource
     protected static ?int $navigationSort = 2;
 
     protected static ?string $recordTitleAttribute = 'name';
+
+    /* 
+    |---------------------------------
+    | Eloquent Query 
+    |---------------------------------
+    */
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->latest();
+    }
 
     /* 
     |---------------------------------

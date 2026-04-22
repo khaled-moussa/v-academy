@@ -1,0 +1,33 @@
+/* 
+|---------------------------------
+| SECTION
+|--------------------------------
+*/
+.contact {
+    @apply py-10 my-20;
+    @apply text-light;
+}
+
+
+/* 
+|---------------------------------
+| CONTAINER
+|--------------------------------
+*/
+.contact__container {
+    @apply container;
+    @apply flex flex-col;
+    @apply lg:flex-row;
+}
+
+
+/* 
+|---------------------------------
+| GRID
+|--------------------------------
+*/
+.contact__grid {
+    @apply grid grid-cols-1;
+    @apply gap-6;
+    @apply md:grid-cols-3;
+}

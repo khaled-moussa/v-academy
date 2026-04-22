@@ -20,7 +20,7 @@ return new class extends Migration
 
             /* 
             |-------------------------------
-            | General Settings
+            | Site Info
             |-------------------------------
             */
             $table->string('site_name')
@@ -28,8 +28,23 @@ return new class extends Migration
 
             $table->mediumText('slugon');
 
+            $table->mediumText('tagline');
+
             $table->longText('description');
 
+            /* 
+            |-------------------------------
+            | Site Youtube Links
+            |-------------------------------
+            */
+            $table->json('youtube_links')
+                ->nullable();
+
+            /* 
+            |-------------------------------
+            | Site Contact
+            |-------------------------------
+            */
             $table->json('phones')
                 ->nullable();
 
@@ -42,6 +57,12 @@ return new class extends Migration
             $table->string('support_email')
                 ->default(config('company-info.support_email'));
 
+
+            /* 
+            |-------------------------------
+            | User Panel Setting
+            |-------------------------------
+            */
             $table->integer('max_capacity')
                 ->default(8);
 

@@ -10,6 +10,7 @@
     scrollbar-color: theme("colors.gray.200");
     -webkit-tap-highlight-color: transparent;
 }
+
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
     @apply h-[0.2rem] w-[0.3rem] scroll-smooth;
@@ -25,8 +26,12 @@
     @apply font-ibm text-[0.95rem] font-normal;
 }
 
+/* body {
+    @apply bg-primary min-h-screen overflow-x-hidden font-poppins;
+} */
+
 body {
-    @apply font-inter relative m-0 box-border w-screen h-screen overflow-x-hidden scroll-smooth bg-surface-1;
+    @apply w-screen h-screen m-0  overflow-x-hidden relative font-poppins box-border scroll-smooth bg-primary;
 }
 
 img {
@@ -63,23 +68,4 @@ i {
 strong,
 b {
     @apply font-semibold;
-}
-
-/* -------------------------------------- */
-
-main {
-    @apply flex flex-col flex-1;
-}
-
-.layout {
-    @apply flex h-screen w-screen overflow-hidden;
-}
-
-.content {
-    @apply relative flex-col overflow-x-auto overflow-y-auto p-6 xl:flex-row;
-    flex-grow: 1;
-}
-
-.divider {
-    @apply text-brand-500/50;
 }

@@ -1,61 +1,65 @@
 /* 
 |-----------------------------
 | Vendors
-|----------------------------- 
+|-----------------------------
 */
-
 @import "@css/common/vendors/_vendors.css";
+
 
 /* 
 |-----------------------------
 | Tailwind
-|----------------------------- 
+|-----------------------------
 */
-
 @import "tailwindcss";
 @import "@css/common/base/_base.css";
 @import "@css/common/components/_components.css";
 
+
 /* 
 |-----------------------------
 | Sources
-|----------------------------- 
+|-----------------------------
 */
-
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source '../**/*.blade.php';
 @source '../**/*.js';
 
+
 /* 
 |-----------------------------
 | Variants
-|----------------------------- 
+|-----------------------------
 */
-
 @custom-variant child {
     & > * {
         @slot;
     }
 }
 
+
 /* 
 |-----------------------------
 | Theme
-|----------------------------- 
+|-----------------------------
 */
-
 @theme {
 
     /* -------------------------------
        BREAKPOINTS
-    ------------------------------- */
+    -------------------------------- */
     --breakpoint-xs: 480px;
+    --breakpoint-sm: 540px;
+    --breakpoint-md: 48rem;
+    --breakpoint-lg: 64rem;
+    --breakpoint-xl: 80rem;
+    --breakpoint-2xl: 96rem;
 
 
     /* -------------------------------
        FONTS
-    ------------------------------- */
+    -------------------------------- */
     --font-poppins: "Poppins", sans-serif;
     --font-inter: "Inter", sans-serif;
     --font-ibm: "IBM Plex Sans Arabic", sans-serif;
@@ -63,63 +67,49 @@
 
     /* -------------------------------
        BASE COLORS
-    ------------------------------- */
-    --color-main: #ffffff;
+    -------------------------------- */
     --color-light: #ffffff;
     --color-dark: #202020;
 
     --color-primary: #0c0a06;
     --color-secondary: #151515;
 
-
-    /* -------------------------------
-       TEXT COLORS
-    ------------------------------- */
-    --color-text: rgba(255, 255, 255, 0.92);
-    --color-text-muted: rgba(255, 255, 255, 0.72);
-    --color-text-soft: rgba(255, 255, 255, 0.6);
-
-
-    /* -------------------------------
-       STATE COLORS
-    ------------------------------- */
-    --color-muted: rgba(255, 255, 255, 0.06);
     --color-danger: #e74c3c;
 
 
     /* -------------------------------
-       SURFACES
-    ------------------------------- */
-    --color-elev-1: rgba(255, 255, 255, 0.04);
-    --color-elev-2: rgba(255, 255, 255, 0.06);
+       TEXT COLORS
+    -------------------------------- */
+    --color-foreground: rgba(255, 255, 255, 0.92);
+    --color-muted-foreground: rgba(255, 255, 255, 0.72);
+    --color-soft-foreground: rgba(255, 255, 255, 0.6);
 
-    --color-border: rgba(255, 255, 255, 0.1);
 
-    --color-surface-1: #111111;
-    --color-surface-2: #151515;
-    --color-surface-3: rgba(21, 21, 21, 0.85);
+    /* -------------------------------
+       SURFACES (reserved)
+    -------------------------------- */
+    /* --color-elev-1 */
+    /* --color-elev-2 */
+    /* --color-border */
+    /* --color-surface-1 */
+    /* --color-surface-2 */
+    /* --color-surface-3 */
 
 
     /* -------------------------------
        BRAND COLORS
-    ------------------------------- */
+    -------------------------------- */
     --color-brand-500: #c3912b;
     --color-brand-400: #d7ad4a;
     --color-brand-300: #e6c26a;
     --color-brand-200: #f0d78e;
     --color-brand-100: #f7e9b8;
 
-    --color-accent-500: #facf6a;
-
 
     /* -------------------------------
        GRADIENTS
-    ------------------------------- */
-    --grad-brand: linear-gradient(
-        135deg,
-        #c3912b 0%,
-        #facf6a 100%
-    );
+    -------------------------------- */
+    --grad-brand: linear-gradient(135deg, #c3912b 0%, #facf6a 100%);
 
     --grad-hero-left: radial-gradient(
         1200px 600px at 10% -20%,
@@ -136,7 +126,7 @@
 
     /* -------------------------------
        RADIUS
-    ------------------------------- */
+    -------------------------------- */
     --radius-sm: 10px;
     --radius-md: 14px;
     --radius-lg: 20px;
@@ -145,41 +135,23 @@
 
 
     /* -------------------------------
-       SPACING
-    ------------------------------- */
-    --space-1: 4px;
-    --space-2: 8px;
-    --space-3: 12px;
-    --space-4: 16px;
-    --space-5: 20px;
-    --space-6: 24px;
-    --space-7: 32px;
-    --space-8: 40px;
-    --space-9: 48px;
-    --space-10: 64px;
-
-
-    /* -------------------------------
        SHADOWS
-    ------------------------------- */
+    -------------------------------- */
     --shadow-soft: 0 8px 30px rgba(0, 0, 0, 0.25);
     --shadow-strong: 0 20px 60px rgba(0, 0, 0, 0.45);
 
 
     /* -------------------------------
        ANIMATIONS
-    ------------------------------- */
+    -------------------------------- */
     --animate-float: float 6s ease-in-out infinite;
-    --animate-tilt: tilt 8s ease-in-out infinite;
     --animate-glow: glow 3.6s ease-in-out infinite;
-
 
     /* -------------------------------
        KEYFRAMES
-    ------------------------------- */
+    -------------------------------- */
     @keyframes float {
-        0%,
-        100% {
+        0%, 100% {
             transform: perspective(800px) rotateY(-8deg) translateY(0);
         }
         50% {
@@ -188,13 +160,43 @@
     }
 
     @keyframes glow {
-        0%,
-        100% {
+        0%, 100% {
             opacity: 0.55;
         }
         50% {
             opacity: 0.85;
         }
     }
+}
 
+
+/* 
+|-----------------------------
+| CONTAINER UTILITY
+|-----------------------------
+*/
+@utility container {
+    margin-inline: auto;
+    width: 100%;
+    padding-inline: 19.5px;
+
+    @media (width >= theme(--breakpoint-sm)) {
+        max-width: 540px;
+    }
+
+    @media (width >= theme(--breakpoint-md)) {
+        max-width: 46rem;
+    }
+
+    @media (width >= theme(--breakpoint-lg)) {
+        max-width: 62rem;
+    }
+
+    @media (width >= theme(--breakpoint-xl)) {
+        max-width: 78rem;
+    }
+
+    @media (width >= theme(--breakpoint-2xl)) {
+        max-width: 82.5rem;
+    }
 }

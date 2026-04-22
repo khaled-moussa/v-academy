@@ -22,7 +22,7 @@
             </div>
 
             {{-- Copy --}}
-            <div class="about__copy">
+            <div class="about__intro">
                 <h2 class="section__title">About Me</h2>
 
                 <p class="lead">I am a Strength & Conditioning Coach and founder of Variables Academy, where science

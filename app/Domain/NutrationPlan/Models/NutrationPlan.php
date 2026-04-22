@@ -5,6 +5,7 @@ namespace App\Domain\NutrationPlan\Models;
 use App\App\Web\Resources\NutrationPlans\NutrationPlanResource;
 use App\Domain\NutrationPlan\Models\Builders\NutrationPlanQueryBuilder;
 use App\Domain\NutrationPlan\Models\Concerns\HasNutrationPlanRelation;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
 use Spatie\ModelStates\HasStates;
 use Illuminate\Database\Eloquent\Model;
@@ -14,8 +15,9 @@ use Carbon\Carbon;
 #[UseResource(NutrationPlanResource::class)]
 class NutrationPlan extends Model
 {
-    use HasUuid;
     use HasStates;
+    use HasUuid;
+    use HasFormattedTimestamps;
     use HasNutrationPlanRelation;
 
     /*
@@ -81,7 +83,7 @@ class NutrationPlan extends Model
     {
         return $this->wednesday;
     }
-    
+
     public function getThursday(): string
     {
         return $this->thursday;

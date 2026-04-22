@@ -10,6 +10,7 @@ class SessionAvailableState extends SessionStates
     {
         return static::class;
     }
+    
     public static function label(): string
     {
         return 'Available';
@@ -24,6 +25,4 @@ class SessionAvailableState extends SessionStates
     {
         return 'success';
     }
-    
 }
-

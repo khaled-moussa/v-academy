@@ -4,8 +4,6 @@ namespace App\Filament\Panels\Admin\Resources\Plans\Schemas;
 
 use App\Domain\Plan\Models\Plan;
 use Filament\Forms\Components\Repeater;
-use Filament\Forms\Components\Repeater\TableColumn;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Components\Section;
@@ -53,9 +51,11 @@ class PlanForm
 
                                 TextInput::make('discount')
                                     ->label('Discount')
+                                    ->required()
                                     ->numeric()
                                     ->minValue(0)
                                     ->maxValue(100)
+                                    ->default(0)
                                     ->mask(RawJs::make('$money($input)'))
                                     ->stripCharacters(',')
                                     ->suffix('%'),

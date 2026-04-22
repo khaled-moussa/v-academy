@@ -2,10 +2,10 @@
 
 namespace App\Domain\TrainingSession\Models;
 
-use App\Domain\SocialAccount\Models\Concerns\HasSocialAccountRelation;
 use App\Domain\TrainingSession\Models\Builders\TrainingSessionQueryBuilder;
 use App\Domain\TrainingSession\Models\Concerns\HasTrainingSessionRelation;
 use App\Domain\TrainingSession\Models\SessionStates\SessionStates;
+use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
@@ -15,6 +15,7 @@ class TrainingSession extends Model
 {
     use HasUuid;
     use HasStates;
+    use HasFormattedTimestamps;
     use HasTrainingSessionRelation;
 
     /*
