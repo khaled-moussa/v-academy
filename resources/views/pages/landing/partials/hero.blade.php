@@ -11,16 +11,16 @@
             {{-- Copy --}}
             <div class="hero__intro">
 
-                <p class="hero__slugon">
-                    {{ $generalSetting['slugon'] }}
+                <p class="hero__tagline">
+                    {{ $generalSetting['tagline'] }}
                 </p>
 
-                <h1 class="hero__description">
-                    {{ $generalSetting['description'] }}
+                <h1 class="hero__slugon">
+                    {{ $generalSetting['slugon'] }}
                 </h1>
 
-                <p class="hero__subtitle">
-                    Personalized training and nutrition tailored to your goals, lifestyle, and schedule.
+                <p class="hero__description">
+                    {{ $generalSetting['description'] }}
                 </p>
 
                 {{-- Actions --}}

@@ -50,18 +50,18 @@
     @apply flex flex-col justify-center;
 }
 
-.hero__slugon {
+.hero__tagline {
     @apply font-semibold tracking-wider text-brand-300;
     @apply mb-3.5;
 }
 
-.hero__description {
+.hero__slugon {
     @apply text-[clamp(32px,5vw,56px)];
     @apply leading-[1.1] font-bold;
     @apply mb-4;
 }
 
-.hero__subtitle {
+.hero__description {
     @apply text-muted-foreground text-lg leading-relaxed;
     @apply mb-6;
 }
