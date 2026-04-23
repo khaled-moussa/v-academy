@@ -3,6 +3,9 @@
 namespace App\Filament\Panels\User\Widgets;
 
 use App\Domain\TrainingSession\Actions\GetSessionsAction;
+use App\Domain\TrainingSession\Models\SessionStates\SessionAvailableState;
+use App\Domain\TrainingSession\Models\SessionStates\SessionFullState;
+use App\Domain\TrainingSession\Models\TrainingSession;
 use App\Support\Context\AuthContext;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Icons\Heroicon;
@@ -12,13 +15,24 @@ use Filament\Widgets\TableWidget;
 
 class UpcomingSessionTableWidget extends TableWidget
 {
+    /*
+    |------------------------------------------------------------------
+    | Layout & Sorting
+    |------------------------------------------------------------------
+    */
+
     protected int|string|array $columnSpan = 'full';
     protected static ?int $sort = 3;
+
+    /*
+    |------------------------------------------------------------------
+    | Table Configuration
+    |------------------------------------------------------------------
+    */
 
     public function table(Table $table): Table
     {
         $user = AuthContext::user();
-        $hasSubscription = AuthContext::hasActiveSubscription();
 
         $startOfWeek = now()->startOfWeek();
         $endOfWeek = now()->endOfWeek();
@@ -40,12 +54,11 @@ class UpcomingSessionTableWidget extends TableWidget
             |------------------------------------------------------------------
             */
 
-            ->query(fn() => app(GetSessionsAction::class)
-                ->upcomingUserSessions(
-                    user: $user,
-                    startDate: $startOfWeek->toDateString(),
-                    endDate: $endOfWeek->toDateString(),
-                ))
+            ->query(fn() => app(GetSessionsAction::class)->upcomingUserSessions(
+                user: $user,
+                startDate: $startOfWeek->toDateString(),
+                endDate: $endOfWeek->toDateString(),
+            ))
 
             /*
             |------------------------------------------------------------------
@@ -54,10 +67,23 @@ class UpcomingSessionTableWidget extends TableWidget
             */
 
             ->columns([
+
+                /* 
+                |-------------------------------
+                | Session Name
+                |------------------------------- 
+                */
+
                 TextColumn::make('name')
                     ->label('Session Name')
                     ->weight(FontWeight::Bold)
                     ->searchable(),
+
+                /* 
+                |-------------------------------
+                | Session State
+                |------------------------------- 
+                */
 
                 TextColumn::make('session_state')
                     ->label('State')
@@ -65,57 +91,66 @@ class UpcomingSessionTableWidget extends TableWidget
                     ->color(fn($state) => $state?->filamentColor())
                     ->formatStateUsing(fn($state) => $state?->label()),
 
+                /* 
+                |-------------------------------
+                | Capacity
+                |------------------------------- 
+                */
+
                 TextColumn::make('capacity')
                     ->label('Capacity')
                     ->badge()
-                    ->color(fn($record) => self::capacityColor($record))
-                    ->formatStateUsing(
-                        fn($record) => "Capacity {$record->getBooking()}/{$record->getCapacity()}"
-                    ),
+                    ->color(fn($record) => self::determineCapacityColor($record))
+                    ->formatStateUsing(fn($record) => 'Capacity ' . $record->getBooking() . '/' . $record->getCapacity()),
 
-                TextColumn::make('session_date')
+                /* 
+                |-------------------------------
+                | Session Date
+                |------------------------------- 
+                */
+
+                TextColumn::make('session_date_formatted')
                     ->label('Date')
                     ->date()
                     ->badge()
-                    ->icon(Heroicon::CalendarDays)
-                    ->formatStateUsing(
-                        fn($record) => $record->getSessionDate()?->format('M d, Y')
-                    ),
+                    ->icon(Heroicon::CalendarDays),
 
-                TextColumn::make('session_time')
+                /* 
+                |-------------------------------
+                | Session Time
+                |------------------------------- 
+                */
+
+                TextColumn::make('session_time_formatted')
                     ->label('Time')
                     ->badge()
-                    ->icon(Heroicon::OutlinedClock)
-                    ->formatStateUsing(
-                        fn($record) => $record->getSessionDate()?->format('h:i A')
-                    ),
+                    ->icon(Heroicon::OutlinedClock),
             ])
 
-            /*
-            |------------------------------------------------------------------
-            | Options
-            |------------------------------------------------------------------
+            /* 
+            |-----------------------------------------------------------------
+            | Table Options
+            |-----------------------------------------------------------------
             */
 
+            ->deferLoading()
+            ->stackedOnMobile()
             ->searchable(false)
             ->paginated(false);
     }
 
-    /*
+    /* 
     |-------------------------------------------------------------------------
     | Helpers
     |-------------------------------------------------------------------------
     */
 
-    private static function capacityColor($record): string
+    private static function determineCapacityColor(TrainingSession $session): array
     {
-        $capacity = max($record->getCapacity(), 1);
-        $usage = $record->getBooking() / $capacity;
+        if ($session->getCapacity() === $session->getBooking()) {
+            return SessionFullState::filamentColor();
+        }
 
-        return match (true) {
-            $usage >= 0.9 => 'danger',
-            $usage >= 0.6 => 'warning',
-            default => 'success',
-        };
+        return SessionAvailableState::filamentColor();
     }
 }

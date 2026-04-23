@@ -13,8 +13,8 @@ use Filament\Pages\Page;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-use BackedEnum;
 use Livewire\Attributes\On;
+use BackedEnum;
 
 class GeneralSettings extends Page
 {
@@ -111,17 +111,20 @@ class GeneralSettings extends Page
                         ->afterHeader([
                             Toggle::make('userCanCreateSession')->hiddenLabel(),
                         ])
-                        ->compact(),
+                        ->compact()
+                        ->secondary(),
 
                     Section::make('Max Capacity')
-                        ->description('Determine the default max capacity when users create a session.')
-                        ->afterHeader([
+                        ->schema([
                             TextInput::make('maxCapacity')
                                 ->hiddenLabel()
+                                ->belowContent('Determine the default max capacity when users create a session.')
+                                ->required()
                                 ->numeric()
                                 ->minValue(1),
                         ])
-                        ->compact(),
+                        ->compact()
+                        ->secondary(),
                 ])
                 ->columnSpanFull()
                 ->compact(),

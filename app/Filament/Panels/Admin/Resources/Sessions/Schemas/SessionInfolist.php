@@ -49,16 +49,14 @@ class SessionInfolist
                             ->color(fn($state) => $state->filamentColor())
                             ->formatStateUsing(fn($state) => $state->label()),
 
-                        TextEntry::make('session_date')
+                        TextEntry::make('session_date_formatted')
                             ->label('Date')
-                            ->date()
-                            ->badge(),
+                            ->date(),
 
-                        TextEntry::make('session_time')
+                        TextEntry::make('session_time_formatted')
                             ->label('Time')
                             ->time()
-                            ->badge()
-                            ->formatStateUsing(fn($state) => $state?->format('h:i A')),
+                            ->badge(),
 
                         /*
                         |-----------------------------

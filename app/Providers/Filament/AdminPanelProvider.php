@@ -44,9 +44,8 @@ class AdminPanelProvider extends PanelProvider
             | Appearance
             |--------------------------------
             */
-            ->brandName(config('company-info.site'))
+            ->brandName(fn() => view('filament.auth.brand-name'))
             ->font('Poppins')
-            ->defaultThemeMode(ThemeMode::System)
 
             ->sidebarCollapsibleOnDesktop()
             ->collapsedSidebarWidth('9rem')

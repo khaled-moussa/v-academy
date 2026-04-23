@@ -4,9 +4,7 @@
 |--------------------------------
 */
 .footer {
-    @apply py-10 pb-5;
-    @apply text-foreground;
-    @apply bg-linear-to-br from-primary to-secondary;
+    @apply py-10 text-foreground bg-linear-to-br from-primary to-secondary;
 }
 
 /* 
@@ -15,36 +13,8 @@
 |--------------------------------
 */
 .footer__container {
-    @apply container flex;
-}
-
-/* 
-|---------------------------------
-| TYPOGRAPHY
-|--------------------------------
-*/
-.footer h4 {
-    @apply mb-3;
-    @apply text-foreground;
-}
-
-.footer__info a {
-    @apply text-muted-foreground;
-}
-
-.footer__info a:hover {
-    @apply text-foreground;
-}
-
-/* 
-|---------------------------------
-| GRID
-|--------------------------------
-*/
-.footer__grid {
-    @apply grid grid-cols-1;
-    @apply gap-6;
-    @apply md:grid-cols-2;
+    @apply container flex flex-col gap-10;
+    @apply lg:flex-row lg:items-start lg:justify-between;
 }
 
 /* 
@@ -53,38 +23,32 @@
 |--------------------------------
 */
 .footer__brand-wrapper {
-    @apply flex flex-col;
+    @apply flex flex-col gap-4;
 }
 
 .footer__brand-header {
     @apply flex items-center gap-3;
 }
 
+.footer__brand {
+    @apply w-full max-w-md;
+}
+
 /* 
 |---------------------------------
-| INFO SECTION
+| INFO
 |--------------------------------
 */
 .footer__info {
-    @apply mt-2;
-}
-
-.footer__contact {
-    @apply mt-1;
-    @apply text-muted-foreground;
-}
-
-.footer__phones {
-    @apply mt-1;
-    @apply grid gap-1;
-    @apply text-muted-foreground;
+    @apply mt-3 flex flex-col gap-2 text-muted-foreground;
 }
 
 .footer__address {
-    @apply mt-2;
-    @apply text-muted-foreground;
     @apply leading-relaxed;
-    @apply max-w-sm;
+}
+
+.footer__phones {
+    @apply grid gap-1;
 }
 
 /* 
@@ -92,8 +56,31 @@
 | LINKS
 |--------------------------------
 */
+.footer__links {
+    @apply w-full lg:w-auto;
+}
+
+.footer__links h4 {
+    @apply my-2;
+}
+
 .footer__links ul {
     @apply grid gap-2;
+}
+
+/* 
+|---------------------------------
+| SOCIAL
+|--------------------------------
+*/
+.footer__social {
+    @apply flex items-center gap-3 mt-3;
+}
+
+.footer__social-link {
+    @apply w-9 h-9 grid place-items-center;
+    @apply rounded-full border border-foreground/10;
+    @apply transition-all hover:bg-brand-500/15;
 }
 
 /* 
@@ -102,7 +89,7 @@
 |--------------------------------
 */
 .footer__meta {
-    @apply mt-6 pt-4;
-    @apply text-center text-white/60;
-    @apply border-t border-brand-500/15;
+    @apply mt-8 pt-4 text-center text-muted-foreground text-xs;
+    @apply border-t border-foreground/10;
+    @apply md:text-sm;
 }

@@ -1,20 +1,56 @@
+/* 
+|---------------------------------
+| OUTLINE BUTTON
+|--------------------------------
+*/
 .outline-btn {
-    @apply flex min-h-8 px-5 py-2 gap-2 w-max items-center justify-center rounded-xl border border-solid border-current/7 bg-current/5 text-sm font-medium;
-    @apply hover:text-current/80 hover:border-current/30 hover:bg-current/15;
+    @apply px-5 py-2;
+    @apply border border-solid border-current/10;
+    @apply rounded-2xl;
+    @apply transition-all;
+    @apply hover:text-current/80;
+    @apply hover:border-current/30;
+    @apply hover:bg-current/15;
 }
 
+/* 
+|---------------------------------
+| OUTLINE BUTTON - BACKGROUND VARIANT
+|--------------------------------
+*/
+.outline-btn--bg {
+    @apply bg-current/5;
+}
+
+/* 
+|---------------------------------
+| OUTLINE BUTTON - CONTENT ORDER
+|--------------------------------
+*/
 .outline-btn span {
     @apply order-2;
 }
 
 .outline-btn i {
-    @apply text-current text-base leading-none !order-1;
+    @apply order-1;
+    @apply text-base leading-none text-current;
 }
 
+/* 
+|---------------------------------
+| OUTLINE BUTTON - VARIANTS
+|--------------------------------
+*/
 .outline-btn.danger {
-    @apply text-red-400 hover:text-red-600;
+    @apply text-red-400;
+    @apply hover:text-red-600;
 }
 
+/* 
+|---------------------------------
+| TOGGLE GROUP
+|--------------------------------
+*/
 .toggle-group button.active {
     @apply bg-current/15;
 }

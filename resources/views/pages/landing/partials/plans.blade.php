@@ -24,14 +24,10 @@
             @foreach ($plans as $plan)
 
                 {{-- Card --}}
-                <div @class([
-                    'plan-card',
-                    'plan-card--popular' => $plan['is_popular'] ?? false,
-                ])>
+                <div class="plan-card">
 
                     {{-- Head --}}
                     <div class="plan-card__head">
-
                         <h3 class="plan-card__title">
                             {{ $plan['name'] }}
                         </h3>
@@ -42,7 +38,6 @@
                         ])>
                             Popular
                         </span>
-
                     </div>
 
 
@@ -80,31 +75,18 @@
 
                         <hr class="divider">
 
-
                         {{-- Includes --}}
                         @foreach ($plan['includes'] ?? [] as $include)
                             <li class="plan-card__item">
                                 {{ $include }}
                             </li>
                         @endforeach
-
                     </ul>
 
-
                     {{-- CTA --}}
-                    <a
-                        href="{{ route('filament.auth.auth.register') }}"
-                        class="btn btn--primary plan-card__cta"
-                    >
-                        Choose {{ $plan['name'] }}
-                    </a>
-
+                    <x-button.link class="primary-btn primary-btn--center" label="Choose {{ $plan['name'] }}" :path="route('filament.auth.auth.register')"/>
                 </div>
-
             @endforeach
-
         </div>
-
     </div>
-
 </section>

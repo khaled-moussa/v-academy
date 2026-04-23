@@ -23,6 +23,7 @@ class GeneralSettingResource extends JsonResource
             'address'             => $this->getAddress(),
             'location_url'        => $this->getLocationUrl(),
             'support_email'       => $this->getSupportEmail(),
+            'social_links'        => $this->getSocialLinks(),
             'phones'              => $this->getPhones(),
 
             'max_capacity'        => $this->getMaxCapacity(),

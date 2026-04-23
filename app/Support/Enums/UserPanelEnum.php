@@ -5,34 +5,50 @@ namespace App\Support\Enums;
 enum UserPanelEnum: string
 {
     case ADMIN = 'admin';
-    case USER = 'user';
+    case USER  = 'user';
 
+    /*
+    |--------------------------------------------------------------------------
+    | Label
+    |--------------------------------------------------------------------------
+    */
+    
     public function label(): string
     {
         return match ($this) {
-            self::ADMIN  => 'Admin',
-            self::USER   => 'User',
+            self::ADMIN => 'Admin',
+            self::USER  => 'User',
         };
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Options
+    |--------------------------------------------------------------------------
+    */
+
     public static function options(): array
     {
-        return array_combine(
-            array_column(self::cases(), 'value'),
-            array_map(fn($case) => $case->label(), self::cases())
-        );
+        return collect(self::cases())
+            ->mapWithKeys(fn(self $case) => [
+                $case->value => $case->label(),
+            ])
+            ->toArray();
     }
-    
-    public static function optionsExcept(UserPanelEnum $panel): array
-    {
-        $cases = array_filter(
-            self::cases(),
-            fn($case) => $case->value != $panel->value
-        );
 
-        return array_combine(
-            array_column($cases, 'value'),
-            array_map(fn($case) => $case->label(), $cases)
-        );
+    /*
+    |--------------------------------------------------------------------------
+    | Options Except
+    |--------------------------------------------------------------------------
+    */
+
+    public static function optionsExcept(self $panel): array
+    {
+        return collect(self::cases())
+            ->reject(fn(self $case) => $case === $panel)
+            ->mapWithKeys(fn(self $case) => [
+                $case->value => $case->label(),
+            ])
+            ->toArray();
     }
 }

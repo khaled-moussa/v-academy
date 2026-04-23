@@ -1,43 +1,83 @@
 /* 
 |---------------------------------
-| Sections
+| SECTIONS
 |--------------------------------
 */
-
 .section {
     @apply py-16;
 }
 
 .section__title {
-    @apply text-white/92 text-[clamp(24px,3.5vw,36px)] mb-4 font-bold;
+    @apply mb-4;
+    @apply text-white/92;
+    @apply text-[clamp(24px,3.5vw,36px)];
+    @apply font-bold;
 }
 
 .lead {
-    @apply text-white/72 text-lg leading-[1.75] mb-4;
+    @apply mb-4;
+    @apply text-lg leading-[1.75];
+    @apply text-white/72;
 }
 
 .chip {
-    @apply px-2.5 py-1.5 rounded-full border border-white/10 bg-white/4 text-white/92;
+    @apply px-2.5 py-1.5;
+    @apply rounded-full;
+    @apply border border-white/10;
+    @apply bg-white/4;
+    @apply text-white/92;
 }
 
 /* 
 |---------------------------------
-| Layout
+| LAYOUT
 |--------------------------------
 */
-
 main {
     @apply flex flex-col flex-1;
 }
 
 .layout {
-    @apply flex h-screen w-screen overflow-hidden;
+    @apply flex;
+    @apply w-screen h-screen;
+    @apply overflow-hidden;
 }
 
 .content {
-    @apply relative flex-col overflow-x-auto overflow-y-auto p-6 xl:flex-row;
+    @apply relative;
+    @apply flex flex-col;
+    @apply p-6;
+    @apply overflow-x-auto overflow-y-auto;
+
+    /* xl */
+    @apply xl:flex-row;
 }
 
 .divider {
     @apply text-brand-500/50;
+}
+
+/* 
+|-------------------------------
+| BRAND
+|--------------------------------
+*/
+.brand {
+    @apply inline-flex items-center gap-2.5;
+    @apply text-foreground;
+}
+
+.brand-mark {
+    @apply inline-grid place-items-center;
+    @apply w-10 h-10 rounded-[14px];
+    @apply bg-linear-to-br from-brand-500 to-brand-300;
+    @apply text-black font-extrabold;
+}
+
+.brand-mark img {
+    @apply w-7.5;
+}
+
+.brand-name {
+    @apply font-semibold tracking-wider;
 }

@@ -24,6 +24,7 @@ class GeneralSetting extends Model
     protected $guarded = [];
 
     protected $casts = [
+        'social_links' => 'array',
         'phones' => 'array',
         'youtube_links' => 'array',
         'user_can_create_session' => 'boolean',
@@ -94,6 +95,11 @@ class GeneralSetting extends Model
     public function getSupportEmail(): string
     {
         return $this->support_email;
+    }
+
+    public function getSocialLinks(): ?array
+    {
+        return $this->social_links;
     }
 
     public function getPhones(): ?array

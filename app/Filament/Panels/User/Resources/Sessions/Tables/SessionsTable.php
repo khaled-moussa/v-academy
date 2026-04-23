@@ -98,22 +98,17 @@ class SessionsTable
                             fn($record) => 'Capacity ' . $record->getBooking() . '/' . $record->getCapacity()
                         ),
 
-                    TextColumn::make('session_date')
+                    TextColumn::make('session_date_formatted')
                         ->label('Date')
                         ->date()
                         ->badge()
-                        ->icon(Heroicon::CalendarDays)
-                        ->formatStateUsing(
-                            fn($record) => $record->getSessionDate()?->format('M d, Y')
-                        ),
+                        ->icon(Heroicon::CalendarDays),
 
-                    TextColumn::make('session_time')
+                    TextColumn::make('session_time_formatted')
                         ->label('Time')
+                        ->time()
                         ->badge()
-                        ->icon(Heroicon::OutlinedClock)
-                        ->formatStateUsing(
-                            fn($record) => $record->getSessionDate()?->format('h:i A')
-                        ),
+                        ->icon(Heroicon::OutlinedClock),
                 ])->space(3),
 
                 /* 
@@ -145,6 +140,7 @@ class SessionsTable
             */
 
             ->deferLoading()
+            ->stackedOnMobile()
             ->searchable(false)
 
             /*
@@ -177,8 +173,8 @@ class SessionsTable
                     ->options(SessionStates::options())
                     ->native(false),
 
-                DateRangeFilter::make('session_date')
-                    ->label('Date Range'),
+                DateRangeFilter::make('session_date_formatted')
+                    ->label('Session Date Range'),
             ])
             ->filtersFormWidth(Width::Large)
 

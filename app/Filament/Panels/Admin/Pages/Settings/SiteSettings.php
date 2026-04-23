@@ -6,6 +6,7 @@ use App\Domain\Setting\GeneralSetting\Actions\UpdateGeneralSettingAction;
 use App\Domain\Setting\GeneralSetting\Dtos\GeneralSettingDto;
 use App\Filament\Components\Notification\CustomNotification;
 use App\Support\Context\GeneralSettingContext;
+use App\Support\Enums\SocialLinkEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -17,6 +18,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Forms\Components\Repeater;
 use BackedEnum;
+use Filament\Forms\Components\Select;
 
 class SiteSettings extends Page
 {
@@ -43,6 +45,7 @@ class SiteSettings extends Page
     public ?string $address = null;
     public ?string $locationUrl = null;
     public ?string $supportEmail = null;
+    public ?array $socialLinks = [];
     public ?array $phones = [];
 
     /*
@@ -72,6 +75,7 @@ class SiteSettings extends Page
         $this->address      = data_get($setting, 'address');
         $this->locationUrl  = data_get($setting, 'location_url');
         $this->supportEmail = data_get($setting, 'support_email');
+        $this->socialLinks  = data_get($setting, 'social_links', []);
         $this->phones       = data_get($setting, 'phones', []);
     }
 
@@ -107,6 +111,7 @@ class SiteSettings extends Page
                     | Site Settings Tab
                     |-------------------------------
                     */
+
                     Tab::make('Intro')
                         ->icon(Heroicon::OutlinedGlobeAmericas)
                         ->schema([
@@ -149,22 +154,26 @@ class SiteSettings extends Page
                     | Site Youtube Tab
                     |-------------------------------
                     */
+
                     Tab::make('Youtube')
                         ->icon(Heroicon::OutlinedLink)
                         ->schema([
-
                             Repeater::make('youtubeLinks')
                                 ->schema([
                                     TextInput::make('title')
                                         ->label('Title')
+                                        ->maxLength(300)
+                                        ->rule('max:300')
                                         ->required(),
 
                                     TextInput::make('link')
                                         ->label('Link')
                                         ->required()
+                                        ->url()
                                 ])
                                 ->columnSpanFull()
                                 ->reorderable(false)
+                                ->itemLabel(fn($state) => $state['title'] ?? 'New')
                         ]),
 
 
@@ -173,6 +182,7 @@ class SiteSettings extends Page
                     | Academy Contact Tab
                     |-------------------------------
                     */
+
                     Tab::make('Contact')
                         ->icon(Heroicon::OutlinedPhone)
                         ->schema([
@@ -192,15 +202,54 @@ class SiteSettings extends Page
                                         ->email()
                                         ->columnSpanFull(),
 
-                                    Repeater::make('phones')
-                                        ->simple(
-                                            TextInput::make('phone')
-                                                ->label('Phones')
-                                                ->tel()
-                                                ->prefixIcon(Heroicon::Phone)
-                                        )
+                                    Section::make('Phones')
+                                        ->schema([
+                                            Repeater::make('phones')
+                                                ->hiddenLabel()
+                                                ->simple(
+                                                    TextInput::make('')
+                                                        ->label('Phone')
+                                                        ->tel()
+                                                        ->prefixIcon(Heroicon::Phone)
+                                                )
+                                                ->columnSpanFull()
+                                                ->reorderable(false)
+                                        ])
                                         ->columnSpanFull()
-                                        ->reorderable(false)
+                                        ->compact()
+                                        ->secondary()
+                                        ->collapsible(),
+
+                                    Section::make('Social Media')
+                                        ->schema([
+                                            Repeater::make('socialLinks')
+                                                ->hiddenLabel()
+                                                ->schema([
+                                                    Select::make('type')
+                                                        ->options(SocialLinkEnum::options())
+                                                        ->native(false),
+
+                                                    TextInput::make('link')
+                                                        ->label('Link')
+                                                        ->required()
+                                                        ->url()
+                                                ])
+                                                ->columnSpanFull()
+                                                ->reorderable(false)
+                                                ->itemLabel(function ($state) {
+                                                    $type = data_get($state, 'type');
+
+                                                    if (! is_string($type) || ! SocialLinkEnum::tryFrom($type)) {
+                                                        return 'New';
+                                                    }
+
+                                                    return SocialLinkEnum::from($type)->label();
+                                                })
+                                        ])
+                                        ->columnSpanFull()
+                                        ->compact()
+                                        ->secondary()
+                                        ->collapsible(),
                                 ])
                                 ->columns(2)
                                 ->contained(false),
@@ -228,6 +277,7 @@ class SiteSettings extends Page
             address: $this->address,
             locationUrl: $this->locationUrl,
             supportEmail: $this->supportEmail,
+            socialLinks: $this->socialLinks,
             phones: $this->phones,
         );
 

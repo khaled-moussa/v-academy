@@ -49,21 +49,21 @@ class SessionForm
                             ->native(false)
                             ->prefixIcon(Heroicon::OutlinedCheckBadge),
 
-                        DatePicker::make('session_date')
+                        DatePicker::make('session_date_formatted')
                             ->label('Session Date')
                             ->required()
-                            ->displayFormat('M d, Y') // Human-readable
-                            ->firstDayOfWeek(1) // Monday
+                            ->displayFormat('M d, Y')
+                            ->firstDayOfWeek(1) // Saturady
                             ->placeholder('Select a date')
                             ->native(false),
 
-                        TimePicker::make('session_time')
+                        TimePicker::make('session_time_formatted')
                             ->label('Session Time')
                             ->required()
                             ->displayFormat('h:i A')
                             ->seconds(false)
-                            ->placeholder('Select a time')
-                            ->native(false),
+                            ->native(false)
+                            ->placeholder('Select a time'),
 
                         /*
                         |-----------------------------------

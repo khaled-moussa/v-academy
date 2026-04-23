@@ -1,47 +1,88 @@
-/**
- * This file is used to contain all the classes used generally by multiple CSS files.
- * Files inside this folder can contain global styles used in the project.
- */
-
+/* 
+|---------------------------------
+| RESET
+|--------------------------------
+*/
 * {
-    @apply m-0 box-border scroll-smooth p-0;
+    @apply m-0 p-0 box-border scroll-smooth;
+
     /* Firefox */
-    scrollbar-width: 0.3rem;
-    scrollbar-color: theme("colors.gray.200");
+    scrollbar-width: thin;
+    scrollbar-color: theme("colors.gray.200") transparent;
+
     -webkit-tap-highlight-color: transparent;
 }
 
-/* Chrome, Edge, and Safari */
+
+/* 
+|---------------------------------
+| SCROLLBAR (WEBKIT)
+|--------------------------------
+*/
 *::-webkit-scrollbar {
-    @apply h-[0.2rem] w-[0.3rem] scroll-smooth;
+    @apply w-[0.3rem] h-[0.2rem];
 }
+
 *::-webkit-scrollbar-track {
     @apply bg-transparent;
 }
+
 *::-webkit-scrollbar-thumb {
-    @apply bg-brand-500 transition-all duration-150 ease-in-out;
+    @apply bg-brand-500;
+    @apply transition-all duration-150 ease-in-out;
 }
 
+
+/* 
+|---------------------------------
+| RTL SUPPORT
+|--------------------------------
+*/
 *[dir="rtl"] {
     @apply font-ibm text-[0.95rem] font-normal;
 }
 
-/* body {
-    @apply bg-primary min-h-screen overflow-x-hidden font-poppins;
-} */
 
+/* 
+|---------------------------------
+| BODY
+|--------------------------------
+*/
 body {
-    @apply w-screen h-screen m-0  overflow-x-hidden relative font-poppins box-border scroll-smooth bg-primary;
+    @apply w-screen h-screen;
+    @apply m-0;
+    @apply relative overflow-x-hidden;
+    @apply font-poppins;
+    @apply bg-primary;
+    @apply box-border scroll-smooth;
 }
 
+
+/* 
+|---------------------------------
+| MEDIA
+|--------------------------------
+*/
 img {
     @apply pointer-events-none select-none;
 }
 
+
+/* 
+|---------------------------------
+| UTILITIES
+|--------------------------------
+*/
 [x-cloak] {
     display: none !important;
 }
 
+
+/* 
+|---------------------------------
+| TYPOGRAPHY RESET
+|--------------------------------
+*/
 h1,
 h2,
 h3,
@@ -50,22 +91,22 @@ h5,
 h6,
 p,
 a {
-    @apply my-0;
-}
-
-a:hover {
-    text-decoration: none;
+    @apply m-0;
 }
 
 p {
     @apply leading-normal;
 }
 
-i {
-    @apply flex h-fit;
+a:hover {
+    text-decoration: none;
 }
 
 strong,
 b {
     @apply font-semibold;
+}
+
+i {
+    @apply flex h-fit;
 }

@@ -4,7 +4,6 @@ namespace App\Filament\Panels\Admin\Resources\Users\Tables;
 
 use App\Filament\Components\Button\GroupedActionsButton;
 use App\Filament\Components\Filter\DateRangeFilter;
-use App\Support\Enums\GenderEnum;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Support\Colors\Color;
@@ -124,10 +123,9 @@ class UsersTable
             | Table Options
             |-----------------------------------------------------------------
             */
-
+         
             ->deferLoading()
             ->stackedOnMobile()
-            ->searchOnBlur()
             ->searchPlaceholder('Search (Full Name, Email, Phone)')
 
 

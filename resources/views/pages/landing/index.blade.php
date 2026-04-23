@@ -7,8 +7,10 @@
 @section('content')
     @include('pages.landing.partials.hero')
     @include('pages.landing.partials.about')
-    @include('pages.landing.partials.testimonials')
-    @include('pages.landing.partials.plans', ['plans' => $plans])
+
+    @includeWhen(!empty($settings->youtubeLinks), 'pages.landing.partials.testimonials')
+    @includeWhen(!$plans->isEmpty(), 'pages.landing.partials.plans', ['plans' => $plans])
+
     @include('pages.landing.partials.contact')
     @include('pages.landing.partials.footer')
 @endsection
