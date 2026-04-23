@@ -8,7 +8,7 @@
     @include('pages.landing.partials.hero')
     @include('pages.landing.partials.about')
 
-    @includeWhen(!empty($settings->youtubeLinks), 'pages.landing.partials.testimonials')
+    @includeWhen(!empty($settings->youtube_links), 'pages.landing.partials.testimonials')
     @includeWhen(!$plans->isEmpty(), 'pages.landing.partials.plans', ['plans' => $plans])
 
     @include('pages.landing.partials.contact')

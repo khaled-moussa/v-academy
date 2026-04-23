@@ -60,21 +60,19 @@ class GeneralSettingDto
                     return null;
                 }
 
-                // Extract video ID
-                if (Str::contains($link, 'youtu.be/')) {
-                    $videoId = Str::after($link, 'youtu.be/');
-                } elseif (Str::contains($link, 'watch?v=')) {
-                    $videoId = Str::after($link, 'watch?v=');
-                } else {
+                $videoId = $this->extractYoutubeId($link);
+
+                if (! $videoId) {
                     return null;
                 }
 
                 return [
                     ...$youtube,
+                    'video_id' => $videoId,
                     'embed' => "https://www.youtube.com/embed/{$videoId}",
                 ];
             })
-            ->filter() // remove nulls
+            ->filter()
             ->values()
             ->toArray();
     }
@@ -124,5 +122,37 @@ class GeneralSettingDto
             ->filter()
             ->values()
             ->toArray();
+    }
+
+
+    /*
+    |-----------------------------------------------------------------------
+    | Resolvers
+    |-----------------------------------------------------------------------
+    */
+
+    private function extractYoutubeId(string $url): ?string
+    {
+        // youtu.be/xxxx
+        if (Str::contains($url, 'youtu.be/')) {
+            return Str::of($url)->after('youtu.be/')->before('?')->value();
+        }
+
+        // youtube.com/watch?v=xxxx
+        if (Str::contains($url, 'watch?v=')) {
+            return Str::of($url)->after('watch?v=')->before('&')->value();
+        }
+
+        // youtube.com/shorts/xxxx
+        if (Str::contains($url, '/shorts/')) {
+            return Str::of($url)->after('/shorts/')->before('?')->value();
+        }
+
+        // youtube.com/embed/xxxx (already embed)
+        if (Str::contains($url, '/embed/')) {
+            return Str::of($url)->after('/embed/')->before('?')->value();
+        }
+
+        return null;
     }
 }
