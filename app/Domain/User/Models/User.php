@@ -2,6 +2,7 @@
 
 namespace App\Domain\User\Models;
 
+use App\App\Web\Resources\Users\UserResource;
 use App\Domain\User\Models\Builders\UserQueryBuilder;
 use App\Domain\User\Models\Concerns\HasUserRelation;
 use App\Support\Enums\GenderEnum;
@@ -14,9 +15,11 @@ use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasAvatar;
 use Filament\Models\Contracts\HasName;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Attributes\UseResource;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+#[UseResource(UserResource::class)]
 class User extends Authenticatable implements FilamentUser, HasName, HasAvatar
 {
     use Notifiable;

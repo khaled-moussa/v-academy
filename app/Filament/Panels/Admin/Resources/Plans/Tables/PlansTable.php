@@ -8,7 +8,6 @@ use App\Filament\Components\Filter\DateRangeFilter;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
 use Filament\Support\Enums\Width;
-use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Grouping\Group;
@@ -86,7 +85,9 @@ class PlansTable
             | Table Options
             |------------------------------------------------------------------
             */
-
+            
+            ->deferLoading()
+            ->stackedOnMobile()
             ->deferLoading()
             ->searchPlaceholder('Seacrch, Plan name')
 
@@ -115,7 +116,7 @@ class PlansTable
             */
 
             ->filters([
-                DateRangeFilter::make('session_date')
+                DateRangeFilter::make('session_date_formatted')
                     ->label('Session Date Range'),
             ])
 

@@ -77,7 +77,6 @@ class UserForm
                                     ->tel()
                                     ->unique(ignoreRecord: true)
                                     ->nullable()
-                                    ->prefix('+20')
                                     ->prefixIcon(Heroicon::OutlinedPhone)
                                     ->placeholder('Enter phone number'),
 

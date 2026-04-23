@@ -2,11 +2,13 @@
 
 namespace App\Filament\Panels\Admin\Resources\Subscriptions\Tables;
 
+use App\Domain\Subscription\Enums\PaymentMethodEnum;
 use App\Filament\Components\Button\GroupedActionsButton;
 use App\Filament\Components\Filter\DateRangeFilter;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
@@ -91,7 +93,7 @@ class SubscriptionsTable
             | Table Options
             |------------------------------------------------------------------
             */
-
+   
             ->deferLoading()
             ->stackedOnMobile()
             ->searchable(false)
@@ -125,6 +127,10 @@ class SubscriptionsTable
             */
 
             ->filters([
+                SelectFilter::make('payment_method')
+                    ->options(PaymentMethodEnum::options())
+                    ->native(false),
+
                 DateRangeFilter::make()
             ])
 

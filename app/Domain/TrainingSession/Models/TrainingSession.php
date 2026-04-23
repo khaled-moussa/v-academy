@@ -47,6 +47,30 @@ class TrainingSession extends Model
 
     /*
     |--------------------------------------------------------------------------
+    | Attributes
+    |--------------------------------------------------------------------------
+    */
+
+    public function getSessionDateFormattedAttribute(): ?string
+    {
+        if (! $this->session_date) {
+            return null;
+        }
+
+        return Carbon::parse($this->session_date)->format('M d, Y');
+    }
+
+    public function getSessionTimeFormattedAttribute(): ?string
+    {
+        if (! $this->session_time) {
+            return null;
+        }
+
+        return Carbon::parse($this->session_time)->format('h:i A');
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Getters
     |--------------------------------------------------------------------------
     */

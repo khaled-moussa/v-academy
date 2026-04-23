@@ -8,10 +8,12 @@ class LandingController
 {
     public function __invoke()
     {
-        $plans = app(GetPlansAction::class)->execute();
+        $plans = app(GetPlansAction::class)
+            ->execute()
+            ->toResourceCollection();
 
         return view('pages.landing.index', [
-            'plans' => $plans->toResourceCollection()->resolve()
+            'plans' => $plans
         ]);
     }
 }

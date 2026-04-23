@@ -46,7 +46,7 @@ class UserPanelProvider extends PanelProvider
             | Appearance
             |--------------------------------
             */
-            ->brandName(config('company-info.site'))
+            ->brandName(fn() => view('filament.auth.brand-name'))
             ->font('Poppins')
 
             ->sidebarCollapsibleOnDesktop()

@@ -3,10 +3,11 @@
     <div class="footer__container">
 
         {{-- Brand --}}
-        <div class="footer__grid footer__brand">
+        <div class="footer__brand">
 
             <a href="#hero" class="footer__brand-wrapper">
 
+                {{-- Brand Header --}}
                 <div class="footer__brand-header">
 
                     <span class="brand-mark">
@@ -14,35 +15,41 @@
                     </span>
 
                     <span class="brand-name">
-                        {{ $generalSetting['site_name'] }}
+                        {{ $settings->site_name }}
                     </span>
 
                 </div>
-
 
                 {{-- Info --}}
                 <div class="footer__info">
 
                     {{-- Address --}}
-                    @if (!empty($generalSetting['address']))
-                        <p class="footer__address">
-                            {{ $generalSetting['address'] }}
-                        </p>
+                    @if (!empty($settings->address))
+                        <p class="footer__address">{{ $settings->address }}</p>
                     @endif
 
                     {{-- Email --}}
-                    @if (!empty($generalSetting['support_email']))
-                        <p class="footer__contact">
-                            {{ $generalSetting['support_email'] }}
-                        </p>
+                    @if (!empty($settings->support_email))
+                        <p class="footer__contact">{{ $settings->support_email }}</p>
                     @endif
 
                     {{-- Phones --}}
-                    @if (!empty($generalSetting['phones']))
+                    @if (!empty($settings->phones))
                         <ul class="footer__phones">
-                            @foreach ($generalSetting['phones'] as $phone)
+                            @foreach ($settings->phones as $phone)
+                                <li>{{ $phone }}</li>
+                            @endforeach
+                        </ul>
+                    @endif
+
+                    {{-- Social --}}
+                    @if (!empty($settings->social_links))
+                        <ul class="footer__social">
+                            @foreach ($settings->social_links as $social)
                                 <li>
-                                    {{ $phone['phone'] }}
+                                    <a href="{{ $social['link'] }}" target="_blank" class="footer__social-link">
+                                        <i class="fi fi-brands-{{ $social['type'] }}"></i>
+                                    </a>
                                 </li>
                             @endforeach
                         </ul>
@@ -54,36 +61,25 @@
 
         </div>
 
+        {{-- Links --}}
+        <div class="footer__links">
 
-        {{-- Explore --}}
-        <div class="custom-col-6 custom-col-md-3 footer__links">
-
-            <h4>
-                Explore
-            </h4>
+            <h4>Explore</h4>
 
             <ul>
-                <li>
-                    <a href="#plans" class="nav__link">Plans</a>
-                </li>
-                <li>
-                    <a href="#about" class="nav__link">About</a>
-                </li>
-                <li>
-                    <a href="#testimonials" class="nav__link">Results</a>
-                </li>
+                <li><a href="#plans" class="nav__link">Plans</a></li>
+                <li><a href="#about" class="nav__link">About</a></li>
+                <li><a href="#testimonials" class="nav__link">Results</a></li>
+                <li><a href="#testimonials" class="nav__link">Contact</a></li>
             </ul>
 
         </div>
 
     </div>
 
-
     {{-- Meta --}}
     <div class="footer__meta">
-        <p>
-            © 2025 Variables Academy. All rights reserved.
-        </p>
+        <p>© 2025 Variables Academy. All rights reserved.</p>
     </div>
 
 </footer>

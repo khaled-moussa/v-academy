@@ -2,37 +2,48 @@
 
 namespace App\Support\Enums;
 
-use Filament\Support\Colors\Color;
-
-enum GenderEnum: string
+enum SocialLinkEnum: string
 {
-    case MALE = 'male';
-    case FEMALE = 'female';
+    case FACEBOOK = 'facebook';
+    case INSTAGRAM = 'instagram';
+    case YOUTUBE = 'youtube';
+    case X = 'x';
+    case WHATSAPP = 'whatsapp';
+    case TIKTOK = 'tiktok';
 
     /*
     |--------------------------------------------------------------------------
     | Label
     |--------------------------------------------------------------------------
     */
+
     public function label(): string
     {
         return match ($this) {
-            self::MALE   => 'Male',
-            self::FEMALE => 'Female',
+            self::FACEBOOK  => 'Facebook',
+            self::INSTAGRAM => 'Instagram',
+            self::YOUTUBE   => 'YouTube',
+            self::X         => 'X',
+            self::WHATSAPP  => 'WhatsApp',
+            self::TIKTOK    => 'TikTok',
         };
     }
 
     /*
     |--------------------------------------------------------------------------
-    | Filament Color
+    | Icon (Lucide / Heroicon / custom class)
     |--------------------------------------------------------------------------
     */
 
-    public function filamentColor(): array
+    public function icon(): string
     {
         return match ($this) {
-            self::MALE   => Color::Blue,
-            self::FEMALE => Color::Pink,
+            self::FACEBOOK  => 'facebook',
+            self::INSTAGRAM => 'instagram',
+            self::YOUTUBE   => 'youtube',
+            self::X         => 'x',
+            self::WHATSAPP  => 'whatsapp',
+            self::TIKTOK    => 'tiktok',
         };
     }
 
@@ -45,7 +56,7 @@ enum GenderEnum: string
     public static function options(): array
     {
         return collect(self::cases())
-            ->mapWithKeys(fn (self $case) => [
+            ->mapWithKeys(fn(self $case) => [
                 $case->value => $case->label(),
             ])
             ->toArray();

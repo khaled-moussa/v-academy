@@ -1,7 +1,22 @@
-.btn--primary {
-    @apply bg-linear-to-br from-brand-500 to-brand-300 text-black font-bold;
+/* 
+|---------------------------------
+| PRIMARY BUTTON
+|--------------------------------
+*/
+.primary-btn {
+    @apply font-bold text-black;
+    @apply px-5 py-3;
+    @apply bg-linear-to-br from-brand-500 to-brand-300;
+    @apply transition-transform;
+    @apply rounded-2xl;
+    @apply -translate-y-0.5;
 }
 
-.btn--primary:hover {
-    @apply -translate-y-0.5;
+/* 
+|---------------------------------
+| PRIMARY BUTTON - TEXT CENTER
+|--------------------------------
+*/
+.primary-btn--center {
+    @apply text-center;
 }

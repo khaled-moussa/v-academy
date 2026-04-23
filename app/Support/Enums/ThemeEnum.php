@@ -8,6 +8,12 @@ enum ThemeEnum: string
     case DARK = 'dark';
     case SYSTEM = 'system';
 
+    /*
+    |--------------------------------------------------------------------------
+    | Label
+    |--------------------------------------------------------------------------
+    */
+
     public function label(): string
     {
         return match ($this) {
@@ -17,11 +23,18 @@ enum ThemeEnum: string
         };
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | Options (for Select fields)
+    |--------------------------------------------------------------------------
+    */
+    
     public static function options(): array
     {
-        return array_combine(
-            array_column(self::cases(), 'value'),
-            array_map(fn($case) => $case->label(), self::cases())
-        );
+        return collect(self::cases())
+            ->mapWithKeys(fn (self $case) => [
+                $case->value => $case->label(),
+            ])
+            ->toArray();
     }
 }

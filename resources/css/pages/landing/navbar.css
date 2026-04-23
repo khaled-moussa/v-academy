@@ -1,12 +1,13 @@
 /* 
 |-------------------------------
-| NAV BASE
+| NAV
 |--------------------------------
 */
 .nav {
     @apply relative flex items-center justify-between;
     @apply pb-5;
-    @apply lg:py-5 lg:pb-7 z-10;
+    @apply lg:py-5 lg:pb-7;
+    @apply z-10;
 }
 
 .nav--hero {
@@ -16,33 +17,7 @@
 
 /* 
 |-------------------------------
-| BRAND
-|--------------------------------
-*/
-.nav__brand {
-    @apply inline-flex items-center;
-    @apply gap-2.5 text-foreground;
-}
-
-.brand-mark {
-    @apply inline-grid place-items-center;
-    @apply w-10 h-10 rounded-[14px];
-    @apply bg-linear-to-br from-brand-500 to-brand-300;
-    @apply text-black font-extrabold;
-}
-
-.brand-mark img {
-    @apply w-7.5;
-}
-
-.brand-name {
-    @apply font-semibold tracking-wider;
-}
-
-
-/* 
-|-------------------------------
-| NAV MENU (RESPONSIVE ONLY TAILWIND)
+| MENU
 |--------------------------------
 */
 .nav__menu {
@@ -68,7 +43,7 @@
 
 /* 
 |-------------------------------
-| LINKS
+| LINK
 |--------------------------------
 */
 .nav__link {
@@ -102,7 +77,7 @@
 
 /* 
 |-------------------------------
-| MOBILE TOGGLE
+| TOGGLE
 |--------------------------------
 */
 .nav__checkbox {
@@ -111,8 +86,6 @@
 
 .nav__toggle {
     @apply cursor-pointer;
-
-    /* lg */
     @apply lg:hidden;
 }
 

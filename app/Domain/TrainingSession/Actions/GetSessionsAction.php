@@ -35,13 +35,14 @@ class GetSessionsAction
         ?string $startDate = null,
         ?string $endDate = null
     ) {
+
         return $this->query(null, $startDate, $endDate)
             ->when(
                 $user,
                 fn(Builder $q) =>
                 $q->whenUserBookig($user->getId())
             )
-            ->whereDate('session_date', '>=', now())
+            ->whereBetween('session_date', [$startDate, $endDate])
             ->orderBy('session_date');
     }
 

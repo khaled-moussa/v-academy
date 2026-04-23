@@ -45,6 +45,9 @@ return new class extends Migration
             | Site Contact
             |-------------------------------
             */
+            $table->json('social_links')
+                ->nullable();
+
             $table->json('phones')
                 ->nullable();
 

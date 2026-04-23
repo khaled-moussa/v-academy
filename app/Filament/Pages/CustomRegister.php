@@ -138,10 +138,9 @@ class CustomRegister extends BaseRegister
     {
         return TextInput::make('phone')
             ->label('Phone')
+            ->nullable()
             ->tel()
             ->unique($this->getUserModel())
-            ->nullable()
-            ->prefix('+20')
             ->prefixIcon(Heroicon::OutlinedPhone)
             ->placeholder('Enter phone number');
     }

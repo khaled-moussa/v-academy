@@ -77,6 +77,28 @@ class AuthContext
 
     /*
     |------------------------------------------------------------
+    | Access
+    |------------------------------------------------------------
+    */
+
+    public static function get(string $key, mixed $default = null): mixed
+    {
+        return data_get(self::resolveUser(), $key, $default);
+    }
+
+    public static function toResource()
+    {
+        return self::resolveUser()?->toResource();
+    }
+
+    public static function toArray(): array
+    {
+        return self::resolveUser()?->toResource()->resolve() ?? [];
+    }
+
+
+    /*
+    |------------------------------------------------------------
     | User State
     |------------------------------------------------------------
     */

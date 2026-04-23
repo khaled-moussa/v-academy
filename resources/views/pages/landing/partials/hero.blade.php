@@ -12,26 +12,21 @@
             <div class="hero__intro">
 
                 <p class="hero__tagline">
-                    {{ $generalSetting['tagline'] }}
+                    {{ $settings->tagline }}
                 </p>
 
                 <h1 class="hero__slugon">
-                    {{ $generalSetting['slugon'] }}
+                    {{ $settings->slugon }}
                 </h1>
 
                 <p class="hero__description">
-                    {{ $generalSetting['description'] }}
+                    {{ $settings->description }}
                 </p>
 
                 {{-- Actions --}}
                 <div class="hero__actions">
-                    <a href="#contact" class="btn btn--primary">
-                        Start Coaching
-                    </a>
-
-                    <a href="#plans" class="btn btn--ghost">
-                        Explore Programs
-                    </a>
+                    <x-button.link class="primary-btn" label="Start Coaching" path="#contact" />
+                    <x-button.link class="outline-btn" label="Explore Programs" path="#plans" />
                 </div>
 
                 {{-- Badges --}}

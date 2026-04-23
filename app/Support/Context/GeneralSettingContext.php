@@ -35,6 +35,11 @@ class GeneralSettingContext
         return self::resolve();
     }
 
+    public static function toResource()
+    {
+        return self::resolve()?->toResource();
+    }
+
     public static function toArray(): array
     {
         return self::resolve()?->toResource()->resolve() ?? [];

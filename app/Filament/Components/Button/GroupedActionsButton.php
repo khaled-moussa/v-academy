@@ -8,6 +8,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Colors\Color;
+use Filament\Support\Enums\Size;
 
 class GroupedActionsButton
 {
@@ -66,10 +67,10 @@ class GroupedActionsButton
             0 => null,
             1 => [$actions[0]],
             default => ActionGroup::make($actions)
-                ->label('Actions')
-                ->button()
-                ->outlined()
-                ->color(Color::Gray),
+                ->label(__('Actions'))
+                ->size(Size::Small)
+                ->color(Color::Stone)
+                ->button(),
         };
     }
 }
