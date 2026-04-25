@@ -5,6 +5,7 @@ namespace App\Filament\Panels\Admin\Resources\Subscriptions\Tables;
 use App\Domain\Subscription\Enums\PaymentMethodEnum;
 use App\Filament\Components\Button\GroupedActionsButton;
 use App\Filament\Components\Filter\DateRangeFilter;
+use Filament\Support\Colors\Color;
 use Filament\Support\Enums\Width;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -33,67 +34,14 @@ class SubscriptionsTable
             |------------------------------------------------------------------
             */
 
-            ->columns([
-
-                /*
-                |-------------------------------
-                | Plan Information
-                |--------------------------------
-                */
-
-                TextColumn::make('plan.name')
-                    ->label('Plan'),
-
-                TextColumn::make('amount')
-                    ->label('Amount')
-                    ->money('EGP'),
-
-                TextColumn::make('payment_method')
-                    ->label('Payment Method')
-                    ->badge()
-                    ->color(fn($state) => $state->color())
-                    ->formatStateUsing(fn($state) => $state->label()),
-
-                TextColumn::make('subscription_state')
-                    ->label('State')
-                    ->badge()
-                    ->color(fn($state) => $state->filamentColor())
-                    ->formatStateUsing(fn($state) => $state->label()),
-
-                /*
-                |-------------------------------
-                | States
-                |--------------------------------
-                */
-
-                IconColumn::make('is_active')
-                    ->label('Active')
-                    ->boolean(),
-
-                /*
-                |-------------------------------
-                | Dates
-                |--------------------------------
-                */
-
-                TextColumn::make('next_renewal_at')
-                    ->label('Next Renewal')
-                    ->date()
-                    ->placeholder('N\A'),
-
-                TextColumn::make('expire_at')
-                    ->label('Expires At')
-                    ->date()
-                    ->placeholder('N\A'),
-
-            ])
+            ->columns(self::columns())
 
             /*
             |------------------------------------------------------------------
             | Table Options
             |------------------------------------------------------------------
             */
-   
+
             ->deferLoading()
             ->stackedOnMobile()
             ->searchable(false)
@@ -104,21 +52,8 @@ class SubscriptionsTable
             |------------------------------------------------------------------
             */
 
-            ->groups([
-                Group::make('is_active')
-                    ->label('Active')
-                    ->getTitleFromRecordUsing(fn($state) => $state ? 'Active' : 'Inactive'),
-
-                Group::make('is_expired')
-                    ->label('Expired')
-                    ->getTitleFromRecordUsing(fn($state) => $state ? 'Expired' : 'Not Expired'),
-
-                Group::make('created_at_formatted')
-                    ->label('Subscribed At')
-                    ->date(),
-            ])
+            ->groups(self::groups())
             ->collapsedGroupsByDefault()
-
 
             /*
             |------------------------------------------------------------------
@@ -126,14 +61,7 @@ class SubscriptionsTable
             |------------------------------------------------------------------
             */
 
-            ->filters([
-                SelectFilter::make('payment_method')
-                    ->options(PaymentMethodEnum::options())
-                    ->native(false),
-
-                DateRangeFilter::make()
-            ])
-
+            ->filters(self::filters())
             ->filtersFormWidth(Width::Large)
 
             /*
@@ -142,9 +70,100 @@ class SubscriptionsTable
             |------------------------------------------------------------------
             */
 
-            ->recordActions(GroupedActionsButton::actions(
-                canDelete: false,
-                canEdit: false
-            ));
+            ->recordActions(GroupedActionsButton::actions());
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Columns
+    |--------------------------------------------------------------------------
+    */
+
+    private static function columns(): array
+    {
+        return [
+
+            TextColumn::make('plan.name')
+                ->label('Plan'),
+
+            TextColumn::make('amount')
+                ->label('Amount')
+                ->money('EGP'),
+
+            TextColumn::make('payment_method')
+                ->label('Payment Method')
+                ->badge()
+                ->color(fn($state) => $state->color())
+                ->formatStateUsing(fn($state) => $state->label()),
+
+            TextColumn::make('subscription_state')
+                ->label('State')
+                ->description(fn($record) => $record->isAdminCreated() ? 'Created by admin' : null)
+                ->badge()
+                ->color(fn($state) => $state->filamentColor())
+                ->formatStateUsing(fn($state) => $state->label()),
+
+            IconColumn::make('is_active')
+                ->label('Active')
+                ->boolean(),
+
+            TextColumn::make('next_renewal_at')
+                ->label('Next Renewal')
+                ->date()
+                ->placeholder('N/A'),
+
+            TextColumn::make('expire_at')
+                ->label('Expires At')
+                ->date()
+                ->placeholder('N/A')
+                ->badge()
+                ->color(
+                    fn($record) => $record->isExpired()
+                        ? Color::Rose
+                        : Color::Gray
+                )
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Groups
+    |--------------------------------------------------------------------------
+    */
+
+    private static function groups(): array
+    {
+        return [
+            Group::make('is_active')
+                ->label('Active')
+                ->titlePrefixedWithLabel(false)
+                ->getTitleFromRecordUsing(fn($record) => $record->isActive() ? 'Active' : 'Inactive'),
+
+            Group::make('expire_at')
+                ->label('Expired')
+                ->titlePrefixedWithLabel(false)
+                ->getTitleFromRecordUsing(fn($record) => $record->isExpired() ? 'Expired' : 'Not Expired'),
+
+            Group::make('created_at')
+                ->label('Subscribed At')
+                ->date(),
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Filters
+    |--------------------------------------------------------------------------
+    */
+
+    private static function filters(): array
+    {
+        return [
+            SelectFilter::make('payment_method')
+                ->options(PaymentMethodEnum::options())
+                ->native(false),
+
+            DateRangeFilter::make(),
+        ];
     }
 }

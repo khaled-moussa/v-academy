@@ -13,4 +13,13 @@ class GetPlansAction
             ->active()
             ->get();
     }
+
+    public function options(): array
+    {
+        return $this->execute()
+            ->mapWithKeys(fn($plan) => [
+                $plan->getId() => $plan->getName()
+            ])
+            ->toArray();
+    }
 }

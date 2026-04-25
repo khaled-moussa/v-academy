@@ -6,6 +6,7 @@ use App\Domain\Subscription\Models\Subscription;
 use App\Filament\Panels\User\Resources\Subscriptions\Pages\ListSubscriptions;
 use App\Filament\Panels\User\Resources\Subscriptions\Schemas\SubscriptionInfolist;
 use App\Filament\Panels\User\Resources\Subscriptions\Tables\SubscriptionsTable;
+use App\Support\Context\AuthContext;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -16,9 +17,9 @@ use Illuminate\Database\Eloquent\Builder;
 class SubscriptionResource extends Resource
 {
     /* 
-    |---------------------------------
+    |-----------------------------------------------------------------
     | Resource Configuration
-    |---------------------------------
+    |-----------------------------------------------------------------
     */
 
     protected static ?string $model = Subscription::class;
@@ -30,20 +31,22 @@ class SubscriptionResource extends Resource
     protected static ?string $recordTitleAttribute = 'name';
 
     /* 
-    |---------------------------------
+    |-----------------------------------------------------------------
     | Eloquent Query 
-    |---------------------------------
+    |-----------------------------------------------------------------
     */
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->latest();
+        return parent::getEloquentQuery()
+            ->latest()
+            ->whereUserId(AuthContext::id());
     }
 
     /* 
-    |---------------------------------
+    |-----------------------------------------------------------------
     | Navigation Labels
-    |---------------------------------
+    |-----------------------------------------------------------------
     */
 
     public static function getNavigationLabel(): string
@@ -62,9 +65,9 @@ class SubscriptionResource extends Resource
     }
 
     /* 
-    |---------------------------------
+    |-----------------------------------------------------------------
     | Form & Infolist & Table
-    |---------------------------------
+    |-----------------------------------------------------------------
     */
     public static function infolist(Schema $schema): Schema
     {
@@ -77,9 +80,9 @@ class SubscriptionResource extends Resource
     }
 
     /* 
-    |----------------------------------
+    |------------------------------------------------------------------
     | Relations
-    |----------------------------------
+    |------------------------------------------------------------------
     */
 
     public static function getRelations(): array
@@ -88,9 +91,9 @@ class SubscriptionResource extends Resource
     }
 
     /* 
-    |---------------------------------
+    |-----------------------------------------------------------------
     | Pages
-    |---------------------------------
+    |-----------------------------------------------------------------
     */
 
     public static function getPages(): array

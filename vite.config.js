@@ -16,6 +16,8 @@ export default defineConfig({
 
                 // -- Landing
                 "resources/css/pages/landing/_landing.css",
+
+                "resources/css/test.css",
             ],
             refresh: true,
         }),

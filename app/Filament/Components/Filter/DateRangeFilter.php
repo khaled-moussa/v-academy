@@ -18,6 +18,7 @@ class DateRangeFilter
                     ->startPlaceholder('Ex. Jan 01, 2020')
                     ->separator(['inline' => '→'])
                     ->singleField()
+                    ->dualCalendar(false)
                     ->startPrefixIcon('heroicon-m-calendar-days')
                     ->columnSpanFull(),
             ])

@@ -7,6 +7,7 @@ use App\Filament\Panels\Admin\Resources\Subscriptions\Pages\ListSubscriptions;
 use App\Filament\Panels\Admin\Resources\Subscriptions\Schemas\SubscriptionInfolist;
 use App\Filament\Panels\Admin\Resources\Subscriptions\Tables\SubscriptionsTable;
 use App\Filament\Panels\Admin\Resources\Subscriptions\Pages\ViewSubscription;
+use App\Filament\Panels\Admin\Resources\Subscriptions\Schemas\SubscriptionForm;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -67,6 +68,11 @@ class SubscriptionResource extends Resource
     | Form & Infolist & Table
     |---------------------------------
     */
+
+    public static function form(Schema $schema): Schema
+    {
+        return SubscriptionForm::configure($schema);
+    }
 
     public static function infolist(Schema $schema): Schema
     {

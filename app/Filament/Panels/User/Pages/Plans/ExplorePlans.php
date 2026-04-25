@@ -24,14 +24,13 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Filament\Support\Icons\Heroicon;
-use Filament\Support\RawJs;
 use Livewire\Attributes\On;
 use BackedEnum;
+use Filament\Forms\Components\FileUpload;
 
 class ExplorePlans extends Page
 {
     protected string $view = 'filament.panels.user.pages.plans.explore-plans';
-
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Bars3BottomLeft;
     protected static ?int $navigationSort = 3;
 
@@ -112,12 +111,12 @@ class ExplorePlans extends Page
                 $this->subscribeAction($plan),
                 $this->subscriptionStateEntry($plan)
             ])
-         
+
             ->schema([
                 $this->priceBlock($plan),
                 $this->includesBlock($plan),
             ])
-            
+
             ->columns(1);
     }
 
@@ -219,19 +218,18 @@ class ExplorePlans extends Page
                             ->html(),
                     ]),
 
-                    SpatieMediaLibraryFileUpload::make('payment_proof')
-                        ->collection('payment_proofs')
-                        ->required()
+                    FileUpload::make('payment_proof')
+                        ->label('Payment Proof')
+                        ->nullable()
                         ->image()
                         ->maxSize(2048)
-                        ->responsiveImages()
-                        ->dehydrated(),
+                        ->disk('public')
+                        ->directory('payment-proofs')
+                        ->visibility('public'),
 
                     TextInput::make('amount')
                         ->required()
                         ->numeric()
-                        ->mask(RawJs::make('$money($input)'))
-                        ->stripCharacters(',')
                         ->minValue($plan['price_discount'])
                         ->maxValue($plan['price_discount'])
                         ->suffix('EGP'),
@@ -257,20 +255,17 @@ class ExplorePlans extends Page
         $plan = app(GetPlanByIdAction::class)
             ->execute($planData['id']);
 
-        $subscription = app(SubscribeToPlanAction::class)
+        app(SubscribeToPlanAction::class)
             ->execute(new SubscriptionDto(
-                amount: $plan->getPrice(),
+                amount: $data['amount'],
+                imagePath: $data['payment_proof'],
                 paymentMethod: $data['payment_method'],
                 totalSessions: $plan['no_of_sessions'],
+                usedSessions: 0,
+                isAdminCreated: false,
                 planId: $plan->getId(),
                 userId: AuthContext::id(),
             ));
-
-        if (! empty($data['payment_proof'])) {
-            $subscription
-                ->addMedia($data['payment_proof'])
-                ->toMediaCollection('payment_proofs');
-        }
 
         CustomNotification::success('Plan subscribed successfully.');
 
