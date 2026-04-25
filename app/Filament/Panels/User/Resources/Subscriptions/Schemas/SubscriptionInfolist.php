@@ -2,6 +2,7 @@
 
 namespace App\Filament\Panels\User\Resources\Subscriptions\Schemas;
 
+use Filament\Infolists\Components\ImageEntry;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Fieldset;
 use Filament\Schemas\Components\Section;
@@ -21,7 +22,8 @@ class SubscriptionInfolist
                     self::subscriptionTab(),
                     self::planTab(),
                 ])
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->contained(false),
         ]);
     }
 
@@ -36,8 +38,22 @@ class SubscriptionInfolist
         return Tab::make('Subscription')
             ->icon(Heroicon::OutlinedCreditCard)
             ->schema([
+
                 Section::make('Subscription Details')
                     ->schema([
+
+                        /*
+                        |-----------------------------
+                        | Basic Info
+                        |-----------------------------
+                        */
+
+                        ImageEntry::make('image')
+                            ->label('Payment Proof')
+                            ->belowLabel('Click on image to view on new tab')
+                            ->imageSize(200)
+                            ->url(fn($state) => $state, true)
+                            ->columnSpanFull(),
 
                         TextEntry::make('uuid')
                             ->label('Reference')
@@ -55,15 +71,42 @@ class SubscriptionInfolist
                             ->formatStateUsing(fn($state) => $state->label()),
 
                         TextEntry::make('subscription_state')
-                            ->label('State')
+                            ->label('Payment Status')
                             ->badge()
                             ->color(fn($state) => $state->filamentColor())
                             ->formatStateUsing(fn($state) => $state->label()),
 
-                        TextEntry::make('created_at_formatted')
-                            ->label('Subscribed At')
-                            ->dateTime()
-                            ->color(Color::Gray),
+                        /*
+                        |-----------------------------
+                        | Dates
+                        |-----------------------------
+                        */
+
+                        Section::make()
+                            ->schema([
+                                TextEntry::make('next_renewal_at')
+                                    ->label('Next Renewal At')
+                                    ->badge()
+                                    ->color(Color::Gray)
+                                    ->formatStateUsing(fn($state) => $state?->format('d M Y, h:i A'))
+                                    ->placeholder('N/A'),
+
+                                TextEntry::make('expire_at')
+                                    ->label('Expired At')
+                                    ->badge()
+                                    ->color(Color::Gray)
+                                    ->formatStateUsing(fn($state) => $state?->format('d M Y, h:i A'))
+                                    ->placeholder('N/A'),
+
+                                TextEntry::make('created_at_formatted')
+                                    ->label('Subscribed At')
+                                    ->badge()
+                                    ->color(Color::Gray),
+                            ])
+                            ->columnSpanFull()
+                            ->columns(3)
+                            ->compact()
+                            ->secondary(),
 
                     ])
                     ->columns(2)
@@ -73,57 +116,67 @@ class SubscriptionInfolist
     }
 
     /*
-    |-----------------------------------
+    |------------------------------------------------------------------
     | Plan Info
-    |-----------------------------------
+    |------------------------------------------------------------------
     */
-
     private static function planTab(): Tab
     {
         return Tab::make('Plan')
-            ->icon(Heroicon::OutlinedClipboardDocumentList)
+            ->icon(Heroicon::Bars3BottomLeft)
             ->schema([
-                Section::make('Plan Details')
+                Section::make()
                     ->relationship('plan')
                     ->schema([
 
-                        TextEntry::make('name')
-                            ->label('Plan Name')
-                            ->badge(),
+                        /*
+                        |-----------------------------
+                        | Plan Information
+                        |-----------------------------
+                        */
 
-                        TextEntry::make('price')
-                            ->money('EGP')
-                            ->badge()
-                            ->color(Color::Orange),
-
-                        TextEntry::make('no_of_sessions')
-                            ->label('Sessions')
-                            ->badge(),
-
-                        Fieldset::make()
-                            ->label('Description')
+                        Section::make('Plan Information')
                             ->schema([
-                                TextEntry::make('description')
-                                    ->hiddenLabel()
-                                    ->placeholder('No description')
-                                    ->columnSpanFull(),
+                                TextEntry::make('name')
+                                    ->label('Plan Name')
+                                    ->weight('bold'),
+
+                                TextEntry::make('no_of_sessions')
+                                    ->label('Number of Sessions')
+                                    ->badge(),
+
+                                TextEntry::make('price')
+                                    ->label('Price')
+                                    ->badge()
+                                    ->money('EGP', locale: 'ln'),
                             ])
-                            ->columnSpanFull(),
+                            ->columns(2)
+                            ->compact()
+                            ->secondary(),
 
-                        TextEntry::make('includes')
-                            ->formatStateUsing(
-                                fn($state) => is_array($state)
-                                    ? implode(', ', $state)
-                                    : $state
-                            )
-                            ->bulleted()
-                            ->hidden(fn($state) => empty($state))
-                            ->columnSpanFull(),
+                        /*
+                        |-----------------------------
+                        | Plan Includes
+                        |-----------------------------
+                        */
 
+                        Section::make('Plan Includes')
+                            ->schema([
+                                TextEntry::make('includes')
+                                    ->hiddenLabel()
+                                    ->formatStateUsing(
+                                        fn($state) => is_array($state)
+                                            ? implode(', ', $state)
+                                            : $state
+                                    )
+                                    ->bulleted(),
+                            ])
+                            ->compact()
+                            ->secondary()
+                            ->collapsible(),
                     ])
-                    ->columns(2)
-                    ->compact()
-                    ->secondary(),
+                    ->columnSpanFull()
+                    ->contained(false),
             ]);
     }
 }

@@ -9,6 +9,15 @@ class SubscribeToPlanAction
 {
     public function execute(SubscriptionDto $dto): Subscription
     {
-        return Subscription::create($dto->toArray());
+        $subscription = Subscription::create($dto->toArray());
+
+        if (! is_null($dto->imagePath)) {
+            $subscription
+                ->addMedia(storage_path('app/public/' . $dto->imagePath))
+                ->usingFileName(basename($dto->imagePath))
+                ->toMediaCollection('payment_proofs');
+        }
+
+        return $subscription;
     }
 }

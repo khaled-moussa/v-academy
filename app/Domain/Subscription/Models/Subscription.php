@@ -177,4 +177,9 @@ class Subscription extends Model implements HasMedia
     {
         return $this->is_active;
     }
+
+    public function isAdminCreated(): bool
+    {
+        return $this->is_admin_created;
+    }
 }

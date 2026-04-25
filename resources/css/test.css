@@ -1,0 +1,11 @@
+/* --------------------------------
+| Expired Subscription Row
+|-------------------------------- */
+
+.expired-subscription-row {
+    background-color: red;
+}
+
+.dark .expired-subscription-row {
+    background-color: red;
+}

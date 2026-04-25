@@ -68,7 +68,7 @@ class GroupedActionsButton
             1 => [$actions[0]],
             default => ActionGroup::make($actions)
                 ->label(__('Actions'))
-                ->size(Size::Small)
+                ->size(Size::ExtraSmall)
                 ->color(Color::Stone)
                 ->button(),
         };

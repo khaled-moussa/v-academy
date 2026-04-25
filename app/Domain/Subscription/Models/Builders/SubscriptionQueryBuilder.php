@@ -20,6 +20,11 @@ class SubscriptionQueryBuilder extends Builder
         return $this->where('uuid', $uuid);
     }
 
+    public function whereUserId(int $userId): self
+    {
+        return $this->where('user_id', $userId);
+    }
+
     /*
     |------------------------------------------------------------------
     | Status Filters
@@ -52,6 +57,11 @@ class SubscriptionQueryBuilder extends Builder
         return $this->where('subscription_state', $state);
     }
 
+    public function pending(): self
+    {
+        return $this->state(SubscriptionPendingState::class);
+    }
+
     public function approved(): self
     {
         return $this->state(SubscriptionApprovedState::class);
@@ -60,11 +70,6 @@ class SubscriptionQueryBuilder extends Builder
     public function rejected(): self
     {
         return $this->state(SubscriptionRejectedState::class);
-    }
-
-    public function pending(): self
-    {
-        return $this->state(SubscriptionPendingState::class);
     }
 
     /*
@@ -83,5 +88,10 @@ class SubscriptionQueryBuilder extends Builder
     {
         return $this->whereNull('expire_at')
             ->orWhere('expire_at', '>=', now());
+    }
+
+    public function expireProcessingNull(): self
+    {
+        return $this->whereNull('expired_processing_at');
     }
 }

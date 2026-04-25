@@ -145,16 +145,6 @@ class SubscriptionInfolist
                                     ->label('Plan Name')
                                     ->weight('bold'),
 
-                                Section::make('Description')
-                                    ->schema([
-                                        TextEntry::make('description')
-                                            ->hiddenLabel()
-                                            ->placeholder('No description'),
-                                    ])
-                                    ->columnSpanFull()
-                                    ->compact()
-                                    ->secondary(),
-
                                 TextEntry::make('no_of_sessions')
                                     ->label('Number of Sessions')
                                     ->badge(),

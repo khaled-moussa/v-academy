@@ -67,6 +67,9 @@ return new class extends Migration
             $table->boolean('is_current')
                 ->default(true);
 
+            $table->boolean('is_admin_created')
+                ->default(false);
+
             /* 
             |-------------------------------
             | Dates
@@ -83,6 +86,9 @@ return new class extends Migration
             | Timestamps
             |-------------------------------
             */
+            $table->timestamp('expired_processing_at')
+                ->nullable();
+
             $table->timestamps();
         });
     }

@@ -34,62 +34,17 @@ class PlansTable
             |------------------------------------------------------------------
             */
 
-            ->columns([
-
-                TextColumn::make('name')
-                    ->label('Plan Name')
-                    ->weight(FontWeight::Bold)
-                    ->searchable(),
-
-
-                TextColumn::make('no_of_sessions')
-                    ->label('Total Sessions')
-                    ->badge(),
-
-                TextColumn::make('price')
-                    ->label('Price')
-                    ->formatStateUsing(fn($record) => static::formatPrice($record))
-                    ->html(),
-
-                TextColumn::make('discount')
-                    ->label('Discount')
-                    ->color(Color::Gray)
-                    ->suffix('%'),
-
-                /*
-                |-----------------------------------
-                | Timestamp
-                |-----------------------------------
-                */
-
-                TextColumn::make('created_at_formatted')
-                    ->label('Created At')
-                    ->badge(),
-
-                /*
-                |-----------------------------------
-                | States
-                |-----------------------------------
-                */
-
-                ToggleColumn::make('is_active')
-                    ->label('Active'),
-
-                ToggleColumn::make('is_popular')
-                    ->label('Popular'),
-
-            ])
+            ->columns(self::columns())
 
             /*
             |------------------------------------------------------------------
             | Table Options
             |------------------------------------------------------------------
             */
-            
+
             ->deferLoading()
             ->stackedOnMobile()
-            ->deferLoading()
-            ->searchPlaceholder('Seacrch, Plan name')
+            ->searchPlaceholder('Search plan name')
 
             /*
             |------------------------------------------------------------------
@@ -97,16 +52,7 @@ class PlansTable
             |------------------------------------------------------------------
             */
 
-            ->groups([
-                Group::make('is_active')
-                    ->label('Active Status')
-                    ->titlePrefixedWithLabel(false)
-                    ->getTitleFromRecordUsing(fn($state) => $state ? 'Active' : 'Inactive'),
-
-                Group::make('created_at_formatted')
-                    ->label('Created At')
-                    ->date(),
-            ])
+            ->groups(self::groups())
             ->collapsedGroupsByDefault()
 
             /*
@@ -115,11 +61,7 @@ class PlansTable
             |------------------------------------------------------------------
             */
 
-            ->filters([
-                DateRangeFilter::make('session_date_formatted')
-                    ->label('Session Date Range'),
-            ])
-
+            ->filters(self::filters())
             ->filtersFormWidth(Width::Large)
 
             /*
@@ -133,6 +75,83 @@ class PlansTable
 
     /*
     |--------------------------------------------------------------------------
+    | Columns
+    |--------------------------------------------------------------------------
+    */
+
+    private static function columns(): array
+    {
+        return [
+
+            TextColumn::make('name')
+                ->label('Plan Name')
+                ->weight(FontWeight::Bold)
+                ->searchable(),
+
+            TextColumn::make('no_of_sessions')
+                ->label('Total Sessions')
+                ->badge(),
+
+            TextColumn::make('price')
+                ->label('Price')
+                ->formatStateUsing(
+                    fn(Plan $record) => self::formatPrice($record)
+                )
+                ->html(),
+
+            TextColumn::make('discount')
+                ->label('Discount')
+                ->color(Color::Gray)
+                ->suffix('%'),
+
+            TextColumn::make('created_at_formatted')
+                ->label('Created At')
+                ->badge(),
+
+            ToggleColumn::make('is_active')
+                ->label('Active'),
+
+            ToggleColumn::make('is_popular')
+                ->label('Popular'),
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Groups
+    |--------------------------------------------------------------------------
+    */
+
+    private static function groups(): array
+    {
+        return [
+            Group::make('is_active')
+                ->label('Active Status')
+                ->titlePrefixedWithLabel(false)
+                ->getTitleFromRecordUsing(fn($record) => $record->isActive() ? 'Active' : 'Inactive'),
+
+            Group::make('created_at')
+                ->label('Created At')
+                ->date(),
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Filters
+    |--------------------------------------------------------------------------
+    */
+
+    private static function filters(): array
+    {
+        return [
+            DateRangeFilter::make('created_at')
+                ->label('Plan Date Range'),
+        ];
+    }
+
+    /*
+    |--------------------------------------------------------------------------
     | Helpers
     |--------------------------------------------------------------------------
     */
@@ -140,21 +159,21 @@ class PlansTable
     private static function formatPrice(Plan $plan): string
     {
         $price = $plan->getPrice();
-        $priceDiscount = $plan->getPriceDiscount();
+        $discountedPrice = $plan->getPriceDiscount();
         $discount = $plan->getDiscount();
 
         if ($discount > 0) {
             return "
-            <div class='flex flex-col'>
-                <span style='text-decoration-line: line-through; color:gray'>
-                    {$price} EGP
-                </span>
+                <div class='flex flex-col'>
+                    <span style='text-decoration-line: line-through; color:gray'>
+                        {$price} EGP
+                    </span>
 
-                <span>
-                    {$priceDiscount} EGP
-                </span>
-            </div>
-        ";
+                    <span>
+                        {$discountedPrice} EGP
+                    </span>
+                </div>
+            ";
         }
 
         return "<span>{$price} EGP</span>";
