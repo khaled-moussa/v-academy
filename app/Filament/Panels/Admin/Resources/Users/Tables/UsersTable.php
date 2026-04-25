@@ -22,6 +22,7 @@ use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\ToggleButtons;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
@@ -206,16 +207,6 @@ class UsersTable
 
             /*
             |------------------------------------------------------------------
-            | Default Form Data
-            |------------------------------------------------------------------
-            */
-
-            ->fillForm(fn(User $record): array => [
-                'user_name' => $record->getFullName(),
-            ])
-
-            /*
-            |------------------------------------------------------------------
             | Form Schema
             |------------------------------------------------------------------
             */
@@ -224,11 +215,9 @@ class UsersTable
                 Section::make()
                     ->schema([
 
-                        TextInput::make('user_name')
+                        TextEntry::make('full_name')
                             ->label('User')
-                            ->disabled()
-                            ->dehydrated(false),
-
+                            ->badge(),
 
                         Select::make('plan_id')
                             ->label('Plan')
@@ -319,7 +308,7 @@ class UsersTable
         );
 
         app(UpdateSubscriptionStateAction::class)
-            ->execute($subscription, SubscriptionApprovedState::value());
+            ->execute($subscription, SubscriptionApprovedState::value(), true);
 
         /*
         |-----------------------------------

@@ -247,7 +247,8 @@ class UserForm
                                     ->label('Fri'),
 
                             ])
-                            ->columns(4), // optional: adjust columns for layout
+                            ->columns(4)
+                            ->defaultItems(0), 
                     ])
                     ->columns(1),
             ]);

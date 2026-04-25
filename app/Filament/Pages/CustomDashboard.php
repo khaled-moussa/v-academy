@@ -11,6 +11,8 @@ use Filament\Schemas\Schema;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 
+use function Laravel\Prompts\info;
+
 class CustomDashboard extends BaseDashboard
 {
     use HasFiltersForm;

@@ -59,6 +59,7 @@
     @apply w-[min(520px,92%)] min-h-70;
     @apply p-5 lg:p-6;
     @apply bg-foreground/4;
+    @apply place-content-center;
     @apply rounded-3xl border border-brand-500/30;
 }
 
