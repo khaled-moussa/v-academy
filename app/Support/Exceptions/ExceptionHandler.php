@@ -9,7 +9,7 @@ class ExceptionHandler
     public function register(Exceptions $exceptions): void
     {
         $this->report($exceptions);
-        $this->render($exceptions);
+        // $this->render($exceptions);
     }
 
     private function report(Exceptions $exceptions): void

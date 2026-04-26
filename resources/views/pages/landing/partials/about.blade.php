@@ -21,32 +21,54 @@
                 </div>
             </div>
 
-            {{-- Copy --}}
+            {{-- About --}}
             <div class="about__intro">
                 <h2 class="section__title">About Academy</h2>
 
-                <p class="lead">I am a Strength & Conditioning Coach and founder of Variables Academy, where science
-                    meets
-                    performance. With over 8 years of experience in athlete development, movement analysis, and sports
-                    nutrition, I specialize in designing science-based training systems that enhance performance and
-                    reduce
-                    injury risk.
+                <p class="lead">
+                    Variables Academy is founded on the principle that human performance is governed by
+                    measurable and trainable variables. Our vision is to advance athletic development through a precise,
+                    science-driven approach—where biomechanics and kinesiology are not just concepts, but the framework
+                    behind every decision we make.
                 </p>
 
-                <p>Before launching Variables Academy, I served as Fitness Head Coach at Performax Academy (2023–2025),
-                    where
-                    I led a team of coaches and developed tailored programs for athletes. I’ve also worked as Head
-                    Strength &
-                    Conditioning Coach at Challenge Academy for Padel, Strength & Conditioning Coach at Al Ahly Club,
-                    and
-                    Fitness Coach at Forest Club.
+                <p>
+                    We view each athlete as a dynamic system of mechanical variables: force production, force
+                    absorption, joint angles, timing, coordination, and energy transfer. Performance is not left to
+                    chance—it is engineered. By analyzing these variables, we identify inefficiencies, limitations, and
+                    opportunities, then design targeted interventions that elevate performance while minimizing injury
+                    risk.
                 </p>
 
-                <p>I hold a Bachelor’s degree in Kinesiology (Human Movement Science) from Helwan University, as well as
-                    advanced certifications including the NASM Performance Enhancement Specialist diploma. My coaching
-                    philosophy integrates performance enhancement, corrective exercise, athlete monitoring, and
-                    rehabilitation
-                    collaboration—delivering measurable results for elite athletes across football, padel, and swimming.
+                <p>
+                    Our approach is rooted in biomechanics, allowing us to understand how forces interact with the body,
+                    and in kinesiology, enabling us to optimize muscular function and movement strategies. This
+                    integration ensures that every program is both scientifically grounded and practically effective in
+                    real-world athletic demands.
+                </p>
+
+                <p>
+                    At Variables Academy, we operate on three core beliefs:
+
+                <ul>
+                    <li>
+                        Precision over generalization — Training must reflect the individual’s mechanical profile, not
+                        generic standards.
+                    </li>
+                    <li>
+                        Movement efficiency drives performance — Optimal sequencing, alignment, and force application
+                        are
+                        the keys to sustainable athletic success.
+                    </li>
+                    <li>
+                        Measurable progress — What gets improved must first be understood, quantified, and tracked.
+                    </li>
+                </ul>
+
+                <p>
+                    We don’t just train athletes—we engineer performance by managing the variables that define it.
+                    Variables Academy is where science meets application, and where athletes gain a competitive edge
+                    through a deeper understanding of how they move and perform.
                 </p>
 
                 <div class="about__highlights">

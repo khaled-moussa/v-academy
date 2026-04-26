@@ -175,6 +175,7 @@ class UserForm
                                 TextInput::make('password')
                                     ->label('Password')
                                     ->password()
+                                    ->minLength(8)
                                     ->visibleOn(['create'])
                                     ->belowLabel('If you provide a password, the user will receive an email with a link to set their own password.')
                                     ->prefixIcon(Heroicon::OutlinedLockClosed)
@@ -247,7 +248,8 @@ class UserForm
                                     ->label('Fri'),
 
                             ])
-                            ->columns(4), // optional: adjust columns for layout
+                            ->columns(4)
+                            ->defaultItems(0), 
                     ])
                     ->columns(1),
             ]);

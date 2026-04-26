@@ -82,6 +82,8 @@ class SubscriptionsTable
     private static function columns(): array
     {
         return [
+            TextColumn::make('user.full_name')
+                ->label('Username'),
 
             TextColumn::make('plan.name')
                 ->label('Plan'),

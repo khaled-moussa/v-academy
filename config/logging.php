@@ -59,17 +59,53 @@ return [
         ],
 
         'single' => [
-            'driver' => 'single',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
+            'driver' => 'monolog',
+            'handler' => Monolog\Handler\FilterHandler::class,
+
+            'handler_with' => [
+                'handler' => new Monolog\Handler\StreamHandler(
+                    storage_path('logs/laravel.log')
+                ),
+
+                'minLevelOrList' => [
+                    Monolog\Level::Debug,
+                    Monolog\Level::Info,
+                    Monolog\Level::Notice,
+                ],
+
+                'maxLevel' => Monolog\Level::Notice,
+            ],
+
             'replace_placeholders' => true,
         ],
 
         'daily' => [
-            'driver' => 'daily',
-            'path' => storage_path('logs/laravel.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-            'days' => env('LOG_DAILY_DAYS', 14),
+            'driver' => 'monolog',
+
+            'handler' => Monolog\Handler\FilterHandler::class,
+
+            'handler_with' => [
+                'handler' => new Monolog\Handler\RotatingFileHandler(
+                    storage_path('logs/issues.log'),
+                    30
+                ),
+
+                'minLevelOrList' => [
+                    Monolog\Level::Warning,
+                    Monolog\Level::Error,
+                ],
+
+                'maxLevel' => Monolog\Level::Error,
+            ],
+
+            'tap' => [
+                \App\Support\Logging\ContextFormatter::class,
+            ],
+
+            'processors' => [
+                \App\Support\Logging\ContextProcessor::class,
+            ],
+
             'replace_placeholders' => true,
         ],
 
@@ -78,22 +114,27 @@ return [
             'handler' => \Monolog\Handler\SlackWebhookHandler::class,
 
             'handler_with' => [
-                'webhookUrl' => env('LOG_SLACK_WEBHOOK_URL'),
-                'channel' => env('LOG_SLACK_CHANNEL'),
-                'username' => env('LOG_SLACK_USERNAME', 'Laravel Log'),
+                'webhookUrl'   => env('LOG_SLACK_WEBHOOK_URL'),
+                'channel'      => env('LOG_SLACK_CHANNEL'),
+                'username'     => env('LOG_SLACK_USERNAME', 'Laravel Log'),
                 'useAttachment' => false,
-                'iconEmoji' => env('LOG_SLACK_EMOJI', ':boom:'),
+                'iconEmoji'    => ':boom:',
+
+                'minLevelOrList' => [
+                    Monolog\Level::Warning,
+                    Monolog\Level::Error,
+                ],
+
+                'maxLevel' => Monolog\Level::Error,
             ],
 
             'tap' => [
-                \App\Support\Logging\SlackFormatter::class,
+                \App\Support\Logging\ContextFormatter::class,
             ],
 
             'processors' => [
-                \App\Support\Logging\SlackContextProcessor::class,
+                \App\Support\Logging\ContextProcessor::class,
             ],
-
-            'level' => env('LOG_LEVEL', 'error'),
         ],
 
         'papertrail' => [
