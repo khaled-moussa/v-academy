@@ -49,7 +49,7 @@ class SessionForm
                             ->native(false)
                             ->prefixIcon(Heroicon::OutlinedCheckBadge),
 
-                        DatePicker::make('session_date_formatted')
+                        DatePicker::make('session_date')
                             ->label('Session Date')
                             ->required()
                             ->displayFormat('M d, Y')
@@ -57,7 +57,7 @@ class SessionForm
                             ->placeholder('Select a date')
                             ->native(false),
 
-                        TimePicker::make('session_time_formatted')
+                        TimePicker::make('session_time')
                             ->label('Session Time')
                             ->required()
                             ->displayFormat('h:i A')
