@@ -12,6 +12,7 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\Icons\Heroicon;
 
 class UserInfolist
@@ -298,6 +299,25 @@ class UserInfolist
                 ->color(fn($state) => $state->filamentColor())
                 ->formatStateUsing(fn($state) => $state->label())
                 ->placeholder('N/A'),
+
+            /*
+            |-----------------------------
+            | Session Usage
+            |-----------------------------
+            */
+
+            Section::make('Session Used')
+                ->schema([
+                    TextEntry::make('used_sessions')
+                        ->hiddenLabel()
+                        ->badge()
+                        ->color(Color::Amber)
+                        ->size(TextSize::Medium)
+                        ->formatStateUsing(fn($record) => $record->getUsedSessions() . ' / ' . $record->getTotalSessions()),
+                ])
+                ->columnSpanFull()
+                ->compact()
+                ->secondary(),
 
             /* 
             |-------------------------------

@@ -13,6 +13,7 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\Layout\Panel;
@@ -140,26 +141,27 @@ class SessionsTable
                 TextColumn::make('capacity')
                     ->label('Capacity')
                     ->badge()
-                    ->color(
-                        fn(TrainingSession $record) => self::determineCapacityColor($record)
-                    )
+                    ->color(fn(TrainingSession $record) => self::determineCapacityColor($record))
                     ->formatStateUsing(
                         fn(TrainingSession $record) => 'Capacity '
                             . $record->getBooking()
                             . '/'
                             . $record->getCapacity()
-                    ),
+                    )
+                    ->size(TextSize::Medium),
 
                 TextColumn::make('session_date_formatted')
                     ->label('Date')
                     ->date()
                     ->badge()
-                    ->icon(Heroicon::CalendarDays),
+                    ->icon(Heroicon::CalendarDays)
+                    ->size(TextSize::Medium),
 
                 TextColumn::make('session_time_formatted')
                     ->label('Time')
                     ->badge()
-                    ->icon(Heroicon::OutlinedClock),
+                    ->icon(Heroicon::OutlinedClock)
+                    ->size(TextSize::Medium),
             ])->space(3),
 
             /*

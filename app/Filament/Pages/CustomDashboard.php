@@ -39,9 +39,10 @@ class CustomDashboard extends BaseDashboard
                 ->schema([
                     DateRangePicker::make('daterange')
                         ->label('Select date')
-                        ->startPlaceholder('e.g. Jan 01, 2020')
+                        ->startPlaceholder('Ex. Jan 01, 2020')
                         ->separator(['inline' => '→'])
                         ->singleField()
+                        ->dualCalendar(false)
                         ->startPrefixIcon('heroicon-m-calendar-days')
                         ->columnSpanFull(),
                 ])

@@ -61,8 +61,8 @@ class SessionForm
                             ->label('Session Time')
                             ->required()
                             ->displayFormat('h:i A')
+                            ->format('h:i A')
                             ->seconds(false)
-                            ->native(false)
                             ->placeholder('Select a time'),
 
                         /*

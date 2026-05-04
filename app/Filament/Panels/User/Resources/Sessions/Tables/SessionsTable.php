@@ -19,6 +19,7 @@ use Filament\Actions\ActionGroup;
 use Filament\Actions\ViewAction;
 use Filament\Support\Colors\Color;
 use Filament\Support\Enums\FontWeight;
+use Filament\Support\Enums\TextSize;
 use Filament\Support\Enums\Width;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\Layout\Panel;
@@ -26,7 +27,6 @@ use Filament\Tables\Columns\Layout\Split;
 use Filament\Tables\Columns\Layout\Stack;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
-use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class SessionsTable
@@ -137,27 +137,27 @@ class SessionsTable
                 TextColumn::make('capacity')
                     ->label('Capacity')
                     ->badge()
-                    ->color(
-                        fn(TrainingSession $record) => self::determineCapacityColor($record)
-                    )
-                    ->formatStateUsing(
-                        fn(TrainingSession $record) => 'Capacity '
+                    ->color(fn(TrainingSession $record) => self::determineCapacityColor($record))
+                    ->formatStateUsing(fn(TrainingSession $record) => 'Capacity '
                             . $record->getBooking()
                             . '/'
                             . $record->getCapacity()
-                    ),
+                    )
+                    ->size(TextSize::Medium),
 
                 TextColumn::make('session_date_formatted')
                     ->label('Date')
                     ->date()
                     ->badge()
-                    ->icon(Heroicon::CalendarDays),
+                    ->icon(Heroicon::CalendarDays)
+                    ->size(TextSize::Medium),
 
                 TextColumn::make('session_time_formatted')
                     ->label('Time')
                     ->time()
                     ->badge()
-                    ->icon(Heroicon::OutlinedClock),
+                    ->icon(Heroicon::OutlinedClock)
+                    ->size(TextSize::Medium),
             ])->space(3),
 
             /*

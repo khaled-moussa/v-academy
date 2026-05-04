@@ -13,7 +13,6 @@ use App\Domain\User\Models\User;
 use App\Filament\Components\Button\GroupedActionsButton;
 use App\Filament\Components\Filter\DateRangeFilter;
 use App\Filament\Components\Notification\CustomNotification;
-use Carbon\Carbon;
 use Filament\Actions\Action;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
@@ -33,6 +32,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
+use Carbon\Carbon;
 
 class UsersTable
 {
@@ -142,6 +142,24 @@ class UsersTable
                 ->label('Current Plan')
                 ->color(Color::Gray)
                 ->placeholder('No active plan'),
+
+            TextColumn::make('activeSubscription.used_sessions')
+                ->label('Session Used')
+                ->color(Color::Amber)
+                ->badge()
+                ->formatStateUsing(function ($state, $record) {
+                    $subscription = $record->activeSubscription;
+
+                    if (! $subscription) {
+                        return 'No subscription';
+                    }
+
+                    $used = $state ?? 0;
+                    $total = $subscription->getTotalSessions() ?? 0;
+
+                    return "{$used} / {$total}";
+                }),
+
 
             IconColumn::make('is_email_verified')
                 ->label('Email Verified')

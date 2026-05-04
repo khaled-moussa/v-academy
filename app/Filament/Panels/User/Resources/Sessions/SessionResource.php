@@ -12,8 +12,8 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
-use BackedEnum;
 use Illuminate\Database\Eloquent\Builder;
+use BackedEnum;
 
 class SessionResource extends Resource
 {
@@ -39,7 +39,7 @@ class SessionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->latest();
+        return parent::getEloquentQuery()->notPast()->latest();
     }
 
     /* 

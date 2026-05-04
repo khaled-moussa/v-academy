@@ -105,6 +105,11 @@ class TrainingSession extends Model
         return $this->session_state;
     }
 
+    public function getUserCreatedSessionId(): int
+    {
+        return $this->user_created_session_id;
+    }
+
     public function getSessionDate(): Carbon
     {
         return $this->session_date;
@@ -115,11 +120,6 @@ class TrainingSession extends Model
         return optional($this->session_time)?->format('h:i A');
     }
 
-    public function getUserCreatedSessionId(): int
-    {
-        return $this->user_created_session_id;
-    }
-
     public function getCreatedAt(): Carbon
     {
         return $this->created_at;
@@ -128,6 +128,23 @@ class TrainingSession extends Model
     public function getUpdatedAt(): Carbon
     {
         return $this->updated_at;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Formated Datae Getters
+    |--------------------------------------------------------------------------
+    */
+
+
+    public function getSessionDateFormatted(): ?string
+    {
+        return $this->session_date_formatted;
+    }
+
+    public function getSessionTimeFormatted(): ?string
+    {
+        return $this->session_time_formatted;
     }
 
     /*

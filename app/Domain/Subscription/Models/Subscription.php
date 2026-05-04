@@ -153,6 +153,7 @@ class Subscription extends Model implements HasMedia
     | States
     |--------------------------------------------------------------------------
     */
+    
     public function isPending(): bool
     {
         return $this->getSubscriptionState() == SubscriptionPendingState::value();

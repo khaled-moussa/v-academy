@@ -83,7 +83,8 @@ class SubscriptionsTable
     {
         return [
             TextColumn::make('user.full_name')
-                ->label('Username'),
+                ->label('Username')
+                ->description(fn($record) => $record->getUsedSessions() . ' / ' . $record->getTotalSessions()),
 
             TextColumn::make('plan.name')
                 ->label('Plan'),
@@ -107,23 +108,22 @@ class SubscriptionsTable
 
             IconColumn::make('is_active')
                 ->label('Active')
-                ->boolean(),
+                ->boolean()
+                ->toggleable(),
 
             TextColumn::make('next_renewal_at')
                 ->label('Next Renewal')
                 ->date()
-                ->placeholder('N/A'),
+                ->placeholder('N/A')
+                ->toggleable(),
 
             TextColumn::make('expire_at')
                 ->label('Expires At')
                 ->date()
                 ->placeholder('N/A')
                 ->badge()
-                ->color(
-                    fn($record) => $record->isExpired()
-                        ? Color::Rose
-                        : Color::Gray
-                )
+                ->color(fn($record) => $record->isExpired() ? Color::Rose : Color::Gray)
+                ->toggleable(),
         ];
     }
 
