@@ -101,7 +101,6 @@ class UpcomingSessionTableWidget extends TableWidget
 
             TextColumn::make('session_date_formatted')
                 ->label('Date')
-                ->date()
                 ->badge()
                 ->icon(Heroicon::CalendarDays),
 

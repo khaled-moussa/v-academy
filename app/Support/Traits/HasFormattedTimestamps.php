@@ -28,6 +28,6 @@ trait HasFormattedTimestamps
         return $this->created_at
             ->copy()
             ->timezone($timezone)
-            ->format('M d, Y h:i A');
+            ->format('D, d M, Y h:i A');
     }
 }

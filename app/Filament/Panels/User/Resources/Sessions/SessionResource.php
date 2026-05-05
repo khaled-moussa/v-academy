@@ -65,7 +65,7 @@ class SessionResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) self::$model::available()->count() . ' ' . SessionAvailableState::label();
+        return (string) self::$model::available()->upcomming()->count() . ' ' . SessionAvailableState::label();
     }
 
     public static function getNavigationBadgeColor(): ?string

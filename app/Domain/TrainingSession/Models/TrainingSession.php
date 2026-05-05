@@ -57,7 +57,7 @@ class TrainingSession extends Model
             return null;
         }
 
-        return Carbon::parse($this->session_date)->format('M d, Y');
+        return Carbon::parse($this->session_date)->format('D, d M, Y');
     }
 
     public function getSessionTimeFormattedAttribute(): ?string

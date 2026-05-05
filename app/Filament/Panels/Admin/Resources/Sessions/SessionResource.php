@@ -2,6 +2,7 @@
 
 namespace App\Filament\Panels\Admin\Resources\Sessions;
 
+use App\Domain\TrainingSession\Models\SessionStates\SessionAvailableState;
 use App\Domain\TrainingSession\Models\TrainingSession;
 use App\Filament\Panels\Admin\Resources\Sessions\Pages\ListSessions;
 use App\Filament\Panels\Admin\Resources\Sessions\Schemas\SessionForm;
@@ -61,7 +62,17 @@ class SessionResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Sessions Management';
+        return 'Sessions';
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) self::$model::available()->upcomming()->count() . ' ' . SessionAvailableState::label();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return SessionAvailableState::filamentColorClass();
     }
 
     /* 
