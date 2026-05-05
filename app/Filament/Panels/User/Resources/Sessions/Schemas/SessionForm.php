@@ -41,10 +41,9 @@ class SessionForm
                         TimePicker::make('session_time')
                             ->label('Session Time')
                             ->required()
-                            ->displayFormat('h:i A')
+                            ->format('h:i A')
                             ->seconds(false)
-                            ->placeholder('Select a time')
-                            ->native(false),
+                            ->placeholder('Select a time'),
 
                         /*
                         |-----------------------------------

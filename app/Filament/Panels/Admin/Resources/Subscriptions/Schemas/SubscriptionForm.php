@@ -4,17 +4,16 @@ namespace App\Filament\Panels\Admin\Resources\Subscriptions\Schemas;
 
 use App\Domain\Plan\Actions\GetPlansAction;
 use App\Domain\Subscription\Enums\PaymentMethodEnum;
+use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\SpatieMediaLibraryFileUpload;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
 use Filament\Forms\Components\ToggleButtons;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Schemas\Components\Section;
-use Filament\Schemas\Components\Utilities\Set;
+use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Schema;
 
 class SubscriptionForm
@@ -73,7 +72,19 @@ class SubscriptionForm
                         ->required()
                         ->displayFormat('M d, Y')
                         ->placeholder('Select expire date')
-                        ->native(false),
+                        ->native(false)
+                        ->reactive()
+                        ->afterStateUpdated(function ($state, callable $set) {
+                            $set('next_renewal_at', $state ? Carbon::parse($state)->addDay() : null);
+                        }),
+
+                    /*
+                    |-----------------------------------
+                    | #Hidden Default
+                    |-----------------------------------
+                    */
+                    Hidden::make('next_renewal_at'),
+
                 ])
                 ->columnSpanFull()
                 ->secondary()

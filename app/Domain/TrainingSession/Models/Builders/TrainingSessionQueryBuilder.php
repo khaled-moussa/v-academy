@@ -43,4 +43,16 @@ class TrainingSessionQueryBuilder extends Builder
     {
         return $this->where('session_state', SessionAvailableState::value());
     }
+
+    public function upcomming(): self
+    {
+        return $this->whereNotNull('session_date')
+            ->where('session_date', '>=', today());
+    }
+
+    public function past(): self
+    {
+        return $this->whereNotNull('session_date')
+            ->where('session_date', '<', today());
+    }
 }

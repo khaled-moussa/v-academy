@@ -50,13 +50,14 @@ class SessionInfolist
                             ->formatStateUsing(fn($state) => $state->label()),
 
                         TextEntry::make('session_date_formatted')
+                            ->badge()
                             ->label('Date')
-                            ->date(),
+                            ->formatStateUsing(fn($record) => $record->getSessionDateFormatted()),
 
                         TextEntry::make('session_time_formatted')
                             ->label('Time')
-                            ->time()
-                            ->badge(),
+                            ->badge()
+                            ->formatStateUsing(fn($record) => $record->getSessionTimeFormatted()),
 
                         /*
                         |-----------------------------

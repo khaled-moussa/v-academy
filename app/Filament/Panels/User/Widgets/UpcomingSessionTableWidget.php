@@ -12,6 +12,7 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget;
+use Carbon\Carbon;
 
 class UpcomingSessionTableWidget extends TableWidget
 {
@@ -96,13 +97,10 @@ class UpcomingSessionTableWidget extends TableWidget
                 ->label('Capacity')
                 ->badge()
                 ->color(fn($record) => $this->determineCapacityColor($record))
-                ->formatStateUsing(
-                    fn($record) => 'Capacity ' . $record->getBooking() . '/' . $record->getCapacity()
-                ),
+                ->formatStateUsing(fn($record) => 'Capacity ' . $record->getBooking() . '/' . $record->getCapacity()),
 
             TextColumn::make('session_date_formatted')
                 ->label('Date')
-                ->date()
                 ->badge()
                 ->icon(Heroicon::CalendarDays),
 
@@ -121,12 +119,47 @@ class UpcomingSessionTableWidget extends TableWidget
 
     private function getQuery()
     {
+        $range = $this->weekRange();
         $user = AuthContext::user();
 
         return app(GetSessionsAction::class)->upcomingUserSessions(
             user: $user,
-            startDate: now()->startOfWeek()->toDateString(),
-            endDate: now()->endOfWeek()->toDateString(),
+            startDate: $range['start'],
+            endDate: $range['end'],
+        );
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Week Range
+    |--------------------------------------------------------------------------
+    */
+
+    private function weekRange(): array
+    {
+        $now = now();
+
+        return [
+            'start' => $now->copy()->startOfWeek(Carbon::SATURDAY)->toDateString(),
+            'end'   => $now->copy()->endOfWeek(Carbon::FRIDAY)->toDateString(),
+        ];
+    }
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Description
+    |--------------------------------------------------------------------------
+    */
+
+    private function getWeekDescription(): string
+    {
+        $range = $this->weekRange();
+
+        return sprintf(
+            'This week: %s - %s',
+            Carbon::parse($range['start'])->format('M d'),
+            Carbon::parse($range['end'])->format('M d, Y')
         );
     }
 
@@ -136,15 +169,7 @@ class UpcomingSessionTableWidget extends TableWidget
     |--------------------------------------------------------------------------
     */
 
-    private function getWeekDescription(): string
-    {
-        $start = now()->startOfWeek()->format('M d');
-        $end = now()->endOfWeek()->format('M d, Y');
-
-        return "This week: {$start} - {$end}";
-    }
-
-    private function determineCapacityColor(TrainingSession $session): array
+    private static function determineCapacityColor(TrainingSession $session): array
     {
         if ($session->getCapacity() === $session->getBooking()) {
             return SessionFullState::filamentColor();

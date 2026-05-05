@@ -1,13 +1,13 @@
 @extends('layouts.errors')
 
 {{-- Title --}}
-@section('title', 'Under Development')
+@section('title', 'Under Maintenance')
 
 {{-- Code --}}
 @section('code', '503')
 
 {{-- Message --}}
-@section('message', __('We’re working hard to improve the site. Please check back soon.'))
+@section('message', __('We’re making some updates right now. Everything will be back online shortly.'))
 
 {{-- Pulse slot --}}
 @section('pulse', true)
