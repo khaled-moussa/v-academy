@@ -94,9 +94,7 @@ class PlansTable
 
             TextColumn::make('price')
                 ->label('Price')
-                ->formatStateUsing(
-                    fn(Plan $record) => self::formatPrice($record)
-                )
+                ->formatStateUsing(fn(Plan $record) => self::formatPrice($record))
                 ->html(),
 
             TextColumn::make('discount')

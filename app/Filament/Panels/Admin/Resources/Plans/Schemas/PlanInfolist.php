@@ -92,8 +92,7 @@ class PlanInfolist
                                 TextEntry::make('created_at_formatted')
                                     ->label('Created At')
                                     ->badge()
-                                    ->color(Color::Gray)
-                                    ->dateTime(),
+                                    ->color(Color::Gray),
                             ])
                             ->columns(2)
                             ->compact()
