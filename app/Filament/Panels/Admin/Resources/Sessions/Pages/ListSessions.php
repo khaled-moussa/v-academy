@@ -24,8 +24,8 @@ class ListSessions extends ListRecords
     {
         return [
             'upcoming' => Tab::make('Upcoming')
-                ->badge(TrainingSession::query()->notPast()->count())
-                ->modifyQueryUsing(fn(Builder $query) => $query->notPast())
+                ->badge(TrainingSession::query()->upcomming()->count())
+                ->modifyQueryUsing(fn(Builder $query) => $query->upcomming())
                 ->excludeQueryWhenResolvingRecord(),
 
             'past' => Tab::make('Past')

@@ -138,7 +138,8 @@ class SessionsTable
                     ->label('Capacity')
                     ->badge()
                     ->color(fn(TrainingSession $record) => self::determineCapacityColor($record))
-                    ->formatStateUsing(fn(TrainingSession $record) => 'Capacity '
+                    ->formatStateUsing(
+                        fn(TrainingSession $record) => 'Capacity '
                             . $record->getBooking()
                             . '/'
                             . $record->getCapacity()
@@ -147,14 +148,12 @@ class SessionsTable
 
                 TextColumn::make('session_date_formatted')
                     ->label('Date')
-                    ->date()
                     ->badge()
                     ->icon(Heroicon::CalendarDays)
                     ->size(TextSize::Medium),
 
                 TextColumn::make('session_time_formatted')
                     ->label('Time')
-                    ->time()
                     ->badge()
                     ->icon(Heroicon::OutlinedClock)
                     ->size(TextSize::Medium),

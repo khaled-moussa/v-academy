@@ -39,7 +39,7 @@ class SessionResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->notPast()->latest();
+        return parent::getEloquentQuery()->upcomming()->latest();
     }
 
     /* 

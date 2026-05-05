@@ -152,7 +152,6 @@ class SessionsTable
 
                 TextColumn::make('session_date_formatted')
                     ->label('Date')
-                    ->date()
                     ->badge()
                     ->icon(Heroicon::CalendarDays)
                     ->size(TextSize::Medium),

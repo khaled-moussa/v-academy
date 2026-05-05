@@ -7,9 +7,9 @@ use App\Domain\TrainingSession\Models\Concerns\HasTrainingSessionRelation;
 use App\Domain\TrainingSession\Models\SessionStates\SessionStates;
 use App\Support\Traits\HasFormattedTimestamps;
 use App\Support\Traits\HasUuid;
-use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\ModelStates\HasStates;
+use Carbon\Carbon;
 
 class TrainingSession extends Model
 {
@@ -31,7 +31,7 @@ class TrainingSession extends Model
         'is_admin_created' => 'boolean',
         'is_active' => 'boolean',
         'session_date' => 'date',
-        'session_time' => 'datetime:H:i',
+        'session_time' => 'datetime',
     ];
 
     /*
