@@ -4,6 +4,8 @@ namespace App\Filament\Panels\Admin\Pages\Settings;
 
 use App\Domain\Setting\GeneralSetting\Actions\UpdateGeneralSettingAction;
 use App\Domain\Setting\GeneralSetting\Dtos\GeneralSettingDto;
+use App\Filament\Components\Notification\CustomNotification;
+use App\Support\Context\GeneralSettingContext;
 use App\Support\Enums\ThemeEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
@@ -49,11 +51,11 @@ class GeneralSettings extends Page
     */
     public function mount(): void
     {
-        $setting = app('generalSetting');
+        $setting = GeneralSettingContext::toArray();
 
-        $this->themeMode            = filament()->getDefaultThemeMode()->value;
-        $this->userCanCreateSession = $setting['user_can_create_session'];
-        $this->maxCapacity          = $setting['max_capacity'];
+        $this->themeMode = filament()->getDefaultThemeMode()->value;
+        $this->userCanCreateSession  = data_get($setting, 'user_can_create_session');
+        $this->maxCapacity = data_get($setting, 'max_capacity');
     }
 
     /*
@@ -107,9 +109,9 @@ class GeneralSettings extends Page
                 ->description('Manage session settings for users.')
                 ->schema([
                     Section::make('Can User Create Session')
-                        ->description('')
                         ->afterHeader([
-                            Toggle::make('userCanCreateSession')->hiddenLabel(),
+                            Toggle::make('userCanCreateSession')
+                                ->hiddenLabel(),
                         ])
                         ->compact()
                         ->secondary(),
@@ -151,6 +153,8 @@ class GeneralSettings extends Page
         );
 
         app(UpdateGeneralSettingAction::class)->execute($generalSettingDto);
+
+        CustomNotification::success(title: 'Settings updated successfully.');
     }
 
     #[On('settings-changed')]

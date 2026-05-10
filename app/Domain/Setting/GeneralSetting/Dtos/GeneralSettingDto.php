@@ -41,7 +41,7 @@ class GeneralSettingDto
             'phones'                   => $this->resolvePhones($this->phones),
             'max_capacity'             => $this->maxCapacity,
             'user_can_create_session'  => $this->userCanCreateSession,
-        ], fn($value) => ! is_null($value));
+        ], fn($value) => ! is_null($value) && $value !== []);
     }
 
     /*
