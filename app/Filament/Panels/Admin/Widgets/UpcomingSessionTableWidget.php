@@ -89,7 +89,8 @@ class UpcomingSessionTableWidget extends TableWidget
             TextColumn::make('name')
                 ->label('Session Name')
                 ->weight(FontWeight::Bold)
-                ->searchable(),
+                ->searchable()
+                ->placeholder('No session name'),
 
             TextColumn::make('session_state')
                 ->label('State')
@@ -139,7 +140,7 @@ class UpcomingSessionTableWidget extends TableWidget
     | Week Range
     |--------------------------------------------------------------------------
     */
-    
+
     private function weekRange(): array
     {
         $now = now();

@@ -85,7 +85,8 @@ class UpcomingSessionTableWidget extends TableWidget
             TextColumn::make('name')
                 ->label('Session Name')
                 ->weight(FontWeight::Bold)
-                ->searchable(),
+                ->searchable()
+                ->placeholder('No session name'),
 
             TextColumn::make('session_state')
                 ->label('State')
