@@ -17,8 +17,8 @@ use Filament\Schemas\Components\Tabs\Tab;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Forms\Components\Repeater;
-use BackedEnum;
 use Filament\Forms\Components\Select;
+use BackedEnum;
 
 class SiteSettings extends Page
 {
@@ -89,6 +89,7 @@ class SiteSettings extends Page
         return [
             Action::make('save')
                 ->label('Save')
+                ->requiresConfirmation()
                 ->action(fn() => $this->save())
                 ->button(),
         ];
