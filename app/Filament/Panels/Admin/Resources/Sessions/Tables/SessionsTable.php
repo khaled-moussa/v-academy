@@ -116,7 +116,8 @@ class SessionsTable
                     TextColumn::make('name')
                         ->label('Session Name')
                         ->weight(FontWeight::Bold)
-                        ->searchable(),
+                        ->searchable()
+                        ->placeholder('No session name'),
                 ]),
 
                 /*

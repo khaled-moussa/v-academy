@@ -32,7 +32,8 @@ class SessionForm
                             ->label('Session Name')
                             ->nullable()
                             ->maxLength(255)
-                            ->columnSpanFull(),
+                            ->columnSpanFull()
+                            ->placeholder('No session name'),
 
                         TextInput::make('capacity')
                             ->label('Capacity')

@@ -36,7 +36,8 @@ class SessionInfolist
                             ->copyable(),
 
                         TextEntry::make('name')
-                            ->label('Session Name'),
+                            ->label('Session Name')
+                            ->placeholder('No session name'),
 
                         TextEntry::make('capacity')
                             ->label('Capacity')
