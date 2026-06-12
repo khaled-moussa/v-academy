@@ -13,61 +13,63 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-
-      - name: Install NPM dependencies & build assets
-        run: |
-          npm ci
-          npm run build
-
-      - name: Upload built assets to server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          host: ${{ secrets.HOSTINGER_IP }}
-          username: ${{ secrets.HOSTINGER_USERNAME }}
-          key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
-          port: ${{ secrets.HOSTINGER_PORT }}
-          source: "public/build/"
-          target: "/home/u749963918/domains/variablesacademy.com/public_html/public/"
-          overwrite: true
-          strip_components: 1
-          
-      - name: Deploy and Build on Server via SSH
+      - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_IP }}
-          username: ${{ secrets.HOSTINGER_USERNAME }}
-          key: ${{ secrets.HOSTINGER_PRIVATE_KEY }} 
           port: ${{ secrets.HOSTINGER_PORT }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+          command_timeout: 30m
           script: |
-            cd /home/u749963918/domains/variablesacademy.com/public_html
+            set -e
 
             PHP=/opt/alt/php84/usr/bin/php
+            DEPLOY_PATH=/home/u749963918/domains/variablesacademy.com/public_html
 
-            echo "Using PHP version:"
-            $PHP -v
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
 
-            echo "Pulling latest code..."
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🚀 Starting Deployment"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+            cd $DEPLOY_PATH
+
+            echo "📥 Pulling latest code..."
             git reset --hard
             git clean -fd
             git pull origin master
+            echo "✅ $(git log -1 --oneline)"
 
-            echo "Installing PHP dependencies..."
-            $PHP $(which composer) install --no-dev --optimize-autoloader --no-interaction --no-scripts
+            echo "📦 Composer..."
+            $PHP $(which composer) install --no-dev --optimize-autoloader --no-interaction --no-progress
+            echo "✅ Composer done"
 
-            echo "Running package discovery..."
-            $PHP artisan package:discover --ansi
+            echo "🎨 Building assets..."
+            npm ci
+            npm run build
+            echo "✅ Assets built"
 
-            echo "Running migrations..."
+            echo "🧹 Clearing caches..."
+            $PHP artisan optimize:clear                   || true
+            $PHP artisan permission:cache-reset           || true
+            $PHP artisan filament:optimize-clear          || true
+            $PHP artisan filament:clear-cached-components || true
+
+            echo "⚡ Migrations..."
             $PHP artisan migrate --force --no-interaction
 
-            echo "Clearing caches..."
-            $PHP artisan optimize:clear
-            $PHP artisan cache:clear
-            $PHP artisan route:clear
-            $PHP artisan view:clear
+            echo "🔧 Rebuilding caches..."
+            $PHP artisan route:cache
+            $PHP artisan view:cache
+            $PHP artisan event:cache
+            $PHP artisan filament:optimize
+            $PHP artisan icons:cache 2>/dev/null || true
 
-            echo "Deployment completed."
+            echo "🔁 Restarting queues..."
+            $PHP artisan queue:restart || true
+
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🟢 Deployment completed successfully"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
