@@ -2,24 +2,12 @@
 
 namespace App\Filament\Pages;
 
-use App\Domain\SocialAccount\Actions\GetSocialAccountBySocialIdAction;
-use App\Domain\SocialAccount\Actions\ResolveSocialAccountLinkedWithUserAction;
-use App\Domain\SocialAccount\Actions\UnlinkSocialAccountAction;
-use App\Domain\SocialAccount\Dtos\SocialAccountDto;
-use App\Domain\User\Actions\ResolveCurrentUserAction;
 use Filament\Actions\Action;
 use Filament\Auth\Pages\EditProfile as BaseEditProfile;
 use Filament\Facades\Filament;
 use Filament\Forms\Components\TextInput;
-use Filament\Infolists\Components\TextEntry;
-use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Component;
-use Filament\Schemas\Components\Flex;
-use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
-use Filament\Support\Enums\Size;
-use Filament\Support\Icons\Heroicon;
-use Livewire\Attributes\On;
 
 class CustomEditProfile extends BaseEditProfile
 {
@@ -32,7 +20,8 @@ class CustomEditProfile extends BaseEditProfile
     public function form(Schema $schema): Schema
     {
         return $schema->components([
-            $this->getNameFormComponent(),
+            $this->getFirstNameFormComponent(),
+            $this->getLastNameFormComponent(),
             $this->getPhoneFormComponent(),
             $this->getEmailFormComponent(),
             $this->getPasswordFormComponent(),
@@ -48,9 +37,14 @@ class CustomEditProfile extends BaseEditProfile
     */
 
     /** Maps the name field to the `full_name` column instead of the default `name`. */
-    protected function getNameFormComponent(): Component
+    protected function getFirstNameFormComponent(): Component
     {
-        return parent::getNameFormComponent()->statePath('full_name');
+        return parent::getNameFormComponent()->statePath('first_name');
+    }
+
+    protected function getLastNameFormComponent(): Component
+    {
+        return parent::getNameFormComponent()->statePath('last_name');
     }
 
     protected function getPhoneFormComponent(): Component
