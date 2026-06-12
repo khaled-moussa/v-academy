@@ -1,4 +1,4 @@
-name: Deploy Variables Academy to Production Server
+name: Deploy Variables Academy to Production
 
 on:
   push:
@@ -10,16 +10,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # ─────────────────────────────
+      # 1. Checkout code
+      # ─────────────────────────────
       - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Deploy via SSH
+      # ─────────────────────────────
+      # 2. Setup Node (CI build)
+      # ─────────────────────────────
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "20"
+
+      - name: Install & Build Frontend Assets
+        run: |
+          npm ci
+          npm run build
+
+      # ─────────────────────────────
+      # 3. Upload built assets (Vite / Laravel Mix)
+      # ─────────────────────────────
+      - name: Upload Built Assets
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.HOSTINGER_IP }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT }}
+          source: "public/build/"
+          target: "/home/u749963918/domains/variablesacademy.com/public_html/public/"
+          overwrite: true
+          strip_components: 1
+
+      # ─────────────────────────────
+      # 4. Deploy Backend via SSH
+      # ─────────────────────────────
+      - name: Deploy Backend via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_IP }}
-          port: ${{ secrets.HOSTINGER_PORT }}
           username: ${{ secrets.HOSTINGER_USERNAME }}
           key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
+          port: ${{ secrets.HOSTINGER_PORT }}
           command_timeout: 30m
           script: |
             set -e
@@ -27,49 +61,61 @@ jobs:
             PHP=/opt/alt/php84/usr/bin/php
             DEPLOY_PATH=/home/u749963918/domains/variablesacademy.com/public_html
 
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
             echo "🚀 Starting Deployment"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
             cd $DEPLOY_PATH
 
+            # ─────────────────────────────
+            # Pull latest code
+            # ─────────────────────────────
             echo "📥 Pulling latest code..."
             git reset --hard
             git clean -fd
             git pull origin master
-            echo "✅ $(git log -1 --oneline)"
+            echo "✅ Latest commit: $(git log -1 --oneline)"
 
-            echo "📦 Composer..."
-            $PHP $(which composer) install --no-dev --optimize-autoloader --no-interaction --no-progress
-            echo "✅ Composer done"
+            # ─────────────────────────────
+            # Composer install
+            # ─────────────────────────────
+            echo "📦 Installing PHP dependencies..."
+            $PHP $(which composer) install \
+              --no-dev \
+              --optimize-autoloader \
+              --no-interaction \
+              --no-progress
 
-            echo "🎨 Building assets..."
-            npm ci
-            npm run build
-            echo "✅ Assets built"
-
+            # ─────────────────────────────
+            # Laravel optimizations
+            # ─────────────────────────────
             echo "🧹 Clearing caches..."
-            $PHP artisan optimize:clear                   || true
-            $PHP artisan permission:cache-reset           || true
-            $PHP artisan filament:optimize-clear          || true
+            $PHP artisan optimize:clear || true
+            $PHP artisan filament:optimize-clear || true
             $PHP artisan filament:clear-cached-components || true
 
-            echo "⚡ Migrations..."
+            # ─────────────────────────────
+            # Database migrations
+            # ─────────────────────────────
+            echo "⚡ Running migrations..."
             $PHP artisan migrate --force --no-interaction
 
+            # ─────────────────────────────
+            # Rebuild caches
+            # ─────────────────────────────
             echo "🔧 Rebuilding caches..."
-            $PHP artisan route:cache
-            $PHP artisan view:cache
-            $PHP artisan event:cache
-            $PHP artisan filament:optimize
-            $PHP artisan icons:cache 2>/dev/null || true
+            $PHP artisan route:cache || true
+            $PHP artisan view:cache || true
+            $PHP artisan event:cache || true
+            $PHP artisan filament:optimize || true
+            $PHP artisan icons:cache || true
 
-            echo "🔁 Restarting queues..."
+            # ─────────────────────────────
+            # Restart queue
+            # ─────────────────────────────
+            echo "🔁 Restarting queue..."
             $PHP artisan queue:restart || true
 
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-            echo "🟢 Deployment completed successfully"
-            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+            echo "🟢 Deployment Completed Successfully"
+            echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
