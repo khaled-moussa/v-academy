@@ -27,22 +27,23 @@ jobs:
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOSTINGER_IP }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_KEY }}
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_PRIVATE_KEY }}
           port: ${{ secrets.HOSTINGER_PORT }}
           source: "public/build/"
-          target: "/home/u443430971/domains/variablesacademy.com/public_html/public/"
+          target: "/home/u749963918/domains/variablesacademy.com/public_html/public/"
           overwrite: true
           strip_components: 1
+          
       - name: Deploy and Build on Server via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTINGER_IP }}
-          username: ${{ secrets.HOSTINGER_USER }}
-          key: ${{ secrets.HOSTINGER_KEY }} 
+          username: ${{ secrets.HOSTINGER_USERNAME }}
+          key: ${{ secrets.HOSTINGER_PRIVATE_KEY }} 
           port: ${{ secrets.HOSTINGER_PORT }}
           script: |
-            cd /home/u443430971/domains/variablesacademy.com/public_html
+            cd /home/u749963918/domains/variablesacademy.com/public_html
 
             PHP=/opt/alt/php84/usr/bin/php
 
