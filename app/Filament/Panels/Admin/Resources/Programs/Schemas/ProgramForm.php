@@ -93,6 +93,9 @@ class ProgramForm
                 SpatieMediaLibraryFileUpload::make('program_file')
                     ->hiddenLabel()
                     ->collection('programs')
+                    ->acceptedFileTypes([
+                        'application/pdf',
+                    ])
                     ->required(),
             ]);
     }
