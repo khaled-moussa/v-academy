@@ -1,23 +1,24 @@
 <?php
 
-namespace App\Filament\Panels\Admin\Resources\Sessions;
+namespace App\Filament\Panels\Admin\Resources\Programs;
 
-use App\Domain\TrainingSession\Models\SessionStates\SessionAvailableState;
-use App\Domain\TrainingSession\Models\TrainingSession;
-use App\Filament\Panels\Admin\Resources\Sessions\Pages\ListSessions;
-use App\Filament\Panels\Admin\Resources\Sessions\Schemas\SessionForm;
-use App\Filament\Panels\Admin\Resources\Sessions\Schemas\SessionInfolist;
-use App\Filament\Panels\Admin\Resources\Sessions\Tables\SessionsTable;
-use App\Filament\Panels\Admin\Resources\Sessions\Pages\ViewSession;
-use App\Filament\Panels\Admin\Resources\Sessions\RelationManagers\UserBookingSessionRelationManager;
+use App\Domain\Program\Models\Program;
+use App\Filament\Panels\Admin\Resources\Programs\Pages\CreateProgram;
+use App\Filament\Panels\Admin\Resources\Programs\Pages\EditProgram;
+use App\Filament\Panels\Admin\Resources\Programs\Pages\ListPrograms;
+use App\Filament\Panels\Admin\Resources\Programs\Schemas\ProgramForm;
+use App\Filament\Panels\Admin\Resources\Programs\Schemas\ProgramInfolist;
+use App\Filament\Panels\Admin\Resources\Programs\Tables\ProgramsTable;
+use App\Filament\Panels\Admin\Resources\Programs\Pages\ViewProgram;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use BackedEnum;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 
-class SessionResource extends Resource
+class ProgramResource extends Resource
 {
     /* 
     |---------------------------------
@@ -25,9 +26,9 @@ class SessionResource extends Resource
     |---------------------------------
     */
 
-    protected static ?string $model = TrainingSession::class;
+    protected static ?string $model = Program::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCalendar;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedDocumentText;
 
     protected static ?int $navigationSort = 2;
 
@@ -52,12 +53,12 @@ class SessionResource extends Resource
 
     public static function getNavigationLabel(): string
     {
-        return 'Sessions';
+        return 'Programs';
     }
 
     public static function getModelLabel(): string
     {
-        return 'Session';
+        return 'Program';
     }
 
     public static function getNavigationGroup(): ?string
@@ -67,12 +68,13 @@ class SessionResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) self::$model::available()->upcomming()->count() . ' ' . SessionAvailableState::label();
+        $expiresAt = Carbon::create(now()->year, 7, 5, 23, 59, 59);
+        return now()->lessThanOrEqualTo($expiresAt) ? 'New' : null;
     }
 
     public static function getNavigationBadgeColor(): ?string
     {
-        return SessionAvailableState::filamentColorClass();
+        return 'indigo';
     }
 
     /* 
@@ -83,17 +85,17 @@ class SessionResource extends Resource
 
     public static function form(Schema $schema): Schema
     {
-        return SessionForm::configure($schema);
+        return ProgramForm::configure($schema);
     }
 
     public static function infolist(Schema $schema): Schema
     {
-        return SessionInfolist::configure($schema);
+        return ProgramInfolist::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return SessionsTable::configure($table);
+        return ProgramsTable::configure($table);
     }
 
     /* 
@@ -104,9 +106,7 @@ class SessionResource extends Resource
 
     public static function getRelations(): array
     {
-        return [
-            UserBookingSessionRelationManager::class
-        ];
+        return [];
     }
 
     /* 
@@ -118,8 +118,10 @@ class SessionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListSessions::route('/'),
-            'view'   => ViewSession::route('/{record}'),
+            'index' => ListPrograms::route('/'),
+            'create' => CreateProgram::route('/create'),
+            'view'   => ViewProgram::route('/{record}'),
+            'edit' => EditProgram::route('/{record}/edit'),
         ];
     }
 }

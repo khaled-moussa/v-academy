@@ -60,9 +60,9 @@ class SessionResource extends Resource
 
     public static function getNavigationGroup(): ?string
     {
-        return 'Sessions';
+        return 'Sessions & Programs';
     }
-
+    
     public static function getNavigationBadge(): ?string
     {
         return (string) self::$model::available()->upcomming()->count() . ' ' . SessionAvailableState::label();
