@@ -214,7 +214,7 @@ class SessionsTable
                     ->icon(Heroicon::OutlinedCreditCard)
                     ->visible(fn() => self::shouldShowSubscribe())
                     ->url(route('filament.user.pages.explore-plans'))
-                    ->button(),
+                    ->outlined(),
 
                 /*
                 |--------------------------------------------------------------
