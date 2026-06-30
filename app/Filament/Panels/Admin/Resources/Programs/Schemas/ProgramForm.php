@@ -41,7 +41,8 @@ class ProgramForm
             ->schema([
                 TextInput::make('name')
                     ->label('Program Name')
-                    ->maxLength(255),
+                    ->maxLength(255)
+                    ->required(),
 
                 Textarea::make('description')
                     ->label('Description')
